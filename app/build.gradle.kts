@@ -6,7 +6,7 @@ plugins {
 
 android {
     namespace = "live.lafi.chatgpt_assist"
-    compileSdk = 33
+    compileSdk = Version.compileSdk
 
     defaultConfig {
         applicationId = "live.lafi.chatgpt_assist"
@@ -41,6 +41,9 @@ android {
 }
 
 dependencies {
+    implementation(project(":domain"))
+    implementation(project(":data"))
+
     implementation(Dep.AndroidX.core)
     implementation(Dep.AndroidX.appCompat)
     implementation(Dep.AndroidX.material)
