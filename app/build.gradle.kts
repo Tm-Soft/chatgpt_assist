@@ -1,6 +1,7 @@
 plugins {
     id("com.android.application")
-    id("org.jetbrains.kotlin.android")
+    kotlin("android")
+    kotlin("kapt")
 }
 
 android {
@@ -9,10 +10,10 @@ android {
 
     defaultConfig {
         applicationId = "live.lafi.chatgpt_assist"
-        minSdk = 24
-        targetSdk = 33
-        versionCode = 1
-        versionName = "1.0"
+        minSdk = Version.minSdk
+        targetSdk = Version.targetSdk
+        versionCode = Version.versionCode
+        versionName = Version.versionName
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -33,15 +34,40 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+
+    viewBinding.isEnabled = true
 }
 
 dependencies {
+    implementation(Dep.AndroidX.core)
+    implementation(Dep.AndroidX.appCompat)
+    implementation(Dep.AndroidX.material)
+    implementation(Dep.AndroidX.constraintLayout)
+    implementation(Dep.AndroidX.activity)
+    implementation(Dep.AndroidX.fragment)
 
-    implementation("androidx.core:core-ktx:1.9.0")
-    implementation("androidx.appcompat:appcompat:1.6.1")
-    implementation("com.google.android.material:material:1.8.0")
-    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
-    testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.1.5")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+    testImplementation(Dep.Test.junit)
+    androidTestImplementation(Dep.Test.junitExt)
+    androidTestImplementation(Dep.Test.espressoCore)
+
+    // Timber 사용을 위한 의존성 추가
+    implementation(Dep.Timber.core)
+
+    // Room 사용을 위한 의존성 추가
+    implementation(Dep.Room.runtime)
+    implementation(Dep.Room.ktx)
+    kapt(Dep.Room.compiler)
+
+    // ViewModel 사용을 위한 의존성 추가
+    implementation(Dep.Lifecycle.viewModel)
+
+    // retrofit2 & okhttp 사용을 위한 의존성 추가
+    implementation(Dep.Square.retrofit)
+    implementation(Dep.Square.converterGson)
+    implementation(Dep.Square.converterScalars)
+    implementation(Dep.Square.okhttp3)
+    implementation(Dep.Square.loggingInterceptor)
+
+    // Gilde 사용을 위한 의존성 추가
+    implementation(Dep.Gilde.okhttp3)
 }
