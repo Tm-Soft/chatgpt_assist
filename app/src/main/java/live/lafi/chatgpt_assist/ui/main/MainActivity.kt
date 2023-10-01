@@ -1,6 +1,7 @@
-package live.lafi.chatgpt_assist
+package live.lafi.chatgpt_assist.ui.main
 
 import android.os.Bundle
+import live.lafi.chatgpt_assist.R
 import live.lafi.chatgpt_assist.base.BaseActivity
 import live.lafi.chatgpt_assist.databinding.ActivityMainBinding
 import live.lafi.data.DataExample
