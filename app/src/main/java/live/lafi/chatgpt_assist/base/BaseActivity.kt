@@ -45,7 +45,7 @@ abstract class BaseActivity<T: ViewDataBinding>(
 
     fun showToast(
         msg: String,
-        duration: Int = Toast.LENGTH_SHORT
+        duration: Int = Toast.LENGTH_LONG
     ) {
         Toast.makeText(this, msg, duration).show()
     }
