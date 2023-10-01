@@ -18,7 +18,7 @@ object Dep {
     const val serializationPlugin = "org.jetbrains.kotlin:kotlin-serialization:$version"
 
     object AndroidX {
-        const val core = "androidx.core:core-ktx:1.12.0"
+        const val core = "androidx.core:core-ktx:1.10.0"
         const val appCompat = "androidx.appcompat:appcompat:1.6.1"
 
         const val activity = "androidx.activity:activity-ktx:1.7.1"
