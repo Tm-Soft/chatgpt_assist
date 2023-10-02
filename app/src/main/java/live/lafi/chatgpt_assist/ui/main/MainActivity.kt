@@ -10,7 +10,7 @@ import live.lafi.chatgpt_assist.base.BaseActivity
 import live.lafi.chatgpt_assist.databinding.ActivityMainBinding
 import live.lafi.data.DataExample
 import live.lafi.domain.DomainExample
-import live.lafi.util.GptToken
+import live.lafi.util.GetGptToken
 import live.lafi.util.model.GptChatMessage
 
 class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
@@ -23,8 +23,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
         setupUi()
         //initAdMob()
 
-        val token = GptToken.getGptTokens(
-            GptToken.GptModelType.GPT_3_5_TURBO,
+        val token = GetGptToken(
+            GetGptToken.GptModelType.GPT_3_5_TURBO,
             listOf(
                 GptChatMessage(
                     "user",

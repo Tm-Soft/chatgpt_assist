@@ -4,12 +4,8 @@ import com.knuddels.jtokkit.Encodings
 import com.knuddels.jtokkit.api.ModelType
 import live.lafi.util.model.GptChatMessage
 
-object GptToken {
-    enum class GptModelType {
-        GPT_3_5_TURBO,
-        GPT_4
-    }
-    fun getGptTokens(
+object GetGptToken {
+    operator fun invoke(
         modelType: GptModelType,
         messages: List<GptChatMessage>
     ): Int {
@@ -46,5 +42,10 @@ object GptToken {
         sum += 3
 
         return sum
+    }
+
+    enum class GptModelType {
+        GPT_3_5_TURBO,
+        GPT_4
     }
 }
