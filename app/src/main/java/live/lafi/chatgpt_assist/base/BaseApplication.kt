@@ -2,9 +2,11 @@ package live.lafi.chatgpt_assist.base
 
 import android.app.Application
 import android.util.Log
+import dagger.hilt.android.HiltAndroidApp
 import live.lafi.chatgpt_assist.BuildConfig
 import timber.log.Timber
 
+@HiltAndroidApp
 class BaseApplication : Application() {
     init {
         instance = this

@@ -1,12 +1,13 @@
 package live.lafi.chatgpt_assist.ui.main
 
 import android.os.Bundle
-import android.os.SystemClock
+import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -19,13 +20,16 @@ import live.lafi.util.GetGptToken
 import live.lafi.util.model.GptChatMessage
 import timber.log.Timber
 
+@AndroidEntryPoint
 class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
     override val TAG: String = MainActivity::class.java.simpleName
+    private val mainViewModel: MainViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setupUi()
+        subscribeUi()
         //initAdMob()
 
         lifecycleScope.launch(Dispatchers.Default) {
@@ -54,9 +58,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
             )
             Timber.tag("test").d("끝")
             withContext(Dispatchers.Main) {
-                showToast(
-                    "토큰 : $token // ${(System.currentTimeMillis() - timeTick)/1000}초 걸림"
-                )
+                //showToast("토큰 : $token // ${(System.currentTimeMillis() - timeTick)/1000}초 걸림")
             }
         }
     }
@@ -65,6 +67,14 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
         with(binding) {
             tvTextFirst.text = DomainExample().getValue()
             tvTextSecond.text = DataExample().getValue()
+        }
+    }
+
+    private fun subscribeUi() {
+        with(mainViewModel) {
+            testValue.observe(this@MainActivity) {
+                showToast(it)
+            }
         }
     }
 

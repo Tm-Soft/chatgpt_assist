@@ -1,5 +1,7 @@
 plugins {
     id("com.android.library")
+//    id("com.google.dagger.hilt.android")
+
     kotlin("android")
     kotlin("kapt")
 }
@@ -43,6 +45,10 @@ dependencies {
 
     // Timber 사용을 위한 의존성 추가
     implementation(Dep.Timber.core)
+
+    // Hilt 사용을 위한 의존성 추가.
+//    implementation(Dep.Hlit.hilt)
+//    kapt(Dep.Hlit.compiler)
 
     // Room 사용을 위한 의존성 추가
     implementation(Dep.Room.runtime)

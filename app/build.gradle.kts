@@ -1,5 +1,7 @@
 plugins {
     id("com.android.application")
+    id("com.google.dagger.hilt.android")
+
     kotlin("android")
     kotlin("kapt")
 }
@@ -66,6 +68,11 @@ dependencies {
 
     // ViewModel 사용을 위한 의존성 추가
     implementation(Dep.Lifecycle.viewModel)
+
+    // Hilt 사용을 위한 의존성 추가.
+    kapt("org.jetbrains.kotlinx:kotlinx-metadata-jvm:0.5.0")
+    implementation(Dep.Hilt.hilt)
+    kapt(Dep.Hilt.compiler)
 
     // retrofit2 & okhttp 사용을 위한 의존성 추가
     implementation(Dep.Square.retrofit)

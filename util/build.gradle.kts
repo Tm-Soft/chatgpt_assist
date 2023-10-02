@@ -1,6 +1,9 @@
 plugins {
     id("com.android.library")
-    id("org.jetbrains.kotlin.android")
+    //id("com.google.dagger.hilt.android")
+
+    kotlin("android")
+    kotlin("kapt")
 }
 
 android {
@@ -45,4 +48,8 @@ dependencies {
 
     // Gpt Token 사용을 위한 의존성 추가
     implementation(Dep.Gpt.jtokkit)
+
+    // Hilt 사용을 위한 의존성 추가.
+//    implementation(Dep.Hlit.hilt)
+//    kapt(Dep.Hlit.compiler)
 }

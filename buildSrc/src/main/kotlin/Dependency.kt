@@ -30,6 +30,11 @@ object Dep {
         const val version = "2.6.1"
         const val viewModel = "androidx.lifecycle:lifecycle-viewmodel-ktx:$version"
     }
+    object Hilt {
+        const val version = "2.48"
+        const val hilt = "com.google.dagger:hilt-android:$version"
+        const val compiler = "com.google.dagger:hilt-compiler:$version"
+    }
     object Square {
         const val retrofit = "com.squareup.retrofit2:retrofit:2.9.0"
         const val converterGson = "com.squareup.retrofit2:converter-gson:2.9.0"
