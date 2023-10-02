@@ -3,6 +3,7 @@ package live.lafi.util
 import com.knuddels.jtokkit.Encodings
 import com.knuddels.jtokkit.api.ModelType
 import live.lafi.util.model.GptChatMessage
+import timber.log.Timber
 
 object GetGptToken {
     operator fun invoke(
@@ -30,8 +31,8 @@ object GetGptToken {
             throw IllegalArgumentException("Unsupported model: " + modelType)
             }
         }
+        Timber.tag("test__").d("내부 시작")
         val encoding = Encodings.newDefaultEncodingRegistry().getEncodingForModel(realModelType)
-
 
         var sum  = 0
         messages.forEach { message ->
