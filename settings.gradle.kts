@@ -17,3 +17,4 @@ rootProject.name = "chatgpt_assist"
 include(":app")
 include(":domain")
 include(":data")
+include(":util")

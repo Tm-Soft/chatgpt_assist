@@ -43,6 +43,7 @@ android {
 dependencies {
     implementation(project(":domain"))
     implementation(project(":data"))
+    implementation(project(":util"))
 
     implementation(Dep.AndroidX.core)
     implementation(Dep.AndroidX.appCompat)

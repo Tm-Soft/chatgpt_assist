@@ -10,6 +10,8 @@ import live.lafi.chatgpt_assist.base.BaseActivity
 import live.lafi.chatgpt_assist.databinding.ActivityMainBinding
 import live.lafi.data.DataExample
 import live.lafi.domain.DomainExample
+import live.lafi.util.GptToken
+import live.lafi.util.model.GptChatMessage
 
 class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
     override val TAG: String = MainActivity::class.java.simpleName
@@ -18,11 +20,29 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding.tvTextFirst.text = DomainExample().getValue()
-        binding.tvTextSecond.text = DataExample().getValue()
+        setupUi()
+        //initAdMob()
 
-        initAdMob()
-        mInterstitialAd?.show(this)
+        val token = GptToken.getGptTokens(
+            GptToken.GptModelType.GPT_3_5_TURBO,
+            listOf(
+                GptChatMessage(
+                    "user",
+                    "안녕하세요. 저는 지금 어떤걸 찾고 있어요. 그런데 아주 작은 아기새가 나타나서 저한테 하는말이 있는거에요!!"
+                )
+            )
+        )
+
+        showToast(
+            "토큰 : " + token
+        )
+    }
+
+    private fun setupUi() {
+        with(binding) {
+            tvTextFirst.text = DomainExample().getValue()
+            tvTextSecond.text = DataExample().getValue()
+        }
     }
 
     private fun initAdMob() {

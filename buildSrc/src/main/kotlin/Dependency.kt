@@ -57,6 +57,9 @@ object Dep {
         const val espressoCore = "androidx.test.espresso:espresso-core:3.5.1"
     }
     object AdMob {
-        const val ads ="com.google.android.gms:play-services-ads:22.4.0"
+        const val ads = "com.google.android.gms:play-services-ads:22.4.0"
+    }
+    object Gpt {
+        const val jtokkit = "com.knuddels:jtokkit:0.6.1"
     }
 }
