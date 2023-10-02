@@ -43,6 +43,7 @@ android {
 dependencies {
     implementation(project(":domain"))
     implementation(project(":data"))
+    implementation(project(":util"))
 
     implementation(Dep.AndroidX.core)
     implementation(Dep.AndroidX.appCompat)
@@ -75,4 +76,7 @@ dependencies {
 
     // Gilde 사용을 위한 의존성 추가
     implementation(Dep.Gilde.okhttp3)
+
+    // 애드몹 사용을 위한 의존성 추가
+    implementation(Dep.AdMob.ads)
 }
