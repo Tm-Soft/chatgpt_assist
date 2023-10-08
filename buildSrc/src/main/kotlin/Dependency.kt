@@ -29,6 +29,7 @@ object Dep {
     object Lifecycle {
         const val version = "2.6.1"
         const val viewModel = "androidx.lifecycle:lifecycle-viewmodel-ktx:$version"
+        const val livedata = "androidx.lifecycle:lifecycle-livedata-ktx:$version"
     }
     object Hilt {
         const val version = "2.48"
@@ -55,6 +56,11 @@ object Dep {
         const val runtime = "androidx.room:room-runtime:$version"
         const val compiler = "androidx.room:room-compiler:$version"
         const val ktx = "androidx.room:room-ktx:$version"
+    }
+    object DataStore {
+        const val version = "1.0.0"
+        const val core = "androidx.datastore:datastore-preferences-core:$version"
+        const val preferences = "androidx.datastore:datastore-preferences:$version"
     }
     object Test {
         const val junit = "junit:junit:4.13.2"

@@ -1,8 +1,15 @@
 package live.lafi.chatgpt_assist.base
 
 import android.app.Application
+import android.content.Context
 import android.util.Log
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.preferencesDataStore
 import dagger.hilt.android.HiltAndroidApp
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
 import live.lafi.chatgpt_assist.BuildConfig
 import timber.log.Timber
 
@@ -23,5 +30,6 @@ class BaseApplication : Application() {
         if (BuildConfig.DEBUG) {
             Timber.plant(Timber.DebugTree())
         }
+
     }
 }

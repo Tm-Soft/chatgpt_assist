@@ -37,6 +37,8 @@ android {
 
 dependencies {
     implementation(project(":domain"))
+    implementation(project(":util"))
+
     implementation(Dep.AndroidX.core)
 
     testImplementation(Dep.Test.junit)
@@ -47,13 +49,18 @@ dependencies {
     implementation(Dep.Timber.core)
 
     // Hilt 사용을 위한 의존성 추가.
-//    implementation(Dep.Hlit.hilt)
-//    kapt(Dep.Hlit.compiler)
+    kapt("org.jetbrains.kotlinx:kotlinx-metadata-jvm:0.5.0")
+    implementation(Dep.Hilt.hilt)
+    kapt(Dep.Hilt.compiler)
 
     // Room 사용을 위한 의존성 추가
     implementation(Dep.Room.runtime)
     implementation(Dep.Room.ktx)
     kapt(Dep.Room.compiler)
+
+    // DataStore 사용을 위한 의존성 추가
+    //implementation(Dep.DataStore.core)
+    implementation(Dep.DataStore.preferences)
 
     // retrofit2 & okhttp 사용을 위한 의존성 추가
     implementation(Dep.Square.retrofit)

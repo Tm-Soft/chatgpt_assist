@@ -66,8 +66,13 @@ dependencies {
     implementation(Dep.Room.ktx)
     kapt(Dep.Room.compiler)
 
+    // DataStore 사용을 위한 의존성 추가
+    //implementation(Dep.DataStore.core)
+    implementation(Dep.DataStore.preferences)
+
     // ViewModel 사용을 위한 의존성 추가
     implementation(Dep.Lifecycle.viewModel)
+    implementation(Dep.Lifecycle.livedata)
 
     // Hilt 사용을 위한 의존성 추가.
     kapt("org.jetbrains.kotlinx:kotlinx-metadata-jvm:0.5.0")
