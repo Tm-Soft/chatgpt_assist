@@ -1,6 +1,6 @@
 package live.lafi.data.model.request
 
-import live.lafi.util.model.ChatGptMessage
+import live.lafi.util.chat_gpt.model.ChatGptMessage
 
 data class CompletionRequest(
     val model: String,

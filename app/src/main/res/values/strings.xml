@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">지피티 도우미</string>
+    <string name="chat_room_list_title">AI 챗봇 목록</string>
 </resources>

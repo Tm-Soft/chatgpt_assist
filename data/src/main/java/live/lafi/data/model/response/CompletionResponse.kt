@@ -1,7 +1,7 @@
 package live.lafi.data.model.response
 
 import com.google.gson.annotations.SerializedName
-import live.lafi.util.model.ChatGptMessage
+import live.lafi.util.chat_gpt.model.ChatGptMessage
 
 data class CompletionResponse (
     @SerializedName("id") val id: String?,

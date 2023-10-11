@@ -4,6 +4,8 @@ plugins {
 
     kotlin("android")
     kotlin("kapt")
+
+    id("kotlin-parcelize")
 }
 
 android {
@@ -26,6 +28,11 @@ android {
             )
         }
     }
+    buildFeatures {
+        dataBinding = true
+        viewBinding = true
+        buildConfig = true
+    }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
@@ -38,6 +45,11 @@ android {
 dependencies {
     implementation(project(":domain"))
     implementation(Dep.AndroidX.core)
+    implementation(Dep.AndroidX.appCompat)
+    implementation(Dep.AndroidX.material)
+    implementation(Dep.AndroidX.constraintLayout)
+    implementation(Dep.AndroidX.activity)
+    implementation(Dep.AndroidX.fragment)
 
     testImplementation(Dep.Test.junit)
     androidTestImplementation(Dep.Test.junitExt)

@@ -9,7 +9,7 @@ import live.lafi.data.model.request.CompletionRequest
 import live.lafi.data.network.OpenaiApi
 import live.lafi.domain.usecase.local_setting.LoadChatGptTokenUseCase
 import live.lafi.domain.usecase.local_setting.SaveChatGptTokenUseCase
-import live.lafi.util.model.ChatGptMessage
+import live.lafi.util.chat_gpt.model.ChatGptMessage
 import javax.inject.Inject
 
 @HiltViewModel

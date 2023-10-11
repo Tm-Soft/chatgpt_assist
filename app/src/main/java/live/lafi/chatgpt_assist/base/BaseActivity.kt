@@ -12,7 +12,7 @@ abstract class BaseActivity<T: ViewDataBinding>(
     @LayoutRes private val layoutId: Int
 ) : AppCompatActivity() {
     lateinit var binding: T
-    abstract val TAG: String
+    val TAG by lazy { this.javaClass.simpleName }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

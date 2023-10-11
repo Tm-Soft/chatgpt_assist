@@ -1,5 +1,6 @@
 package live.lafi.chatgpt_assist.ui.main
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -14,10 +15,10 @@ import kotlinx.coroutines.withContext
 import live.lafi.chatgpt_assist.R
 import live.lafi.chatgpt_assist.base.BaseActivity
 import live.lafi.chatgpt_assist.databinding.ActivityMainBinding
+import live.lafi.chatgpt_assist.ui.chat_room_list.ChatRoomListActivity
 
 @AndroidEntryPoint
 class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
-    override val TAG: String = MainActivity::class.java.simpleName
     private val mainViewModel: MainViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,6 +31,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
         //initAdMob()
         //mainViewModel.testScope1()
         //mainViewModel.testScope2()
+
+        startActivity(
+            Intent(this@MainActivity, ChatRoomListActivity::class.java)
+        )
     }
 
     private fun setupUi() {
@@ -60,7 +65,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
         lifecycleScope.launch(Dispatchers.IO) {
             val token = mainViewModel.setupChatGptToken()
             withContext(Dispatchers.Main) {
-                showToast("곰방와 $token")
+                showToast("설정 토큰 : $token")
             }
         }
     }
