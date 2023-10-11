@@ -2,13 +2,13 @@ package live.lafi.util
 
 import com.knuddels.jtokkit.Encodings
 import com.knuddels.jtokkit.api.ModelType
-import live.lafi.util.model.GptChatMessage
+import live.lafi.util.model.ChatGptMessage
 import timber.log.Timber
 
 object GetGptToken {
     operator fun invoke(
         modelType: GptModelType,
-        messages: List<GptChatMessage>
+        messages: List<ChatGptMessage>
     ): Int {
         var tokenPerMessage = 0
         var tokenPerName = 0
