@@ -16,10 +16,7 @@
         android:theme="@style/Theme.Chatgpt_assist"
         tools:targetApi="31">
         <activity
-            android:name=".ui.chat_room_list.ChatRoomListActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.main.MainActivity"
+            android:name=".SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

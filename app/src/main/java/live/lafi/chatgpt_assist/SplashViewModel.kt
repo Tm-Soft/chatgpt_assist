@@ -1,10 +1,10 @@
-package live.lafi.chatgpt_assist.ui.main
+package live.lafi.chatgpt_assist
 
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import live.lafi.chatgpt_assist.base.BaseViewModel
-import live.lafi.chatgpt_assist.di.GptToken
+import live.lafi.util.public_model.GptToken
 import live.lafi.data.model.request.CompletionRequest
 import live.lafi.data.network.OpenaiApi
 import live.lafi.domain.usecase.local_setting.LoadChatGptTokenUseCase
@@ -13,7 +13,7 @@ import live.lafi.util.chat_gpt.model.ChatGptMessage
 import javax.inject.Inject
 
 @HiltViewModel
-class MainViewModel @Inject constructor(
+class SplashViewModel @Inject constructor(
     private val service: OpenaiApi,
     private val saveChatGptTokenUseCase: SaveChatGptTokenUseCase,
     private val loadChatGptTokenUseCase: LoadChatGptTokenUseCase
@@ -32,7 +32,6 @@ class MainViewModel @Inject constructor(
             saveChatGptTokenUseCase(token)
         }
     }
-
 
 
 

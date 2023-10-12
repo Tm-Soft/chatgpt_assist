@@ -11,6 +11,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import live.lafi.chatgpt_assist.BuildConfig
 import live.lafi.data.network.OpenaiApi
+import live.lafi.util.public_model.GptToken
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Response

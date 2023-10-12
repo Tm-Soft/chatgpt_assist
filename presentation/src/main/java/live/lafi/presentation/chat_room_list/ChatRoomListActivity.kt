@@ -1,16 +1,17 @@
-package live.lafi.chatgpt_assist.ui.chat_room_list
+package live.lafi.presentation.chat_room_list
 
 import android.os.Bundle
 import androidx.activity.viewModels
 import dagger.hilt.android.AndroidEntryPoint
-import live.lafi.chatgpt_assist.R
-import live.lafi.chatgpt_assist.base.BaseActivity
-import live.lafi.chatgpt_assist.databinding.ActivityChatRoomListBinding
 import live.lafi.library_dialog.Dialog
+import live.lafi.presentation.R
+import live.lafi.presentation.base.BaseActivity
+import live.lafi.presentation.databinding.ActivityChatRoomListBinding
 
 @AndroidEntryPoint
 class ChatRoomListActivity : BaseActivity<ActivityChatRoomListBinding>(R.layout.activity_chat_room_list) {
     private val viewModel: ChatRoomListViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
