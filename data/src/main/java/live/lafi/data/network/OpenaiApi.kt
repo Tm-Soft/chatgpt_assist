@@ -10,5 +10,5 @@ interface OpenaiApi {
     @POST("/v1/chat/completions")
     suspend fun getCompletion(
         @Body requestBody: CompletionRequest
-    ): Response<CompletionResponse>
+    ): CompletionResponse
 }

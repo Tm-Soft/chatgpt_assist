@@ -22,7 +22,6 @@ class LocalSettingRepositoryImpl @Inject constructor(
     private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
     companion object {
         val CHAT_GPT_TOKEN = stringPreferencesKey("chatgpt_token")
-        val KEY_COUNT = intPreferencesKey("key_count")
     }
 
     private val getChatGpt: Flow<String> = context.dataStore.data
