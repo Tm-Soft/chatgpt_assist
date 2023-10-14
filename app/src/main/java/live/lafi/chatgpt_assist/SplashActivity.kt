@@ -34,6 +34,7 @@ class SplashActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main)
         startActivity(
             Intent(this@SplashActivity, ChatRoomListActivity::class.java)
         )
+        finish()
     }
 
     private fun setupUi() {

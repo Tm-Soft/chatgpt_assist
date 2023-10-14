@@ -50,8 +50,8 @@ object RetrofitModule {
     @Provides
     @Singleton
     fun provideOkHttpClient(): OkHttpClient {
-        val connectTimeOut = (1000 * 60).toLong()
-        val readTimeOut = (1000 * 5).toLong()
+        val connectTimeOutSec = (60).toLong()
+        val readTimeOutSec = (120).toLong()
 
         val loggingInterceptor = HttpLoggingInterceptor()
 
@@ -84,21 +84,25 @@ object RetrofitModule {
         }
 
         return OkHttpClient.Builder()
-            .readTimeout(readTimeOut, TimeUnit.MILLISECONDS)
-            .connectTimeout(connectTimeOut, TimeUnit.MILLISECONDS)
+            .readTimeout(connectTimeOutSec, TimeUnit.SECONDS)
+            .connectTimeout(connectTimeOutSec, TimeUnit.SECONDS)
             .addInterceptor(loggingInterceptor)
             .addInterceptor(
                 object : Interceptor {
                     @Throws(IOException::class)
                     override fun intercept(chain: Interceptor.Chain): Response = with(chain) {
-                        val newRequest = request().newBuilder()
-                            .addHeader(
-                                "Authorization",
-                                "Bearer ${GptToken.token}"
-                            )
-                            .addHeader("Content-Type", "application/json")
-                            .build()
-                        proceed(newRequest)
+                        try {
+                            val newRequest = request().newBuilder()
+                                .addHeader(
+                                    "Authorization",
+                                    "Bearer ${GptToken.token}"
+                                )
+                                .addHeader("Content-Type", "application/json")
+                                .build()
+                            proceed(newRequest)
+                        } catch (e: Exception) {
+                            proceed(request())
+                        }
                     }
                 }
             )

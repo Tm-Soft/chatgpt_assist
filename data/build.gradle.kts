@@ -40,6 +40,7 @@ dependencies {
     implementation(project(":util"))
 
     implementation(Dep.AndroidX.core)
+    implementation(Dep.coroutine)
 
     testImplementation(Dep.Test.junit)
     androidTestImplementation(Dep.Test.junitExt)

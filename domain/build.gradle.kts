@@ -18,4 +18,6 @@ tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach 
 
 dependencies {
     testImplementation(Dep.Test.junit)
+
+    implementation(Dep.coroutine)
 }

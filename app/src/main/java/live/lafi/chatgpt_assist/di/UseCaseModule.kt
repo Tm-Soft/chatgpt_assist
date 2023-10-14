@@ -4,7 +4,10 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import live.lafi.domain.repository.ChatGptRepository
 import live.lafi.domain.repository.LocalSettingRepository
+import live.lafi.domain.usecase.chat_gpt.PostChatCompletionsUseCase
+import live.lafi.domain.usecase.local_setting.LoadChatGptTokenFlowUseCase
 import live.lafi.domain.usecase.local_setting.LoadChatGptTokenUseCase
 import live.lafi.domain.usecase.local_setting.SaveChatGptTokenUseCase
 import javax.inject.Singleton
@@ -19,4 +22,12 @@ object UseCaseModule {
     @Provides
     @Singleton
     fun provideLoadChatGptTokenUseCase(localSettingRepository: LocalSettingRepository) = LoadChatGptTokenUseCase(localSettingRepository)
+
+    @Provides
+    @Singleton
+    fun provideLoadChatGptTokenFlowUseCase(localSettingRepository: LocalSettingRepository) = LoadChatGptTokenFlowUseCase(localSettingRepository)
+
+    @Provides
+    @Singleton
+    fun providePostChatCompletionsUseCase(chatGptRepository: ChatGptRepository) = PostChatCompletionsUseCase(chatGptRepository)
 }
