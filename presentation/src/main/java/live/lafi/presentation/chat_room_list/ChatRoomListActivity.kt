@@ -43,7 +43,7 @@ class ChatRoomListActivity : BaseActivity<ActivityChatRoomListBinding>(R.layout.
 
     private fun initListener() {
         with(binding) {
-            flChatAddButton.setOnClickListener { showEditGptToken() }
+            flChatAddButton.setOnClickListener { showAddChatRoom() }
             flSettingButton.setOnClickListener {
                 startActivity(
                     Intent(this@ChatRoomListActivity, SettingActivity::class.java)
@@ -61,7 +61,7 @@ class ChatRoomListActivity : BaseActivity<ActivityChatRoomListBinding>(R.layout.
         }
     }
 
-    private fun showEditGptToken() {
+    private fun showAddChatRoom() {
         Dialog.with(this@ChatRoomListActivity)
             .title("챗봇 이름 입력")
             .content("")
