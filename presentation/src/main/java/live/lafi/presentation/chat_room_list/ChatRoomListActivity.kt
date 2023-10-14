@@ -1,6 +1,7 @@
 package live.lafi.presentation.chat_room_list
 
 import android.os.Bundle
+import android.text.method.ScrollingMovementMethod
 import androidx.activity.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import live.lafi.library_dialog.Dialog
@@ -21,16 +22,35 @@ class ChatRoomListActivity : BaseActivity<ActivityChatRoomListBinding>(R.layout.
     }
 
     private fun setupUi() {
-
+        with(binding) {
+            tvResponseMessage.movementMethod = ScrollingMovementMethod()
+        }
     }
 
     private fun subscribeUi() {
-
+        with(viewModel) {
+            onLoading.observe(this@ChatRoomListActivity) { isLoading ->
+                binding.etSendMessage.isEnabled = !isLoading
+                binding.btSend.isEnabled = !isLoading
+            }
+            responseMessage.observe(this@ChatRoomListActivity) { message ->
+                binding.tvResponseMessage.text = message
+            }
+        }
     }
 
     private fun initListener() {
         with(binding) {
             flChatAddButton.setOnClickListener { showEditGptToken() }
+            btSend.setOnClickListener {
+                if (!binding.etSendMessage.text.isNullOrEmpty()) {
+                    viewModel.postChatGptMessage(
+                        binding.etSendMessage.text.toString()
+                    )
+
+                    binding.etSendMessage.text.clear()
+                }
+            }
         }
     }
 

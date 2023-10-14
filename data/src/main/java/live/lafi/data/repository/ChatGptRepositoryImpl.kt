@@ -36,7 +36,8 @@ class ChatGptRepositoryImpl @Inject constructor(
             when(apiResult) {
                 is ApiResult.Success -> ApiResult.Success(ChatGptMapper.mapperToCompletionData(apiResult.data))
                 is ApiResult.Fail -> apiResult
-                is ApiResult.Loading -> ApiResult.Loading
+                is ApiResult.LoadingStart -> ApiResult.LoadingStart
+                is ApiResult.LoadingEnd -> ApiResult.LoadingEnd
             }
         }
 }

@@ -52,6 +52,25 @@
 
         </com.google.android.material.appbar.AppBarLayout>
 
+        <TextView
+            android:id="@+id/tv_response_message"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+
+        <EditText
+            android:id="@+id/et_send_message"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:hint="테스트 명령어를 입력 해주세요."/>
+
+        <Button
+            android:id="@+id/bt_send"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:text="전송"/>
+
     </LinearLayout>
 
 </layout>
