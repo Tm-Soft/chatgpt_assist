@@ -91,14 +91,18 @@ object RetrofitModule {
                 object : Interceptor {
                     @Throws(IOException::class)
                     override fun intercept(chain: Interceptor.Chain): Response = with(chain) {
-                        val newRequest = request().newBuilder()
-                            .addHeader(
-                                "Authorization",
-                                "Bearer ${GptToken.token}"
-                            )
-                            .addHeader("Content-Type", "application/json")
-                            .build()
-                        proceed(newRequest)
+                        try {
+                            val newRequest = request().newBuilder()
+                                .addHeader(
+                                    "Authorization",
+                                    "Bearer ${GptToken.token}"
+                                )
+                                .addHeader("Content-Type", "application/json")
+                                .build()
+                            proceed(newRequest)
+                        } catch (e: Exception) {
+                            proceed(request())
+                        }
                     }
                 }
             )

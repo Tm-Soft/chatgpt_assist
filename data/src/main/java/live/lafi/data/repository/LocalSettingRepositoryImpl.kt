@@ -36,7 +36,14 @@ class LocalSettingRepositoryImpl @Inject constructor(
             preferences[CHAT_GPT_TOKEN] ?: ""
         }
 
-    override suspend fun getChatGPtToken() = getChatGpt.first()
+    override suspend fun getChatGptToken() = getChatGpt.first()
+
+    override suspend fun getChatGptTokenFlow(): Flow<String> {
+        return context.dataStore.data
+            .map { preferences ->
+                preferences[CHAT_GPT_TOKEN] ?: ""
+            }
+    }
 
     override suspend fun updateChatGptToken(token: String) {
         context.dataStore.edit { preferences ->

@@ -3,12 +3,8 @@ package live.lafi.presentation.chat_room_list
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import live.lafi.domain.ApiResult.LoadingStart.onError
 import live.lafi.domain.ApiResult.LoadingStart.onException
 import live.lafi.domain.ApiResult.LoadingStart.onLoadingEnd
@@ -18,13 +14,11 @@ import live.lafi.domain.usecase.chat_gpt.PostChatCompletionsUseCase
 import live.lafi.domain.usecase.local_setting.SaveChatGptTokenUseCase
 import live.lafi.presentation.base.BaseViewModel
 import live.lafi.util.ext.SingleLiveEvent
-import live.lafi.util.public_model.GptToken
 import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
 class ChatRoomListViewModel @Inject constructor(
-    private val saveChatGptTokenUseCase: SaveChatGptTokenUseCase,
     private val postChatCompletionsUseCase: PostChatCompletionsUseCase
 ) : BaseViewModel() {
     private val _onLoading = SingleLiveEvent<Boolean>()
@@ -32,21 +26,6 @@ class ChatRoomListViewModel @Inject constructor(
 
     private val _responseMessage = MutableLiveData<String>()
     val responseMessage: LiveData<String> get() = _responseMessage
-
-    fun updateChatGptToken(
-        token: String,
-        success: () -> Unit
-    ) {
-        scopeIO.launch {
-            GptToken.editToken(token)
-            saveChatGptTokenUseCase(token)
-            withContext(Dispatchers.Main) {
-                withContext(Dispatchers.Main) {
-                    success.invoke()
-                }
-            }
-        }
-    }
 
     fun postChatGptMessage(message: String) {
         scopeIO.launch {
