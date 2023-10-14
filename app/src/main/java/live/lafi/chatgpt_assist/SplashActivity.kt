@@ -1,5 +1,6 @@
-package live.lafi.chatgpt_assist.ui.main
+package live.lafi.chatgpt_assist
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -11,14 +12,13 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import live.lafi.chatgpt_assist.R
 import live.lafi.chatgpt_assist.base.BaseActivity
 import live.lafi.chatgpt_assist.databinding.ActivityMainBinding
+import live.lafi.presentation.chat_room_list.ChatRoomListActivity
 
 @AndroidEntryPoint
-class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
-    override val TAG: String = MainActivity::class.java.simpleName
-    private val mainViewModel: MainViewModel by viewModels()
+class SplashActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
+    private val splashViewModel: SplashViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,6 +30,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
         //initAdMob()
         //mainViewModel.testScope1()
         //mainViewModel.testScope2()
+
+        startActivity(
+            Intent(this@SplashActivity, ChatRoomListActivity::class.java)
+        )
     }
 
     private fun setupUi() {
@@ -40,27 +44,27 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
     }
 
     private fun subscribeUi() {
-        with(mainViewModel) {
+        with(splashViewModel) {
         }
     }
 
     private fun initListener() {
         with(binding) {
             tvTextFirst.setOnClickListener {
-                mainViewModel.updateChatGptToken("")
+                splashViewModel.updateChatGptToken("")
             }
 
             tvTextSecond.setOnClickListener {
-                mainViewModel.postChatGpt()
+                splashViewModel.postChatGpt()
             }
         }
     }
 
     private fun initData() {
         lifecycleScope.launch(Dispatchers.IO) {
-            val token = mainViewModel.setupChatGptToken()
+            val token = splashViewModel.setupChatGptToken()
             withContext(Dispatchers.Main) {
-                showToast("곰방와 $token")
+                showToast("설정 토큰 : $token")
             }
         }
     }
@@ -78,7 +82,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
 
                 override fun onAdLoaded(interstitialAd: InterstitialAd) {
                     showToast("광고 불러오기 성공")
-                    interstitialAd.show(this@MainActivity)
+                    interstitialAd.show(this@SplashActivity)
                 }
             }
         )

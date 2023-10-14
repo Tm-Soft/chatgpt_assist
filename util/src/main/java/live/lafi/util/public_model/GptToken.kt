@@ -1,4 +1,4 @@
-package live.lafi.chatgpt_assist.di
+package live.lafi.util.public_model
 
 /**
  * OkHttp3 에 ChatGpt 토큰을 전달하기 위한 싱글톤 클래스.
@@ -8,6 +8,6 @@ package live.lafi.chatgpt_assist.di
 object GptToken {
     var token = ""
     fun editToken(token: String) {
-        this.token = token
+        GptToken.token = token
     }
 }

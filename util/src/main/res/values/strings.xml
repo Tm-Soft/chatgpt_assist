@@ -1,0 +1,25 @@
+<resources>
+    <string name="dialog_title_text_default">알림</string>
+    <string name="dialog_content_text_default">내용 없음</string>
+    <string name="dialog_positive_text_default">닫기</string>
+    <string name="dialog_negative_text_default">취소</string>
+    <string name="dialog_image_text_default">사진 가져오기</string>
+    <string name="dialog_video_text_default">동영상 가져오기</string>
+
+    <string name="text_cancel_under_line"><u>취소</u></string>
+
+    <string-array name="certify_info_type_list">
+        <item>수상 경력</item>
+        <item>자격증</item>
+        <item>코칭 경력</item>
+        <item>기타</item>
+    </string-array>
+
+    <string-array name="certify_info_type_explain_list">
+        <item>대회,경연등에서 수상한 트로피나 순위</item>
+        <item>국가 자격증 및 코칭에 유관한 자격사항</item>
+        <item>활동 햇수(~년) 및 유명인 코칭 경력,\n회원 후기 등 코칭 경력으로 인정할 만한 사항</item>
+        <item>위 유형에 해당하지 않지만 필히 첨부해야할 사항</item>
+    </string-array>
+
+</resources>

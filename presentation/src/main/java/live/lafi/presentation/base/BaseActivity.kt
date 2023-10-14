@@ -1,4 +1,4 @@
-package live.lafi.chatgpt_assist.base
+package live.lafi.presentation.base
 
 import android.os.Bundle
 import android.widget.Toast

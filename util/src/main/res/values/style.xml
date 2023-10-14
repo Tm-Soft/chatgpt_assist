@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <style name="AppTheme.Picker" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:textColorPrimary">@color/gray_50</item>
+        <item name="colorControlNormal">@color/gray_30</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="EdittextTheme" parent="Widget.AppCompat.EditText">
+        <item name="android:textColor"> @color/gray_50</item>
+        <item name="android:textColorHint"> @color/gray_30</item>
+        <item name="android:textSize" tools:ignore="SpUsage">14dp</item>
+        <item name="colorAccent">@color/gray_50</item>
+    </style>
+
+</resources>

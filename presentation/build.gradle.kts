@@ -1,5 +1,6 @@
 plugins {
-    id("com.android.application")
+    id("com.android.library")
+    //id("org.jetbrains.kotlin.android")
     id("com.google.dagger.hilt.android")
 
     kotlin("android")
@@ -7,18 +8,16 @@ plugins {
 }
 
 android {
-    namespace = "live.lafi.chatgpt_assist"
-    compileSdk = Version.compileSdk
+    namespace = "live.lafi.presentation"
+    compileSdk = 33
 
     defaultConfig {
-        applicationId = "live.lafi.chatgpt_assist"
-        minSdk = Version.minSdk
-        targetSdk = Version.targetSdk
-        versionCode = Version.versionCode
-        versionName = Version.versionName
+        minSdk = 24
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles("consumer-rules.pro")
     }
+
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -43,9 +42,7 @@ android {
 }
 
 dependencies {
-    implementation(project(":presentation"))
     implementation(project(":domain"))
-    implementation(project(":data"))
     implementation(project(":util"))
 
     implementation(Dep.AndroidX.core)
@@ -54,9 +51,6 @@ dependencies {
     implementation(Dep.AndroidX.constraintLayout)
     implementation(Dep.AndroidX.activity)
     implementation(Dep.AndroidX.fragment)
-    implementation("androidx.appcompat:appcompat:1.6.1")
-    implementation("com.google.android.material:material:1.9.0")
-    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
 
     testImplementation(Dep.Test.junit)
     androidTestImplementation(Dep.Test.junitExt)

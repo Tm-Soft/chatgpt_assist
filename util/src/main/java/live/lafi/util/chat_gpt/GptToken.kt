@@ -1,8 +1,8 @@
-package live.lafi.util
+package live.lafi.util.chat_gpt
 
 import com.knuddels.jtokkit.Encodings
 import com.knuddels.jtokkit.api.ModelType
-import live.lafi.util.model.ChatGptMessage
+import live.lafi.util.chat_gpt.model.ChatGptMessage
 import timber.log.Timber
 
 object GetGptToken {
@@ -28,7 +28,7 @@ object GetGptToken {
             }
 
             else -> {
-            throw IllegalArgumentException("Unsupported model: " + modelType)
+                throw IllegalArgumentException("Unsupported model: " + modelType)
             }
         }
         Timber.tag("test__").d("내부 시작")
