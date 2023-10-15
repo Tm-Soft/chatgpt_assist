@@ -62,12 +62,7 @@ class SplashActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main)
     }
 
     private fun initData() {
-        lifecycleScope.launch(Dispatchers.IO) {
-            val token = splashViewModel.setupChatGptToken()
-            withContext(Dispatchers.Main) {
-                showToast("설정 토큰 : $token")
-            }
-        }
+        splashViewModel.setupChatGptToken()
     }
 
     private fun initAdMob() {

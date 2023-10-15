@@ -1,6 +1,9 @@
 package live.lafi.data.repository
 
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import live.lafi.data.handleFlowApi
 import live.lafi.data.mapper.ChatGptMapper
@@ -16,21 +19,21 @@ import javax.inject.Inject
 class ChatGptRepositoryImpl @Inject constructor(
     private val service: OpenaiApi
 ): ChatGptRepository {
-    override fun postChatCompletions(
+    override suspend fun postChatCompletions(
         sendMessage: String
     ): Flow<ApiResult<CompletionData>> =
         handleFlowApi {
             service.getCompletion(
                 CompletionRequest(
-                        model = "gpt-3.5-turbo",
-                        temperature = 0.9,
-                        messages = listOf(
-                            ChatGptMessage(
-                                "user",
-                                sendMessage
-                            )
+                    model = "gpt-3.5-turbo-16k",
+                    temperature = 0.8,
+                    messages = listOf(
+                        ChatGptMessage(
+                            "user",
+                            sendMessage
                         )
                     )
+                )
             )
         }.map { apiResult ->
             when(apiResult) {

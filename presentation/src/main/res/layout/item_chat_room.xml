@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="?attr/selectableItemBackground">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            app:cardCornerRadius="15dp"
+            app:cardElevation="0dp">
+
+            <ImageView
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                android:background="@color/gray_20"
+                android:foreground="@drawable/ic_baseline_person_24"
+                android:foregroundTint="@color/white"/>
+
+        </androidx.cardview.widget.CardView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_marginStart="10dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp">
+
+
+            <TextView
+                android:id="@+id/chat_room_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="GPT 비서"
+                android:textStyle="bold"
+                android:textSize="15dp"
+                android:maxLines="1"
+                android:layout_marginBottom="5dp"/>
+
+
+            <TextView
+                android:id="@+id/textView_question"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/chat_content_right_text"
+                android:padding="5dp"
+                android:layout_marginBottom="5dp"
+                android:maxLines="2"
+                android:ellipsize="end"
+                android:textColor="@color/black"
+                android:text="로또 번호 알려줄래? 아리까아리까아리까아리까아리까아리까아리까"/>
+
+            <TextView
+                android:id="@+id/textView_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/gray_40"
+                android:text="GPT 답장 내용"
+                android:maxLines="5"
+                android:ellipsize="end"/>
+
+        </LinearLayout>
+
+        <FrameLayout
+            android:id="@+id/layout_new_icon"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:background="@drawable/ic_baseline_circle_24"
+            android:backgroundTint="@color/chat_count_icon_red"
+            android:layout_gravity="center_vertical|end|top"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="N"
+                android:textColor="@color/white"
+                android:layout_gravity="center"
+                android:textSize="11dp"/>
+
+        </FrameLayout>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#E8E8E8"/>
+</LinearLayout >
