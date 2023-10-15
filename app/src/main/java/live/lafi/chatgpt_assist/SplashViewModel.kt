@@ -23,12 +23,13 @@ class SplashViewModel @Inject constructor(
     private val saveChatGptTokenUseCase: SaveChatGptTokenUseCase,
     private val loadChatGptTokenUseCase: LoadChatGptTokenUseCase
 ): BaseViewModel() {
-    suspend fun setupChatGptToken(): String {
-        val token = loadChatGptTokenUseCase()
-        if (token.isNotEmpty()) {
-            GptToken.editToken(token)
+    fun setupChatGptToken() {
+        scopeIO.launch {
+            val token = loadChatGptTokenUseCase()
+            if (token.isNotEmpty()) {
+                GptToken.editToken(token)
+            }
         }
-        return token
     }
 
     fun updateChatGptToken(token: String) {

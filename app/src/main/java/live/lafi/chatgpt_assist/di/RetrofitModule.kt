@@ -34,21 +34,6 @@ object RetrofitModule {
 
     @Provides
     @Singleton
-    fun provideHeaderInterceptor(): Interceptor {
-        return object : Interceptor {
-            @Throws(IOException::class)
-            override fun intercept(chain: Interceptor.Chain): Response = with(chain) {
-                val newRequest = request().newBuilder()
-                    .addHeader("Authorization", "Bearer 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")
-                    .addHeader("Content-Type", "application/json")
-                    .build()
-                proceed(newRequest)
-            }
-        }
-    }
-
-    @Provides
-    @Singleton
     fun provideOkHttpClient(): OkHttpClient {
         val connectTimeOutSec = (60).toLong()
         val readTimeOutSec = (120).toLong()
@@ -85,19 +70,20 @@ object RetrofitModule {
 
         return OkHttpClient.Builder()
             .readTimeout(connectTimeOutSec, TimeUnit.SECONDS)
-            .connectTimeout(connectTimeOutSec, TimeUnit.SECONDS)
+            .connectTimeout(readTimeOutSec, TimeUnit.SECONDS)
             .addInterceptor(loggingInterceptor)
             .addInterceptor(
                 object : Interceptor {
                     @Throws(IOException::class)
                     override fun intercept(chain: Interceptor.Chain): Response = with(chain) {
                         try {
-                            val newRequest = request().newBuilder()
+                            val newRequest =request()
+                                .newBuilder()
+                                .addHeader("Content-Type", "application/json")
                                 .addHeader(
                                     "Authorization",
                                     "Bearer ${GptToken.token}"
                                 )
-                                .addHeader("Content-Type", "application/json")
                                 .build()
                             proceed(newRequest)
                         } catch (e: Exception) {

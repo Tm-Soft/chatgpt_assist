@@ -6,7 +6,7 @@ import live.lafi.domain.model.chat_gpt.CompletionData
 import live.lafi.domain.repository.ChatGptRepository
 
 class PostChatCompletionsUseCase(private val chatGptRepository: ChatGptRepository) {
-    operator fun invoke(
+    suspend operator fun invoke(
         sendMessage: String
     ): Flow<ApiResult<CompletionData>> = chatGptRepository.postChatCompletions(sendMessage = sendMessage)
 }

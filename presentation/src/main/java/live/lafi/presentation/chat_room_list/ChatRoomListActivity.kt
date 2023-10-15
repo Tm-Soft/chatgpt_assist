@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.method.ScrollingMovementMethod
 import androidx.activity.viewModels
+import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import live.lafi.library_dialog.Dialog
 import live.lafi.presentation.R
@@ -15,29 +16,113 @@ import live.lafi.presentation.setting.SettingActivity
 class ChatRoomListActivity : BaseActivity<ActivityChatRoomListBinding>(R.layout.activity_chat_room_list) {
     private val viewModel: ChatRoomListViewModel by viewModels()
 
+    private val chatRoomListAdapter by lazy { ChatRoomListAdapter() }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setupUi()
         subscribeUi()
         initListener()
+
+        chatRoomListAdapter.submitList(
+            listOf(
+                ChatRoomInfo(
+                    chatRoomSrl = 1L,
+                    title = "챗봇이냐옹",
+                    question = "물어보고 싶네요",
+                    content = "무엇을용?",
+                    profileUri = "",
+                    lastViewDate = 0L,
+                    lastUpdate = 0L
+                ),
+                ChatRoomInfo(
+                    chatRoomSrl = 2L,
+                    title = "챗봇이냐옹",
+                    question = "물어보고 싶네요",
+                    content = "무엇을용?",
+                    profileUri = "",
+                    lastViewDate = 0L,
+                    lastUpdate = 0L
+                ),
+                ChatRoomInfo(
+                    chatRoomSrl = 3L,
+                    title = "챗봇이냐옹",
+                    question = "물어보고 싶네요",
+                    content = "무엇을용?",
+                    profileUri = "",
+                    lastViewDate = 0L,
+                    lastUpdate = 0L
+                ),
+                ChatRoomInfo(
+                    chatRoomSrl = 4L,
+                    title = "챗봇이냐옹",
+                    question = "물어보고 싶네요",
+                    content = "무엇을용?",
+                    profileUri = "",
+                    lastViewDate = 0L,
+                    lastUpdate = 0L
+                ),
+                ChatRoomInfo(
+                    chatRoomSrl = 5L,
+                    title = "챗봇이냐옹",
+                    question = "물어보고 싶네요",
+                    content = "무엇을용?",
+                    profileUri = "",
+                    lastViewDate = 0L,
+                    lastUpdate = 0L
+                ),
+                ChatRoomInfo(
+                    chatRoomSrl = 6L,
+                    title = "챗봇이냐옹",
+                    question = "물어보고 싶네요",
+                    content = "무엇을용?",
+                    profileUri = "",
+                    lastViewDate = 0L,
+                    lastUpdate = 0L
+                ),
+                ChatRoomInfo(
+                    chatRoomSrl = 7L,
+                    title = "챗봇이냐옹",
+                    question = "물어보고 싶네요",
+                    content = "무엇을용?",
+                    profileUri = "",
+                    lastViewDate = 0L,
+                    lastUpdate = 0L
+                ),
+                ChatRoomInfo(
+                    chatRoomSrl = 8L,
+                    title = "챗봇이냐옹",
+                    question = "물어보고 싶네요",
+                    content = "무엇을용?",
+                    profileUri = "",
+                    lastViewDate = 0L,
+                    lastUpdate = 0L
+                ),
+                ChatRoomInfo(
+                    chatRoomSrl = 9L,
+                    title = "챗봇이냐옹",
+                    question = "물어보고 싶네요",
+                    content = "무엇을용?",
+                    profileUri = "",
+                    lastViewDate = 0L,
+                    lastUpdate = 0L
+                )
+            )
+        )
     }
 
     private fun setupUi() {
         with(binding) {
-            tvResponseMessage.movementMethod = ScrollingMovementMethod()
+            rvChatRoomList.apply {
+                adapter = chatRoomListAdapter
+                layoutManager = LinearLayoutManager(this@ChatRoomListActivity, LinearLayoutManager.VERTICAL, false)
+            }
         }
     }
 
     private fun subscribeUi() {
         with(viewModel) {
-            onLoading.observe(this@ChatRoomListActivity) { isLoading ->
-                binding.etSendMessage.isEnabled = !isLoading
-                binding.btSend.isEnabled = !isLoading
-            }
-            responseMessage.observe(this@ChatRoomListActivity) { message ->
-                binding.tvResponseMessage.text = message
-            }
         }
     }
 
@@ -49,15 +134,10 @@ class ChatRoomListActivity : BaseActivity<ActivityChatRoomListBinding>(R.layout.
                     Intent(this@ChatRoomListActivity, SettingActivity::class.java)
                 )
             }
-            btSend.setOnClickListener {
-                if (!binding.etSendMessage.text.isNullOrEmpty()) {
-                    viewModel.postChatGptMessage(
-                        binding.etSendMessage.text.toString()
-                    )
+        }
 
-                    binding.etSendMessage.text.clear()
-                }
-            }
+        chatRoomListAdapter.setOnClickListener {
+            showToast("안녕 클릭 : $it")
         }
     }
 

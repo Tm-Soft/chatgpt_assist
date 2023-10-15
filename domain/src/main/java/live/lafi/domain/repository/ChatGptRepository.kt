@@ -5,7 +5,7 @@ import live.lafi.domain.ApiResult
 import live.lafi.domain.model.chat_gpt.CompletionData
 
 interface ChatGptRepository {
-    fun postChatCompletions(
+    suspend fun postChatCompletions(
         sendMessage: String
     ): Flow<ApiResult<CompletionData>>
 }
