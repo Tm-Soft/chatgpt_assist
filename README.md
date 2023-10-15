@@ -38,9 +38,6 @@ https://openai.com ChatGPT API를 이용한 어플리케이션 입니다.
 - **design pattern MVP/VM WhatEver**
   - View와 ViewModel은 1:1 관계를 Default로 유지합니다.
   - 필요에 따라서 View와 ViewModel은 N:1 관계가 유지 될 수 있습니다. (ex:: Fragment) 
- 
-- **BuildSrc**
-  - Kotlin-dsl를 사용하고 있으며 여러 모듈의 gradle를 BuildSrc를 통해 일관성 있게 관리하고 있습니다.
 
 - **Local Lite SQL Room & Flow**
   - Room의 데이터를 Flow를 통해 UI에 전달할 수 있습니다.
@@ -49,6 +46,9 @@ https://openai.com ChatGPT API를 이용한 어플리케이션 입니다.
 - **Services**
   - Services를 이용하여, 독립적인 LifeCycle을 이용하여, 백그라운드에서 ChatGPT의 Reqeust 담당합니다.
   - 유저에게 보이는 화면과 상관 없이 서버의 Reqeust는 항시 유지 될 수 있습니다.
+ 
+- **BuildSrc**
+  - Kotlin-dsl를 사용하고 있으며 여러 모듈의 gradle를 BuildSrc를 통해 일관성 있게 관리하고 있습니다.
 
 ---
 ### 실력 향상을 위한 프로젝트 입니다.
