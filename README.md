@@ -15,8 +15,11 @@ https://openai.com ChatGPT API를 이용한 어플리케이션 입니다.
     
 - **ChatGPT API Token Maxium**
   - API Token Maxium 4096에 맞게 대화 내역을 GPT에게 전송하여 이어지는 대화를 ChatGPT와 나눌 수 있습니다.
-  - API Token Maxium은 설정에서 1000 - 4096 사이로 설정 하여 Local에 저장합니다.
+  - API Token Maxium은 설정에서 1000 - 16000 사이로 설정 하여 Local에 저장합니다.
+  - Maximum 값에 따라 [gpt3.5 turbo] or [gpt3.5 turbo-16k] 분기하여 사용 됩니다.
+  - 만약 최대 값이 16000이고, 전송하고 반환 받는 token이 4096 이하이면 [gpt3.5 turbo]를 사용하고 그 이상이면 [gpt3.5 turbo-16k]를 사용합니다.
   - https://github.com/knuddelsgmbh/jtokkit 를 사용하여 구현 하였습니다.
+  
 
 - **백그라운드에서 ChatGPT에게 전송한 대화 내역을 ChatGPT를 통해 요약 합니다.**
   - 앱 내에서 On/Off로 설정 가능하며, 일정 Token 이상의 대화 내용을 ChatGPT를 이용하여 요약합니다.
