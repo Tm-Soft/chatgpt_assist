@@ -1,6 +1,7 @@
 package live.lafi.presentation.setting
 
 import android.os.Bundle
+import android.widget.SeekBar
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
@@ -38,7 +39,7 @@ class SettingActivity : BaseActivity<ActivitySettingBinding>(R.layout.activity_s
                     }
                     binding.tvTokenAlready.text = viewToken
                 } else {
-                    binding.tvTokenAlready.text = "X 설정 된 API Token이 없습니다."
+                    binding.tvTokenAlready.text = "Open AI - Api Key 가 존재하지 않습니다"
                 }
             }
         }
@@ -57,6 +58,29 @@ class SettingActivity : BaseActivity<ActivitySettingBinding>(R.layout.activity_s
             }
             btnTokenModify.setOnClickListener {
                 showEditGptToken()
+            }
+            seekBarMaxToken.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+                override fun onProgressChanged(
+                    seekBar: SeekBar?,
+                    progress: Int,
+                    fromUser: Boolean
+                ) {
+                    tvMaxTokenText.text = "${progress} 토큰"
+                }
+                override fun onStartTrackingTouch(seekBar: SeekBar?) {
+                }
+                override fun onStopTrackingTouch(seekBar: SeekBar?) {
+                    showToast("저장 : ${seekBar?.progress}")
+                }
+            })
+            expTokenInfo.parentLayout.setOnClickListener {
+                expTokenInfo.expand()
+            }
+            expTokenInfo.secondLayout.setOnClickListener {
+                expTokenInfo.collapse()
+            }
+
+            expTokenInfo.apply {
             }
         }
     }

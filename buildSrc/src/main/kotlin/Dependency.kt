@@ -73,4 +73,8 @@ object Dep {
     object Gpt {
         const val jtokkit = "com.knuddels:jtokkit:0.6.1"
     }
+    // https://github.com/skydoves/ExpandableLayout
+    object ExpandableLayout {
+        const val expandableLayout = "com.github.skydoves:expandablelayout:1.0.7"
+    }
 }

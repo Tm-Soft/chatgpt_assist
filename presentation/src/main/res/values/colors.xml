@@ -2,4 +2,648 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="primary_blue">#66387DF7</color>
+
+    <!-- Category Colors -->
+    <color name="palette_green100">#FF13BD7E</color>
+    <color name="palette_green100_90p">#E613BD7E</color>
+    <color name="palette_green100_70p">#B313BD7E</color>
+    <color name="palette_green100_50p">#8013BD7E</color>
+    <color name="palette_green100_30p">#4A13BD7E</color>
+    <color name="palette_green100_15p">#2613BD7E</color>
+    <color name="palette_green100_00p">#0013BD7E</color>
+
+    <color name="palette_green200">#FF09A56F</color>
+    <color name="palette_green200_90p">#E609A56F</color>
+    <color name="palette_green200_70p">#B309A56F</color>
+    <color name="palette_green200_50p">#8009A56F</color>
+    <color name="palette_green200_30p">#4A09A56F</color>
+    <color name="palette_green200_15p">#2609A56F</color>
+    <color name="palette_green200_00p">#0009A56F</color>
+
+    <color name="palette_green300">#FF009960</color>
+    <color name="palette_green300_90p">#E6009960</color>
+    <color name="palette_green300_70p">#B3009960</color>
+    <color name="palette_green300_50p">#80009960</color>
+    <color name="palette_green300_30p">#4A009960</color>
+    <color name="palette_green300_15p">#26009960</color>
+    <color name="palette_green300_00p">#00009960</color>
+
+    <color name="palette_green400">#FF008A57</color>
+    <color name="palette_green400_90p">#E6008A57</color>
+    <color name="palette_green400_70p">#B3008A57</color>
+    <color name="palette_green400_50p">#80008A57</color>
+    <color name="palette_green400_30p">#4A008A57</color>
+    <color name="palette_green400_15p">#26008A57</color>
+    <color name="palette_green400_00p">#00008A57</color>
+
+    <color name="palette_mint100">#FF0FC9BA</color>
+    <color name="palette_mint100_90p">#E60FC9BA</color>
+    <color name="palette_mint100_70p">#B30FC9BA</color>
+    <color name="palette_mint100_50p">#800FC9BA</color>
+    <color name="palette_mint100_30p">#4A0FC9BA</color>
+    <color name="palette_mint100_15p">#260FC9BA</color>
+    <color name="palette_mint100_00p">#000FC9BA</color>
+
+    <color name="palette_mint200">#FF09BAAB</color>
+    <color name="palette_mint200_90p">#E609BAAB</color>
+    <color name="palette_mint200_70p">#B309BAAB</color>
+    <color name="palette_mint200_50p">#8009BAAB</color>
+    <color name="palette_mint200_30p">#4A09BAAB</color>
+    <color name="palette_mint200_15p">#2609BAAB</color>
+    <color name="palette_mint200_00p">#0009BAAB</color>
+
+    <color name="palette_mint300">#FF05AB9D</color>
+    <color name="palette_mint300_90p">#E605AB9D</color>
+    <color name="palette_mint300_70p">#B305AB9D</color>
+    <color name="palette_mint300_50p">#8005AB9D</color>
+    <color name="palette_mint300_30p">#4A05AB9D</color>
+    <color name="palette_mint300_15p">#2605AB9D</color>
+    <color name="palette_mint300_00p">#0005AB9D</color>
+
+    <color name="palette_mint400">#FF009C8F</color>
+    <color name="palette_mint400_90p">#E6009C8F</color>
+    <color name="palette_mint400_70p">#B3009C8F</color>
+    <color name="palette_mint400_50p">#80009C8F</color>
+    <color name="palette_mint400_30p">#4A009C8F</color>
+    <color name="palette_mint400_15p">#26009C8F</color>
+    <color name="palette_mint400_00p">#00009C8F</color>
+
+    <color name="palette_sky100">#FF00BFE0</color>
+    <color name="palette_sky100_90p">#E600BFE0</color>
+    <color name="palette_sky100_70p">#B300BFE0</color>
+    <color name="palette_sky100_50p">#8000BFE0</color>
+    <color name="palette_sky100_30p">#4A00BFE0</color>
+    <color name="palette_sky100_15p">#2600BFE0</color>
+    <color name="palette_sky100_00p">#0000BFE0</color>
+
+    <color name="palette_sky200">#FF00B2D1</color>
+    <color name="palette_sky200_90p">#E600B2D1</color>
+    <color name="palette_sky200_70p">#B300B2D1</color>
+    <color name="palette_sky200_50p">#8000B2D1</color>
+    <color name="palette_sky200_30p">#4A00B2D1</color>
+    <color name="palette_sky200_15p">#2600B2D1</color>
+    <color name="palette_sky200_00p">#0000B2D1</color>
+
+    <color name="palette_sky300">#FF00A5C2</color>
+    <color name="palette_sky300_90p">#E600A5C2</color>
+    <color name="palette_sky300_70p">#B300A5C2</color>
+    <color name="palette_sky300_50p">#8000A5C2</color>
+    <color name="palette_sky300_30p">#4A00A5C2</color>
+    <color name="palette_sky300_15p">#2600A5C2</color>
+    <color name="palette_sky300_00p">#0000A5C2</color>
+
+    <color name="palette_sky400">#FF0098B2</color>
+    <color name="palette_sky400_90p">#E60098B2</color>
+    <color name="palette_sky400_70p">#B30098B2</color>
+    <color name="palette_sky400_50p">#800098B2</color>
+    <color name="palette_sky400_30p">#4A0098B2</color>
+    <color name="palette_sky400_15p">#260098B2</color>
+    <color name="palette_sky400_00p">#000098B2</color>
+
+    <color name="palette_lightblue100">#FF189DF0</color>
+    <color name="palette_lightblue100_90p">#E6189DF0</color>
+    <color name="palette_lightblue100_70p">#B3189DF0</color>
+    <color name="palette_lightblue100_50p">#80189DF0</color>
+    <color name="palette_lightblue100_30p">#4A189DF0</color>
+    <color name="palette_lightblue100_15p">#26189DF0</color>
+    <color name="palette_lightblue100_00p">#00189DF0</color>
+
+    <color name="palette_lightblue200">#FF0F8BD9</color>
+    <color name="palette_lightblue200_90p">#E60F8BD9</color>
+    <color name="palette_lightblue200_70p">#B30F8BD9</color>
+    <color name="palette_lightblue200_50p">#800F8BD9</color>
+    <color name="palette_lightblue200_30p">#4A0F8BD9</color>
+    <color name="palette_lightblue200_15p">#260F8BD9</color>
+    <color name="palette_lightblue200_00p">#000F8BD9</color>
+
+    <color name="palette_lightblue300">#FF087EC7</color>
+    <color name="palette_lightblue300_90p">#E6087EC7</color>
+    <color name="palette_lightblue300_70p">#B3087EC7</color>
+    <color name="palette_lightblue300_50p">#80087EC7</color>
+    <color name="palette_lightblue300_30p">#4A087EC7</color>
+    <color name="palette_lightblue300_15p">#26087EC7</color>
+    <color name="palette_lightblue300_00p">#00087EC7</color>
+
+    <color name="palette_lightblue400">#FF0070B5</color>
+    <color name="palette_lightblue400_90p">#E60070B5</color>
+    <color name="palette_lightblue400_70p">#B30070B5</color>
+    <color name="palette_lightblue400_50p">#800070B5</color>
+    <color name="palette_lightblue400_30p">#4A0070B5</color>
+    <color name="palette_lightblue400_15p">#260070B5</color>
+    <color name="palette_lightblue400_00p">#000070B5</color>
+
+    <color name="palette_deepblue100">#FF4A88E5</color>
+    <color name="palette_deepblue100_90p">#E64A88E5</color>
+    <color name="palette_deepblue100_70p">#B34A88E5</color>
+    <color name="palette_deepblue100_50p">#804A88E5</color>
+    <color name="palette_deepblue100_30p">#4A4A88E5</color>
+    <color name="palette_deepblue100_15p">#264A88E5</color>
+    <color name="palette_deepblue100_00p">#004A88E5</color>
+
+    <color name="palette_deepblue200">#FF3B7AD9</color>
+    <color name="palette_deepblue200_90p">#E63B7AD9</color>
+    <color name="palette_deepblue200_70p">#B33B7AD9</color>
+    <color name="palette_deepblue200_50p">#803B7AD9</color>
+    <color name="palette_deepblue200_30p">#4A3B7AD9</color>
+    <color name="palette_deepblue200_15p">#263B7AD9</color>
+    <color name="palette_deepblue200_00p">#003B7AD9</color>
+
+    <color name="palette_deepblue300">#FF2C6AC7</color>
+    <color name="palette_deepblue300_90p">#E62C6AC7</color>
+    <color name="palette_deepblue300_70p">#B32C6AC7</color>
+    <color name="palette_deepblue300_50p">#802C6AC7</color>
+    <color name="palette_deepblue300_30p">#4A2C6AC7</color>
+    <color name="palette_deepblue300_15p">#262C6AC7</color>
+    <color name="palette_deepblue300_00p">#002C6AC7</color>
+
+    <color name="palette_deepblue400">#FF205DBA</color>
+    <color name="palette_deepblue400_90p">#E6205DBA</color>
+    <color name="palette_deepblue400_70p">#B3205DBA</color>
+    <color name="palette_deepblue400_50p">#80205DBA</color>
+    <color name="palette_deepblue400_30p">#4A205DBA</color>
+    <color name="palette_deepblue400_15p">#26205DBA</color>
+    <color name="palette_deepblue400_00p">#00205DBA</color>
+
+    <color name="palette_indigo100">#FF6478ED</color>
+    <color name="palette_indigo100_90p">#E66478ED</color>
+    <color name="palette_indigo100_70p">#B36478ED</color>
+    <color name="palette_indigo100_50p">#806478ED</color>
+    <color name="palette_indigo100_30p">#4A6478ED</color>
+    <color name="palette_indigo100_15p">#266478ED</color>
+    <color name="palette_indigo100_00p">#006478ED</color>
+
+    <color name="palette_indigo200">#FF5368E0</color>
+    <color name="palette_indigo200_90p">#E65368E0</color>
+    <color name="palette_indigo200_70p">#B35368E0</color>
+    <color name="palette_indigo200_50p">#805368E0</color>
+    <color name="palette_indigo200_30p">#4A5368E0</color>
+    <color name="palette_indigo200_15p">#265368E0</color>
+    <color name="palette_indigo200_00p">#005368E0</color>
+
+    <color name="palette_indigo300">#FF4459D4</color>
+    <color name="palette_indigo300_90p">#E64459D4</color>
+    <color name="palette_indigo300_70p">#B34459D4</color>
+    <color name="palette_indigo300_50p">#804459D4</color>
+    <color name="palette_indigo300_30p">#4A4459D4</color>
+    <color name="palette_indigo300_15p">#264459D4</color>
+    <color name="palette_indigo300_00p">#004459D4</color>
+
+    <color name="palette_indigo400">#FF364BC7</color>
+    <color name="palette_indigo400_90p">#E6364BC7</color>
+    <color name="palette_indigo400_70p">#B3364BC7</color>
+    <color name="palette_indigo400_50p">#80364BC7</color>
+    <color name="palette_indigo400_30p">#4A364BC7</color>
+    <color name="palette_indigo400_15p">#26364BC7</color>
+    <color name="palette_indigo400_00p">#00364BC7</color>
+
+    <color name="palette_violet100">#FF877AF5</color>
+    <color name="palette_violet100_90p">#E6877AF5</color>
+    <color name="palette_violet100_70p">#B3877AF5</color>
+    <color name="palette_violet100_50p">#80877AF5</color>
+    <color name="palette_violet100_30p">#4A877AF5</color>
+    <color name="palette_violet100_15p">#26877AF5</color>
+    <color name="palette_violet100_00p">#00877AF5</color>
+
+    <color name="palette_violet200">#FF7668E8</color>
+    <color name="palette_violet200_90p">#E67668E8</color>
+    <color name="palette_violet200_70p">#B37668E8</color>
+    <color name="palette_violet200_50p">#807668E8</color>
+    <color name="palette_violet200_30p">#4A7668E8</color>
+    <color name="palette_violet200_15p">#267668E8</color>
+    <color name="palette_violet200_00p">#007668E8</color>
+
+    <color name="palette_violet300">#FF6658DB</color>
+    <color name="palette_violet300_90p">#E66658DB</color>
+    <color name="palette_violet300_70p">#B36658DB</color>
+    <color name="palette_violet300_50p">#806658DB</color>
+    <color name="palette_violet300_30p">#4A6658DB</color>
+    <color name="palette_violet300_15p">#266658DB</color>
+    <color name="palette_violet300_00p">#006658DB</color>
+
+    <color name="palette_violet400">#FF5648CF</color>
+    <color name="palette_violet400_90p">#E65648CF</color>
+    <color name="palette_violet400_70p">#B35648CF</color>
+    <color name="palette_violet400_50p">#805648CF</color>
+    <color name="palette_violet400_30p">#4A5648CF</color>
+    <color name="palette_violet400_15p">#265648CF</color>
+    <color name="palette_violet400_00p">#005648CF</color>
+
+    <color name="palette_purple100">#FFA17FF0</color>
+    <color name="palette_purple100_90p">#E6A17FF0</color>
+    <color name="palette_purple100_70p">#B3A17FF0</color>
+    <color name="palette_purple100_50p">#80A17FF0</color>
+    <color name="palette_purple100_30p">#4AA17FF0</color>
+    <color name="palette_purple100_15p">#26A17FF0</color>
+    <color name="palette_purple100_00p">#00A17FF0</color>
+
+    <color name="palette_purple200">#FF926EE5</color>
+    <color name="palette_purple200_90p">#E6926EE5</color>
+    <color name="palette_purple200_70p">#B3926EE5</color>
+    <color name="palette_purple200_50p">#80926EE5</color>
+    <color name="palette_purple200_30p">#4A926EE5</color>
+    <color name="palette_purple200_15p">#26926EE5</color>
+    <color name="palette_purple200_00p">#00926EE5</color>
+
+    <color name="palette_purple300">#FF825CDB</color>
+    <color name="palette_purple300_90p">#E6825CDB</color>
+    <color name="palette_purple300_70p">#B3825CDB</color>
+    <color name="palette_purple300_50p">#80825CDB</color>
+    <color name="palette_purple300_30p">#4A825CDB</color>
+    <color name="palette_purple300_15p">#26825CDB</color>
+    <color name="palette_purple300_00p">#00825CDB</color>
+
+    <color name="palette_purple400">#FF734CCF</color>
+    <color name="palette_purple400_90p">#E6734CCF</color>
+    <color name="palette_purple400_70p">#B3734CCF</color>
+    <color name="palette_purple400_50p">#80734CCF</color>
+    <color name="palette_purple400_30p">#4A734CCF</color>
+    <color name="palette_purple400_15p">#26734CCF</color>
+    <color name="palette_purple400_00p">#00734CCF</color>
+
+    <color name="palette_orchid100">#FFD287ED</color>
+    <color name="palette_orchid100_90p">#E6D287ED</color>
+    <color name="palette_orchid100_70p">#B3D287ED</color>
+    <color name="palette_orchid100_50p">#80D287ED</color>
+    <color name="palette_orchid100_30p">#4AD287ED</color>
+    <color name="palette_orchid100_15p">#26D287ED</color>
+    <color name="palette_orchid100_00p">#00D287ED</color>
+
+    <color name="palette_orchid200">#FFC475E0</color>
+    <color name="palette_orchid200_90p">#E6C475E0</color>
+    <color name="palette_orchid200_70p">#B3C475E0</color>
+    <color name="palette_orchid200_50p">#80C475E0</color>
+    <color name="palette_orchid200_30p">#4AC475E0</color>
+    <color name="palette_orchid200_15p">#26C475E0</color>
+    <color name="palette_orchid200_00p">#00C475E0</color>
+
+    <color name="palette_orchid300">#FFB663D4</color>
+    <color name="palette_orchid300_90p">#E6B663D4</color>
+    <color name="palette_orchid300_70p">#B3B663D4</color>
+    <color name="palette_orchid300_50p">#80B663D4</color>
+    <color name="palette_orchid300_30p">#4AB663D4</color>
+    <color name="palette_orchid300_15p">#26B663D4</color>
+    <color name="palette_orchid300_00p">#00B663D4</color>
+
+    <color name="palette_orchid400">#FFA954C7</color>
+    <color name="palette_orchid400_90p">#E6A954C7</color>
+    <color name="palette_orchid400_70p">#B3A954C7</color>
+    <color name="palette_orchid400_50p">#80A954C7</color>
+    <color name="palette_orchid400_30p">#4AA954C7</color>
+    <color name="palette_orchid400_15p">#26A954C7</color>
+    <color name="palette_orchid400_00p">#00A954C7</color>
+
+    <color name="palette_magenta100">#FFE884C6</color>
+    <color name="palette_magenta100_90p">#E6E884C6</color>
+    <color name="palette_magenta100_70p">#B3E884C6</color>
+    <color name="palette_magenta100_50p">#80E884C6</color>
+    <color name="palette_magenta100_30p">#4AE884C6</color>
+    <color name="palette_magenta100_15p">#26E884C6</color>
+    <color name="palette_magenta100_00p">#00E884C6</color>
+
+    <color name="palette_magenta200">#FFDB72B8</color>
+    <color name="palette_magenta200_90p">#E6DB72B8</color>
+    <color name="palette_magenta200_70p">#B3DB72B8</color>
+    <color name="palette_magenta200_50p">#80DB72B8</color>
+    <color name="palette_magenta200_30p">#4ADB72B8</color>
+    <color name="palette_magenta200_15p">#26DB72B8</color>
+    <color name="palette_magenta200_00p">#00DB72B8</color>
+
+    <color name="palette_magenta300">#FFCF61AA</color>
+    <color name="palette_magenta300_90p">#E6CF61AA</color>
+    <color name="palette_magenta300_70p">#B3CF61AA</color>
+    <color name="palette_magenta300_50p">#80CF61AA</color>
+    <color name="palette_magenta300_30p">#4ACF61AA</color>
+    <color name="palette_magenta300_15p">#26CF61AA</color>
+    <color name="palette_magenta300_00p">#00CF61AA</color>
+
+    <color name="palette_magenta400">#FFC2519C</color>
+    <color name="palette_magenta400_90p">#E6C2519C</color>
+    <color name="palette_magenta400_70p">#B3C2519C</color>
+    <color name="palette_magenta400_50p">#80C2519C</color>
+    <color name="palette_magenta400_30p">#4AC2519C</color>
+    <color name="palette_magenta400_15p">#26C2519C</color>
+    <color name="palette_magenta400_00p">#00C2519C</color>
+
+    <color name="palette_pink100">#FFFF8AAD</color>
+    <color name="palette_pink100_90p">#E6FF8AAD</color>
+    <color name="palette_pink100_70p">#B3FF8AAD</color>
+    <color name="palette_pink100_50p">#80FF8AAD</color>
+    <color name="palette_pink100_30p">#4AFF8AAD</color>
+    <color name="palette_pink100_15p">#26FF8AAD</color>
+    <color name="palette_pink100_00p">#00FF8AAD</color>
+
+    <color name="palette_pink200">#FFF27C9F</color>
+    <color name="palette_pink200_90p">#E6F27C9F</color>
+    <color name="palette_pink200_70p">#B3F27C9F</color>
+    <color name="palette_pink200_50p">#80F27C9F</color>
+    <color name="palette_pink200_30p">#4AF27C9F</color>
+    <color name="palette_pink200_15p">#26F27C9F</color>
+    <color name="palette_pink200_00p">#00F27C9F</color>
+
+    <color name="palette_pink300">#FFE56E92</color>
+    <color name="palette_pink300_90p">#E6E56E92</color>
+    <color name="palette_pink300_70p">#B3E56E92</color>
+    <color name="palette_pink300_50p">#80E56E92</color>
+    <color name="palette_pink300_30p">#4AE56E92</color>
+    <color name="palette_pink300_15p">#26E56E92</color>
+    <color name="palette_pink300_00p">#00E56E92</color>
+
+    <color name="palette_pink400">#FFD96285</color>
+    <color name="palette_pink400_90p">#E6D96285</color>
+    <color name="palette_pink400_70p">#B3D96285</color>
+    <color name="palette_pink400_50p">#80D96285</color>
+    <color name="palette_pink400_30p">#4AD96285</color>
+    <color name="palette_pink400_15p">#26D96285</color>
+    <color name="palette_pink400_00p">#00D96285</color>
+
+    <color name="palette_coral100">#FFFF8D87</color>
+    <color name="palette_coral100_90p">#E6FF8D87</color>
+    <color name="palette_coral100_70p">#B3FF8D87</color>
+    <color name="palette_coral100_50p">#80FF8D87</color>
+    <color name="palette_coral100_30p">#4AFF8D87</color>
+    <color name="palette_coral100_15p">#26FF8D87</color>
+    <color name="palette_coral100_00p">#00FF8D87</color>
+
+    <color name="palette_coral200">#FFF27F79</color>
+    <color name="palette_coral200_90p">#E6F27F79</color>
+    <color name="palette_coral200_70p">#B3F27F79</color>
+    <color name="palette_coral200_50p">#80F27F79</color>
+    <color name="palette_coral200_30p">#4AF27F79</color>
+    <color name="palette_coral200_15p">#26F27F79</color>
+    <color name="palette_coral200_00p">#00F27F79</color>
+
+    <color name="palette_coral300">#FFE8736D</color>
+    <color name="palette_coral300_90p">#E6E8736D</color>
+    <color name="palette_coral300_70p">#B3E8736D</color>
+    <color name="palette_coral300_50p">#80E8736D</color>
+    <color name="palette_coral300_30p">#4AE8736D</color>
+    <color name="palette_coral300_15p">#26E8736D</color>
+    <color name="palette_coral300_00p">#00E8736D</color>
+
+    <color name="palette_coral400">#FFDB6760</color>
+    <color name="palette_coral400_90p">#E6DB6760</color>
+    <color name="palette_coral400_70p">#B3DB6760</color>
+    <color name="palette_coral400_50p">#80DB6760</color>
+    <color name="palette_coral400_30p">#4ADB6760</color>
+    <color name="palette_coral400_15p">#26DB6760</color>
+    <color name="palette_coral400_00p">#00DB6760</color>
+
+    <color name="palette_orange100">#FFFFA166</color>
+    <color name="palette_orange100_90p">#E6FFA166</color>
+    <color name="palette_orange100_70p">#B3FFA166</color>
+    <color name="palette_orange100_50p">#80FFA166</color>
+    <color name="palette_orange100_30p">#4AFFA166</color>
+    <color name="palette_orange100_15p">#26FFA166</color>
+    <color name="palette_orange100_00p">#00FFA166</color>
+
+    <color name="palette_orange200">#FFF5965B</color>
+    <color name="palette_orange200_90p">#E6F5965B</color>
+    <color name="palette_orange200_70p">#B3F5965B</color>
+    <color name="palette_orange200_50p">#80F5965B</color>
+    <color name="palette_orange200_30p">#4AF5965B</color>
+    <color name="palette_orange200_15p">#26F5965B</color>
+    <color name="palette_orange200_00p">#00F5965B</color>
+
+    <color name="palette_orange300">#FFEB8B50</color>
+    <color name="palette_orange300_90p">#E6EB8B50</color>
+    <color name="palette_orange300_70p">#B3EB8B50</color>
+    <color name="palette_orange300_50p">#80EB8B50</color>
+    <color name="palette_orange300_30p">#4AEB8B50</color>
+    <color name="palette_orange300_15p">#26EB8B50</color>
+    <color name="palette_orange300_00p">#00EB8B50</color>
+
+    <color name="palette_orange400">#FFE08146</color>
+    <color name="palette_orange400_90p">#E6E08146</color>
+    <color name="palette_orange400_70p">#B3E08146</color>
+    <color name="palette_orange400_50p">#80E08146</color>
+    <color name="palette_orange400_30p">#4AE08146</color>
+    <color name="palette_orange400_15p">#26E08146</color>
+    <color name="palette_orange400_00p">#00E08146</color>
+
+    <color name="palette_mustard100">#FFFFBE4C</color>
+    <color name="palette_mustard100_90p">#E6FFBE4C</color>
+    <color name="palette_mustard100_70p">#B3FFBE4C</color>
+    <color name="palette_mustard100_50p">#80FFBE4C</color>
+    <color name="palette_mustard100_30p">#4AFFBE4C</color>
+    <color name="palette_mustard100_15p">#26FFBE4C</color>
+    <color name="palette_mustard100_00p">#00FFBE4C</color>
+
+    <color name="palette_mustard200">#FFF2B141</color>
+    <color name="palette_mustard200_90p">#E6F2B141</color>
+    <color name="palette_mustard200_70p">#B3F2B141</color>
+    <color name="palette_mustard200_50p">#80F2B141</color>
+    <color name="palette_mustard200_30p">#4AF2B141</color>
+    <color name="palette_mustard200_15p">#26F2B141</color>
+    <color name="palette_mustard200_00p">#00F2B141</color>
+
+    <color name="palette_mustard300">#FFE5A637</color>
+    <color name="palette_mustard300_90p">#E6E5A637</color>
+    <color name="palette_mustard300_70p">#B3E5A637</color>
+    <color name="palette_mustard300_50p">#80E5A637</color>
+    <color name="palette_mustard300_30p">#4AE5A637</color>
+    <color name="palette_mustard300_15p">#26E5A637</color>
+    <color name="palette_mustard300_00p">#00E5A637</color>
+
+    <color name="palette_mustard400">#FFD9992B</color>
+    <color name="palette_mustard400_90p">#E6D9992B</color>
+    <color name="palette_mustard400_70p">#B3D9992B</color>
+    <color name="palette_mustard400_50p">#80D9992B</color>
+    <color name="palette_mustard400_30p">#4AD9992B</color>
+    <color name="palette_mustard400_15p">#26D9992B</color>
+    <color name="palette_mustard400_00p">#00D9992B</color>
+
+    <!-- Element Colors -->
+    <color name="palette_red100">#FFFF6677</color>
+    <color name="palette_red100_90p">#E6FF6677</color>
+    <color name="palette_red100_70p">#B3FF6677</color>
+    <color name="palette_red100_50p">#80FF6677</color>
+    <color name="palette_red100_30p">#4AFF6677</color>
+    <color name="palette_red100_15p">#26FF6677</color>
+    <color name="palette_red100_00p">#00FF6677</color>
+
+    <color name="palette_red200">#FFF53E50</color>
+    <color name="palette_red200_90p">#E6F53E50</color>
+    <color name="palette_red200_70p">#B3F53E50</color>
+    <color name="palette_red200_50p">#80F53E50</color>
+    <color name="palette_red200_30p">#4AF53E50</color>
+    <color name="palette_red200_15p">#26F53E50</color>
+    <color name="palette_red200_00p">#00F53E50</color>
+
+    <color name="palette_yellow100">#FFFFC24A</color>
+    <color name="palette_yellow100_90p">#E6FFC24A</color>
+    <color name="palette_yellow100_70p">#B3FFC24A</color>
+    <color name="palette_yellow100_50p">#80FFC24A</color>
+    <color name="palette_yellow100_30p">#4AFFC24A</color>
+    <color name="palette_yellow100_15p">#26FFC24A</color>
+    <color name="palette_yellow100_00p">#00FFC24A</color>
+
+    <color name="palette_blue070">#FF46B1F3</color>
+    <color name="palette_blue070_90p">#E646B1F3</color>
+    <color name="palette_blue070_70p">#B346B1F3</color>
+    <color name="palette_blue070_50p">#8046B1F3</color>
+    <color name="palette_blue070_30p">#4A46B1F3</color>
+    <color name="palette_blue070_15p">#2646B1F3</color>
+    <color name="palette_blue070_00p">#0046B1F3</color>
+
+    <color name="palette_blue100">#FF0077FF</color>
+    <color name="palette_blue100_90p">#E60077FF</color>
+    <color name="palette_blue100_70p">#B30077FF</color>
+    <color name="palette_blue100_50p">#800077FF</color>
+    <color name="palette_blue100_30p">#4A0077FF</color>
+    <color name="palette_blue100_15p">#260077FF</color>
+    <color name="palette_blue100_00p">#000077FF</color>
+
+    <!-- Grayscale -->
+    <color name="palette_black000">#FF000000</color>
+    <color name="palette_black000_90p">#E6000000</color>
+    <color name="palette_black000_70p">#B3000000</color>
+    <color name="palette_black000_50p">#80000000</color>
+    <color name="palette_black000_30p">#4A000000</color>
+    <color name="palette_black000_15p">#26000000</color>
+    <color name="palette_black000_00p">#00000000</color>
+
+    <color name="palette_gray050">#FF111111</color>
+    <color name="palette_gray050_90p">#E6111111</color>
+    <color name="palette_gray050_70p">#B3111111</color>
+    <color name="palette_gray050_50p">#80111111</color>
+    <color name="palette_gray050_30p">#4A111111</color>
+    <color name="palette_gray050_15p">#26111111</color>
+    <color name="palette_gray050_00p">#00111111</color>
+
+    <color name="palette_gray100">#FF333A44</color>
+    <color name="palette_gray100_90p">#E6333A44</color>
+    <color name="palette_gray100_70p">#B3333A44</color>
+    <color name="palette_gray100_50p">#80333A44</color>
+    <color name="palette_gray100_30p">#4A333A44</color>
+    <color name="palette_gray100_15p">#26333A44</color>
+    <color name="palette_gray100_00p">#00333A44</color>
+
+    <color name="palette_gray150">#FF444B55</color>
+    <color name="palette_gray150_90p">#E6444B55</color>
+    <color name="palette_gray150_70p">#B3444B55</color>
+    <color name="palette_gray150_50p">#80444B55</color>
+    <color name="palette_gray150_30p">#4A444B55</color>
+    <color name="palette_gray150_15p">#26444B55</color>
+    <color name="palette_gray150_00p">#00444B55</color>
+
+    <color name="palette_gray200">#FF555C68</color>
+    <color name="palette_gray200_90p">#E6555C68</color>
+    <color name="palette_gray200_70p">#B3555C68</color>
+    <color name="palette_gray200_50p">#80555C68</color>
+    <color name="palette_gray200_30p">#4A555C68</color>
+    <color name="palette_gray200_15p">#26555C68</color>
+    <color name="palette_gray200_00p">#00555C68</color>
+
+    <color name="palette_gray300">#FF646D7A</color>
+    <color name="palette_gray300_90p">#E6646D7A</color>
+    <color name="palette_gray300_70p">#B3646D7A</color>
+    <color name="palette_gray300_50p">#80646D7A</color>
+    <color name="palette_gray300_30p">#4A646D7A</color>
+    <color name="palette_gray300_15p">#26646D7A</color>
+    <color name="palette_gray300_00p">#00646D7A</color>
+
+    <color name="palette_gray350">#FF757E8C</color>
+    <color name="palette_gray350_90p">#E6757E8C</color>
+    <color name="palette_gray350_70p">#B3757E8C</color>
+    <color name="palette_gray350_50p">#80757E8C</color>
+    <color name="palette_gray350_30p">#4A757E8C</color>
+    <color name="palette_gray350_15p">#26757E8C</color>
+    <color name="palette_gray350_00p">#00757E8C</color>
+
+    <color name="palette_gray400">#FF878E9C</color>
+    <color name="palette_gray400_90p">#E6878E9C</color>
+    <color name="palette_gray400_70p">#B3878E9C</color>
+    <color name="palette_gray400_50p">#80878E9C</color>
+    <color name="palette_gray400_30p">#4A878E9C</color>
+    <color name="palette_gray400_15p">#26878E9C</color>
+    <color name="palette_gray400_00p">#00878E9C</color>
+
+    <color name="palette_gray500">#FF9FA4B0</color>
+    <color name="palette_gray500_90p">#E69FA4B0</color>
+    <color name="palette_gray500_70p">#B39FA4B0</color>
+    <color name="palette_gray500_50p">#809FA4B0</color>
+    <color name="palette_gray500_30p">#4A9FA4B0</color>
+    <color name="palette_gray500_15p">#269FA4B0</color>
+    <color name="palette_gray500_00p">#009FA4B0</color>
+
+    <color name="palette_gray550">#FFBBC0CA</color>
+    <color name="palette_gray550_90p">#E6BBC0CA</color>
+    <color name="palette_gray550_70p">#B3BBC0CA</color>
+    <color name="palette_gray550_50p">#80BBC0CA</color>
+    <color name="palette_gray550_30p">#4ABBC0CA</color>
+    <color name="palette_gray550_15p">#26BBC0CA</color>
+    <color name="palette_gray550_00p">#00BBC0CA</color>
+
+    <color name="palette_gray600">#FFD0D6DE</color>
+    <color name="palette_gray600_90p">#E6D0D6DE</color>
+    <color name="palette_gray600_70p">#B3D0D6DE</color>
+    <color name="palette_gray600_50p">#80D0D6DE</color>
+    <color name="palette_gray600_30p">#4AD0D6DE</color>
+    <color name="palette_gray600_15p">#26D0D6DE</color>
+    <color name="palette_gray600_00p">#00D0D6DE</color>
+
+    <color name="palette_gray700">#FFE5E8ED</color>
+    <color name="palette_gray700_90p">#E6E5E8ED</color>
+    <color name="palette_gray700_70p">#B3E5E8ED</color>
+    <color name="palette_gray700_50p">#80E5E8ED</color>
+    <color name="palette_gray700_30p">#4AE5E8ED</color>
+    <color name="palette_gray700_15p">#26E5E8ED</color>
+    <color name="palette_gray700_00p">#00E5E8ED</color>
+
+    <color name="palette_gray750">#FFF0F2F5</color>
+    <color name="palette_gray750_90p">#E6F0F2F5</color>
+    <color name="palette_gray750_70p">#B3F0F2F5</color>
+    <color name="palette_gray750_50p">#80F0F2F5</color>
+    <color name="palette_gray750_30p">#4AF0F2F5</color>
+    <color name="palette_gray750_15p">#26F0F2F5</color>
+    <color name="palette_gray750_00p">#00F0F2F5</color>
+
+    <color name="palette_gray800">#FFF4F5F7</color>
+    <color name="palette_gray800_90p">#E6F4F5F7</color>
+    <color name="palette_gray800_70p">#B3F4F5F7</color>
+    <color name="palette_gray800_50p">#80F4F5F7</color>
+    <color name="palette_gray800_30p">#4AF4F5F7</color>
+    <color name="palette_gray800_15p">#26F4F5F7</color>
+    <color name="palette_gray800_00p">#00F4F5F7</color>
+
+    <color name="palette_gray850">#FFFAFAFB</color>
+    <color name="palette_gray850_90p">#E6FAFAFB</color>
+    <color name="palette_gray850_70p">#B3FAFAFB</color>
+    <color name="palette_gray850_50p">#80FAFAFB</color>
+    <color name="palette_gray850_30p">#4AFAFAFB</color>
+    <color name="palette_gray850_15p">#26FAFAFB</color>
+    <color name="palette_gray850_00p">#00FAFAFB</color>
+
+    <color name="palette_white900">#FFFFFFFF</color>
+    <color name="palette_white900_90p">#E6FFFFFF</color>
+    <color name="palette_white900_70p">#B3FFFFFF</color>
+    <color name="palette_white900_50p">#80FFFFFF</color>
+    <color name="palette_white900_30p">#4AFFFFFF</color>
+    <color name="palette_white900_15p">#26FFFFFF</color>
+    <color name="palette_white900_00p">#00FFFFFF</color>
+
+    <!-- Alpha to Hex Mapping -->
+    <!-- Reference: https://stackoverflow.com/a/11019879 -->
+    <!-- 100% — ff -->
+    <!--  95% — f2 -->
+    <!--  90% — e6 -->
+    <!--  85% — d9 -->
+    <!--  80% — cc -->
+    <!--  75% — bf -->
+    <!--  70% — b3 -->
+    <!--  65% — a6 -->
+    <!--  60% — 99 -->
+    <!--  55% — 8c -->
+    <!--  50% — 80 -->
+    <!--  45% — 73 -->
+    <!--  40% — 66 -->
+    <!--  35% — 59 -->
+    <!--  30% — 4d -->
+    <!--  25% — 40 -->
+    <!--  20% — 33 -->
+    <!--  15% — 26 -->
+    <!--  10% — 1a -->
+    <!--   5% — 0d -->
+    <!--   0% — 00 -->
 </resources>

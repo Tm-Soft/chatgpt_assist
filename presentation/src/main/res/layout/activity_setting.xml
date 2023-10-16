@@ -5,17 +5,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".setting.SettingActivity">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/appbar"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            android:backgroundTint="#FFFFFF">
 
             <FrameLayout
                 android:layout_width="match_parent"
@@ -24,9 +23,10 @@
 
                 <FrameLayout
                     android:id="@+id/fl_back_button"
-                    android:layout_width="50dp"
+                    android:layout_width="40dp"
                     android:layout_height="match_parent"
-                    android:background="?attr/selectableItemBackgroundBorderless">
+                    android:layout_margin="5dp"
+                    android:background="@drawable/ripple_circle_effect">
 
                     <ImageView
                         android:layout_width="30dp"
@@ -45,41 +45,152 @@
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
-
             </FrameLayout>
 
         </com.google.android.material.appbar.AppBarLayout>
 
-        <LinearLayout
+        <!-- 하단 설정 영역은 스크롤뷰 -->
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="15dp"
-            android:gravity="center"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/appbar">
+            android:layout_height="match_parent">
 
-            <TextView
-                android:id="@+id/tv_token_already"
-                android:layout_width="0dp"
-                android:layout_height="40dp"
-                android:layout_weight="0.7"
-                android:gravity="center"
-                android:text="설정 된 토큰 어쩌구 저쩌구"
-                />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-            <Button
-                android:id="@+id/btn_token_modify"
-                android:layout_width="0dp"
-                android:layout_height="40dp"
-                android:layout_weight="0.23"
-                android:text="@string/token_modify_button_text" />
-        </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/ll_open_ai_info_guide"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginStart="20dp"
+                    android:orientation="horizontal"
+                    android:gravity="center">
 
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:background="@drawable/ic_key_simple" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:paddingBottom="1dp"
+                        android:textStyle="bold"
+                        android:textColor="@color/black"
+                        android:text="Open AI - API Key" />
+                </LinearLayout>
 
+                <LinearLayout
+                    android:id="@+id/ll_token_set"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="15dp"
+                    android:gravity="center"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp">
+
+                    <TextView
+                        android:id="@+id/tv_token_already"
+                        android:layout_width="0dp"
+                        android:layout_height="40dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="설정 된 토큰 어쩌구 저쩌구"
+                        android:background="@drawable/left_round_text_view"
+                        />
+
+                    <TextView
+                        android:id="@+id/btn_token_modify"
+                        android:layout_width="80dp"
+                        android:layout_height="40dp"
+                        android:layout_marginStart="-1dp"
+                        style="@style/TextViewAsButtonPrimaryBlue"
+                        android:text="@string/token_modify_button_text" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#E8E8E8" />
+
+                <LinearLayout
+                    android:id="@+id/ll_max_token_info_guide"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:background="@drawable/ic_truck_max_token"
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:paddingBottom="1dp"
+                        android:textStyle="bold"
+                        android:textColor="@color/black"
+                        android:text="@string/setting_info_guide_max_token"
+                        />
+                </LinearLayout>
+
+                <com.skydoves.expandablelayout.ExpandableLayout
+                    android:id="@+id/exp_token_info"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    app:expandable_parentLayout="@layout/layout_token_info_parent"
+                    app:expandable_secondLayout="@layout/layout_token_info_second"
+
+                    app:expandable_duration="100"
+                    app:expandable_showSpinner="false"
+                    app:expandable_spinner_size="32dp"/>
+
+                <TextView
+                    android:id="@+id/tv_max_token_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="5dp"
+
+                    android:text="13,000 토큰"
+                    android:textSize="17dp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"/>
+
+                <!-- https://kkh0977.tistory.com/1262 -->
+                <SeekBar
+                    android:id="@+id/seek_bar_max_token"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginBottom="10dp"
+                    android:max="16000"
+                    android:min="2000"
+
+                    android:thumb="@drawable/seekbar_custom_thumb"
+                    android:progressDrawable="@drawable/seekbar_custom_progress"
+                    android:splitTrack="false" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#E8E8E8" />
+
+            </LinearLayout>
+
+        </ScrollView>
+
+    </LinearLayout>
 </layout>

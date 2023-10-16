@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/palette_gray600_15p"
+    android:paddingTop="5dp"
+    android:paddingStart="10dp"
+    android:paddingEnd="10dp"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="토큰은 Chat GPT에 전송하고 반환받는 메세지의 총 합계입니다.\n\nChat GPT에 메세지를 전송 할 때 이전 대화 내역을 같이 보내야지만 더욱 정확한 결과값을 얻을 수 있습니다. 대화 했던 내용이 많아질 수 록 이전 내용을 같이 보내기에 전송 되는 메세지 양이 많아집니다.\n\n토큰 사용량은 API 이용 요금에 영향을 주기 때문에, 우리 어플은 최대 토큰 전송 값을 지정하여 비용을 절약할 수 있습니다.\n\n사용 되는 Token 양을 예측하여, gpt 3.5-turbo, gpt 3.5-turbo 16K API를 적절히 사용합니다."/>
+
+</LinearLayout>
