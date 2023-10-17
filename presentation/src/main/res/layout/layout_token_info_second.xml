@@ -4,14 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/palette_gray600_15p"
-    android:paddingTop="5dp"
-    android:paddingStart="10dp"
-    android:paddingEnd="10dp"
+    android:paddingVertical="5dp"
+    android:paddingHorizontal="10dp"
     android:orientation="vertical">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="토큰은 Chat GPT에 전송하고 반환받는 메세지의 총 합계입니다.\n\nChat GPT에 메세지를 전송 할 때 이전 대화 내역을 같이 보내야지만 더욱 정확한 결과값을 얻을 수 있습니다. 대화 했던 내용이 많아질 수 록 이전 내용을 같이 보내기에 전송 되는 메세지 양이 많아집니다.\n\n토큰 사용량은 API 이용 요금에 영향을 주기 때문에, 우리 어플은 최대 토큰 전송 값을 지정하여 비용을 절약할 수 있습니다.\n\n사용 되는 Token 양을 예측하여, gpt 3.5-turbo, gpt 3.5-turbo 16K API를 적절히 사용합니다."/>
+        android:text="토큰은 Chat GPT에 전달한 메시지 또는 받은 메시지의 길이에 따라 결정됩니다. Chat GPT API를 이용할 때는 사용된 토큰의 양에 따라 요금이 청구됩니다.\n\nAPI를 통해 메시지를 전송할 때, 이전의 대화 내용을 함께 전송하면 더욱 정확한 답변을 받을 수 있습니다. 그러나 이러한 방식은 더 많은 토큰을 사용할 수 있습니다. 저희 어플리케이션은 사용자가 설정한 '최대 사용 토큰' 한도 내에서 최적의 응답을 제공하기 위해 설계되었습니다.\n\n[Chat GPT API 요금정보]\ngpt-3.5-turbo: 1,000 토큰당 0.002 USD\ngpt-3.5-turbo 16K: 1,000 토큰당 0.004 USD\n\n모델마다 요금이 다르므로, 저희는 전송되는 토큰의 양을 정확하게 계산하고 가장 경제적인 모델을 선택하여 사용자에게 요금 절약의 기회를 제공합니다."/>
 
 </LinearLayout>

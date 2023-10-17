@@ -2,6 +2,7 @@ package live.lafi.chatgpt_assist
 
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 import live.lafi.chatgpt_assist.base.BaseViewModel
@@ -25,7 +26,7 @@ class SplashViewModel @Inject constructor(
 ): BaseViewModel() {
     fun setupChatGptToken() {
         scopeIO.launch {
-            val token = loadChatGptTokenUseCase()
+            val token = loadChatGptTokenUseCase().first()
             if (token.isNotEmpty()) {
                 GptToken.editToken(token)
             }

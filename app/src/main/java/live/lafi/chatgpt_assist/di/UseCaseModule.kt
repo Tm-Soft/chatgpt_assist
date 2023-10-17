@@ -7,9 +7,10 @@ import dagger.hilt.components.SingletonComponent
 import live.lafi.domain.repository.ChatGptRepository
 import live.lafi.domain.repository.LocalSettingRepository
 import live.lafi.domain.usecase.chat_gpt.PostChatCompletionsUseCase
-import live.lafi.domain.usecase.local_setting.LoadChatGptTokenFlowUseCase
 import live.lafi.domain.usecase.local_setting.LoadChatGptTokenUseCase
+import live.lafi.domain.usecase.local_setting.LoadMaxUseTokenUseCase
 import live.lafi.domain.usecase.local_setting.SaveChatGptTokenUseCase
+import live.lafi.domain.usecase.local_setting.SaveMaxUseTokenUseCase
 import javax.inject.Singleton
 
 @Module
@@ -25,7 +26,11 @@ object UseCaseModule {
 
     @Provides
     @Singleton
-    fun provideLoadChatGptTokenFlowUseCase(localSettingRepository: LocalSettingRepository) = LoadChatGptTokenFlowUseCase(localSettingRepository)
+    fun provideSaveMaxUseTokenUseCase(localSettingRepository: LocalSettingRepository) = SaveMaxUseTokenUseCase(localSettingRepository)
+
+    @Provides
+    @Singleton
+    fun provideLoadMaxUseTokenUseCase(localSettingRepository: LocalSettingRepository) = LoadMaxUseTokenUseCase(localSettingRepository)
 
     @Provides
     @Singleton

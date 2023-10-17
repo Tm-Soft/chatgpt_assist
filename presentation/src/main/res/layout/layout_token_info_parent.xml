@@ -7,13 +7,14 @@
     android:paddingBottom="10dp"
     android:orientation="horizontal"
     android:gravity="center"
-    android:background="@color/palette_gray600_50p">
+    android:background="@color/palette_gray600_50p"
+    android:foreground="?attr/selectableItemBackground">
 
     <TextView
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="최대 토큰 전달 값은 무엇인가요?"/>
+        android:text="@string/token_info_max_use_parent"/>
 
     <ImageView
         android:layout_width="22dp"

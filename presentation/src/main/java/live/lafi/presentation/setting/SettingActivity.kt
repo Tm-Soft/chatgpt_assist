@@ -4,7 +4,9 @@ import android.os.Bundle
 import android.widget.SeekBar
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
+import com.skydoves.expandablelayout.ExpandableAnimation
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import live.lafi.library_dialog.Dialog
@@ -12,6 +14,7 @@ import live.lafi.presentation.R
 import live.lafi.presentation.base.BaseActivity
 import live.lafi.presentation.databinding.ActivitySettingBinding
 import timber.log.Timber
+import kotlin.math.exp
 
 @AndroidEntryPoint
 class SettingActivity : BaseActivity<ActivitySettingBinding>(R.layout.activity_setting) {
@@ -25,12 +28,18 @@ class SettingActivity : BaseActivity<ActivitySettingBinding>(R.layout.activity_s
         initData()
     }
 
-    private fun setupUi() {
-    }
+    private fun setupUi() {}
 
     private fun subscribeUi() {
         lifecycleScope.launch {
-            viewModel.getFlow().collectLatest { setToken ->
+            viewModel.getMaxUseToken().collectLatest { setMaxUseToken ->
+                binding.seekBarMaxToken.progress = setMaxUseToken
+                binding.tvMaxTokenText.text = "$setMaxUseToken Token"
+            }
+        }
+
+        lifecycleScope.launch {
+            viewModel.getChatGptToken().collectLatest { setToken ->
                 if (setToken.isNotEmpty()) {
                     val viewToken = if (setToken.length > 10) {
                         setToken.substring(0, 20) + "..."
@@ -53,41 +62,35 @@ class SettingActivity : BaseActivity<ActivitySettingBinding>(R.layout.activity_s
 
     private fun initListener() {
         with(binding) {
-            flBackButton.setOnClickListener {
-                onBackPressed()
-            }
-            btnTokenModify.setOnClickListener {
-                showEditGptToken()
-            }
+            flBackButton.setOnClickListener { onBackPressed() }
+
+            btnTokenModify.setOnClickListener { showEditGptToken() }
+
             seekBarMaxToken.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
                 override fun onProgressChanged(
                     seekBar: SeekBar?,
                     progress: Int,
                     fromUser: Boolean
-                ) {
-                    tvMaxTokenText.text = "${progress} 토큰"
-                }
-                override fun onStartTrackingTouch(seekBar: SeekBar?) {
-                }
+                ) { tvMaxTokenText.text = "$progress Token" }
+                override fun onStartTrackingTouch(seekBar: SeekBar?) {}
                 override fun onStopTrackingTouch(seekBar: SeekBar?) {
-                    showToast("저장 : ${seekBar?.progress}")
+                    seekBar?.let { viewModel.updateMaxUseToken(it.progress) }
                 }
             })
-            expTokenInfo.parentLayout.setOnClickListener {
-                expTokenInfo.expand()
-            }
-            expTokenInfo.secondLayout.setOnClickListener {
-                expTokenInfo.collapse()
-            }
 
-            expTokenInfo.apply {
+            // 내부 this는 expTokenInfo 전체 사용.
+            with(expTokenInfo) {
+                parentLayout.setOnClickListener {
+                    if (isExpanded) collapse()
+                    else expand()
+                }
+
+                secondLayout.setOnClickListener { collapse() }
             }
         }
     }
 
-    private fun initData() {
-
-    }
+    private fun initData() {}
 
     private fun showEditGptToken() {
         Dialog.with(this@SettingActivity)

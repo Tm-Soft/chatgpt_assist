@@ -69,8 +69,8 @@
                     android:gravity="center">
 
                     <ImageView
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
                         android:background="@drawable/ic_key_simple" />
 
                     <TextView
@@ -128,8 +128,8 @@
                     android:gravity="center">
 
                     <ImageView
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
                         android:background="@drawable/ic_truck_max_token"
                         />
 
@@ -152,7 +152,7 @@
                     app:expandable_parentLayout="@layout/layout_token_info_parent"
                     app:expandable_secondLayout="@layout/layout_token_info_second"
 
-                    app:expandable_duration="100"
+                    app:expandable_duration="150"
                     app:expandable_showSpinner="false"
                     app:expandable_spinner_size="32dp"/>
 
