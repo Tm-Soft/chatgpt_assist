@@ -8,4 +8,6 @@ interface ChatGptRepository {
     suspend fun postChatCompletions(
         sendMessage: String
     ): Flow<ApiResult<CompletionData>>
+
+    suspend fun chatCompletionsStream()
 }

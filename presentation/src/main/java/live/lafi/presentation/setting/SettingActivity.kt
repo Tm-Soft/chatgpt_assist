@@ -102,13 +102,8 @@ class SettingActivity : BaseActivity<ActivitySettingBinding>(R.layout.activity_s
                 if (inputText.isNotEmpty()) {
                     viewModel.updateChatGptToken(
                         token = inputText,
-                        success = {
-                            Timber.tag("test__").e("토큰 변경 완료")
-                            showToast("ChatGPT Token 변경 완료")
-                        },
-                        fail = {
-                            showToast("유효 하지 않은 Token")
-                        }
+                        success = { showToast("ChatGPT Token 변경 완료") },
+                        fail = { showToast("유효 하지 않은 Token") }
                     )
                 } else {
                     showToast("AI 이름을 입력 해주세요.")

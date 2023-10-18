@@ -11,6 +11,7 @@ import live.lafi.domain.ApiResult.LoadingEnd.onException
 import live.lafi.domain.ApiResult.LoadingEnd.onLoadingEnd
 import live.lafi.domain.ApiResult.LoadingEnd.onLoadingStart
 import live.lafi.domain.ApiResult.LoadingEnd.onSuccess
+import live.lafi.domain.usecase.chat_gpt.PostChatCompletionsStreamUseCase
 import live.lafi.domain.usecase.chat_gpt.PostChatCompletionsUseCase
 import live.lafi.domain.usecase.local_setting.LoadChatGptTokenUseCase
 import live.lafi.domain.usecase.local_setting.LoadMaxUseTokenUseCase
@@ -27,7 +28,8 @@ class SettingViewModel @Inject constructor(
     private val saveChatGptTokenUseCase: SaveChatGptTokenUseCase,
     private val loadMaxUseTokenUseCase: LoadMaxUseTokenUseCase,
     private val saveMaxUseTokenUseCase: SaveMaxUseTokenUseCase,
-    private val postChatCompletionsUseCase: PostChatCompletionsUseCase
+    private val postChatCompletionsUseCase: PostChatCompletionsUseCase,
+    private val postChatCompletionsStreamUseCase: PostChatCompletionsStreamUseCase
 ): BaseViewModel() {
     private val _onLoading = SingleLiveEvent<Boolean>()
     val onLoading: SingleLiveEvent<Boolean> get() = _onLoading
@@ -74,6 +76,14 @@ class SettingViewModel @Inject constructor(
                     }
                 }
             }
+        }
+    }
+
+    fun chatStream(token: String) {
+        scopeIO.launch {
+            GptToken.editToken(token)
+
+            postChatCompletionsStreamUseCase()
         }
     }
 
