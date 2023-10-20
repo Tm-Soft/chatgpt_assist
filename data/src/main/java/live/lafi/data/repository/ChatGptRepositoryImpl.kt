@@ -34,6 +34,7 @@ class ChatGptRepositoryImpl @Inject constructor(
                 CompletionRequest(
                     model = "gpt-3.5-turbo-16k",
                     temperature = 0.8,
+                    stream = true,
                     messages = listOf(
                         ChatGptMessage(
                             "user",
@@ -52,13 +53,12 @@ class ChatGptRepositoryImpl @Inject constructor(
         }
 
     override suspend fun chatCompletionsStream() {
-        flow {
-            coroutineScope {
                 val gson = Gson()
                 val inputReader = service.getCompletionStream(
                     CompletionRequest(
                         model = "gpt-3.5-turbo-16k",
                         temperature = 0.8,
+                        stream = true,
                         messages = listOf(
                             ChatGptMessage(
                                 "user",
@@ -66,18 +66,6 @@ class ChatGptRepositoryImpl @Inject constructor(
                             )
                         )
                     )
-                ).byteStream().bufferedReader()
-
-                var event: String? = null
-                var completionData: CompletionResponse? = null
-                while (isActive) {
-                    val line = inputReader.readLine()
-                    Timber.tag("stream__").d("$line")
-                    emit("")
-                }
+                )
             }
-        }.collect {
-
-        }
-    }
 }

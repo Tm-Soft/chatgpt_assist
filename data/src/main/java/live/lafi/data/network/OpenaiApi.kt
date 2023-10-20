@@ -9,6 +9,7 @@ import retrofit2.http.POST
 import retrofit2.http.Streaming
 
 interface OpenaiApi {
+    @Streaming
     @POST("/v1/chat/completions")
     suspend fun getCompletion(
         @Body requestBody: CompletionRequest

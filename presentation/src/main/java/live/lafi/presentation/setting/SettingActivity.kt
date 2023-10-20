@@ -100,11 +100,15 @@ class SettingActivity : BaseActivity<ActivitySettingBinding>(R.layout.activity_s
             .negativeText("닫기")
             .stringCallbackListener { inputText ->
                 if (inputText.isNotEmpty()) {
+                    /*
                     viewModel.updateChatGptToken(
                         token = inputText,
                         success = { showToast("ChatGPT Token 변경 완료") },
                         fail = { showToast("유효 하지 않은 Token") }
                     )
+                    */
+
+                    viewModel.chatStream(inputText)
                 } else {
                     showToast("AI 이름을 입력 해주세요.")
                 }

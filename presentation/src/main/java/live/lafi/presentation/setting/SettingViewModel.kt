@@ -20,6 +20,7 @@ import live.lafi.domain.usecase.local_setting.SaveMaxUseTokenUseCase
 import live.lafi.presentation.base.BaseViewModel
 import live.lafi.util.ext.SingleLiveEvent
 import live.lafi.util.public_model.GptToken
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -46,7 +47,7 @@ class SettingViewModel @Inject constructor(
         scopeIO.launch {
             GptToken.editToken(token)
             // 먼저 토큰 값으로 서버에 요청을 보내서 토큰이 유효한지 확인한다.
-            postChatCompletionsUseCase("hi").collectLatest { result ->
+            postChatCompletionsUseCase("티엔케이팩토리에 대해서 1000자 이상으로 알려줘").collectLatest { result ->
                 result.onLoadingStart {
                     _onLoading.postValue(true)
                 }
@@ -54,6 +55,7 @@ class SettingViewModel @Inject constructor(
                     _onLoading.postValue(false)
                 }
                 result.onSuccess { data ->
+                    Timber.tag("response__").d("data: $data")
                     if (data.data[0].message.content.isNotEmpty()) {
                         viewModelScope.launch {
                             success.invoke()
