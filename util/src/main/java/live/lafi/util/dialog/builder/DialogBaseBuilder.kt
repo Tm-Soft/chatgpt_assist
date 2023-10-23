@@ -20,6 +20,7 @@ import live.lafi.util.R
 open class DialogBaseBuilder<out B : DialogBaseBuilder<B>>(
     internal var title: String? = null,
     internal var content: String? = null,
+    internal var editTextHint: String? = null,
     internal var positiveText: String? = null,
     internal var negativeText: String? = null,
     internal var selectTitleList: List<String>? = null,
@@ -32,7 +33,6 @@ open class DialogBaseBuilder<out B : DialogBaseBuilder<B>>(
     internal var positiveTextColorResId: Int = R.color.detail_button_blue,
     @ColorRes
     internal var negativeTextColorResId: Int = R.color.gray_30
-
 ): Parcelable {
     @IgnoredOnParcel
     protected var positiveListener: PositiveListener? = null
@@ -50,6 +50,11 @@ open class DialogBaseBuilder<out B : DialogBaseBuilder<B>>(
 
     fun content(content: String): B {
         this.content = content
+        return this as B
+    }
+
+    fun editTextHint(editTextHint: String): B {
+        this.editTextHint = editTextHint
         return this as B
     }
 

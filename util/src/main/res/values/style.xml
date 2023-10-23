@@ -13,4 +13,8 @@
         <item name="colorAccent">@color/gray_50</item>
     </style>
 
+    <style name="AppThemeBlueAccent" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorAccent">@color/purple_700</item>
+    </style>
+
 </resources>

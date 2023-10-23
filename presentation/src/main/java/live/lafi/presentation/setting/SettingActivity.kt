@@ -96,6 +96,7 @@ class SettingActivity : BaseActivity<ActivitySettingBinding>(R.layout.activity_s
         Dialog.with(this@SettingActivity)
             .title("ChatGpt API Token 입력")
             .content("https://platform.openai.com/account/api-keys 에서 발급 받은 API Key 입력 해주세요")
+            .editTextHint("API Key를 입력 해주세요")
             .positiveText("변경")
             .negativeText("닫기")
             .stringCallbackListener { inputText ->

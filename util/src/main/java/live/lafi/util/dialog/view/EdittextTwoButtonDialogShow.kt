@@ -19,7 +19,6 @@ class EdittextTwoButtonDialogShow (
     private val positiveListener: StringCallbackListener? = null,
     private val negativeListener: NegativeListener? = null
 ): Dialog(context) {
-
     private lateinit var binding : DialogEdittextWithTwoButtonBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -68,8 +67,11 @@ class EdittextTwoButtonDialogShow (
         }
 
         when (builder.content) {
-            null -> { binding.editText.hint = "내용을 입력해 주세요"}
-            else -> { binding.editText.setText(builder.content) }
+            null -> binding.textViewContent.visibility = View.GONE
+            else -> {
+                binding.textViewContent.visibility = View.VISIBLE
+                binding.textViewContent.text = builder.content
+            }
         }
 
         when(builder.positiveText) {
@@ -80,6 +82,11 @@ class EdittextTwoButtonDialogShow (
         when(builder.negativeText) {
             null -> { binding.btnDialogNegative.text = context.getString(R.string.dialog_negative_text_default) }
             else -> { binding.btnDialogNegative.text = builder.negativeText }
+        }
+
+        when (builder.editTextHint) {
+            null -> binding.editText.hint = "내용을 입력해 주세요"
+            else -> binding.editText.hint = builder.editTextHint
         }
 
 
