@@ -34,7 +34,7 @@ class ChatGptRepositoryImpl @Inject constructor(
                 CompletionRequest(
                     model = "gpt-3.5-turbo-16k",
                     temperature = 0.8,
-                    stream = true,
+                    stream = false,
                     messages = listOf(
                         ChatGptMessage(
                             "user",

@@ -47,7 +47,7 @@ class SettingViewModel @Inject constructor(
         scopeIO.launch {
             GptToken.editToken(token)
             // 먼저 토큰 값으로 서버에 요청을 보내서 토큰이 유효한지 확인한다.
-            postChatCompletionsUseCase("티엔케이팩토리에 대해서 1000자 이상으로 알려줘").collectLatest { result ->
+            postChatCompletionsUseCase("hi").collectLatest { result ->
                 result.onLoadingStart {
                     _onLoading.postValue(true)
                 }
