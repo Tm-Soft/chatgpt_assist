@@ -51,21 +51,4 @@ class ChatGptRepositoryImpl @Inject constructor(
                 is ApiResult.LoadingEnd -> ApiResult.LoadingEnd
             }
         }
-
-    override suspend fun chatCompletionsStream() {
-                val gson = Gson()
-                val inputReader = service.getCompletionStream(
-                    CompletionRequest(
-                        model = "gpt-3.5-turbo-16k",
-                        temperature = 0.8,
-                        stream = true,
-                        messages = listOf(
-                            ChatGptMessage(
-                                "user",
-                                "티엔케이팩토리에 대해서 알려줘"
-                            )
-                        )
-                    )
-                )
-            }
 }

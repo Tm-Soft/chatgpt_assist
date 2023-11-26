@@ -6,7 +6,6 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import live.lafi.domain.repository.ChatGptRepository
 import live.lafi.domain.repository.LocalSettingRepository
-import live.lafi.domain.usecase.chat_gpt.PostChatCompletionsStreamUseCase
 import live.lafi.domain.usecase.chat_gpt.PostChatCompletionsUseCase
 import live.lafi.domain.usecase.local_setting.LoadChatGptTokenUseCase
 import live.lafi.domain.usecase.local_setting.LoadMaxUseTokenUseCase
@@ -36,8 +35,4 @@ object UseCaseModule {
     @Provides
     @Singleton
     fun providePostChatCompletionsUseCase(chatGptRepository: ChatGptRepository) = PostChatCompletionsUseCase(chatGptRepository)
-
-    @Provides
-    @Singleton
-    fun providePostChatCompletionsStreamUseCase(chatGptRepository: ChatGptRepository) = PostChatCompletionsStreamUseCase(chatGptRepository)
 }

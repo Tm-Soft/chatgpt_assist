@@ -5,6 +5,7 @@ import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.View
 import androidx.core.content.ContextCompat
 import live.lafi.library_dialog.builder.DialogBaseBuilder
@@ -63,6 +64,9 @@ class EdittextTwoButtonDialogShow (
                 else -> binding.editText.hint = builder.editTextHint
             }
 
+            if (builder.editTextMaxLine != null) {
+                binding.editText.maxLines = builder.editTextMaxLine!!
+            }
 
             // Title Color Set
             textViewTitle.setTextColor(

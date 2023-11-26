@@ -25,6 +25,7 @@ open class DialogBaseBuilder<out B : DialogBaseBuilder<B>>(
     internal var negativeText: String? = null,
     internal var selectTitleList: List<String>? = null,
     internal var selectContentList: List<String>? = null,
+    internal var editTextMaxLine: Int? = null,
     @ColorRes
     internal var titleTextColorResId: Int = R.color.gray_60,
     @ColorRes
@@ -75,6 +76,11 @@ open class DialogBaseBuilder<out B : DialogBaseBuilder<B>>(
 
     fun negativeText(negativeText: String): B {
         this.negativeText = negativeText
+        return this as B
+    }
+
+    fun setEditTextMaxLine(maxLine: Int): B {
+        this.editTextMaxLine = maxLine
         return this as B
     }
 
