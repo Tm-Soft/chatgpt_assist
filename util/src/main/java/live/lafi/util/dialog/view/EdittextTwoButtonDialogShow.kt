@@ -5,6 +5,7 @@ import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.View
 import androidx.core.content.ContextCompat
 import live.lafi.library_dialog.builder.DialogBaseBuilder
@@ -19,7 +20,6 @@ class EdittextTwoButtonDialogShow (
     private val positiveListener: StringCallbackListener? = null,
     private val negativeListener: NegativeListener? = null
 ): Dialog(context) {
-
     private lateinit var binding : DialogEdittextWithTwoButtonBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,74 +28,95 @@ class EdittextTwoButtonDialogShow (
         binding = DialogEdittextWithTwoButtonBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.editText.addTextChangedListener(object : TextWatcher{
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+        setupUi()
+        initListener()
+    }
 
-            override fun onTextChanged(char: CharSequence?, start: Int, end: Int, p3: Int) {
-                if(!char.isNullOrBlank()) {
-                    binding.btnDeleteAllText.visibility = View.VISIBLE
-                } else {
-                    binding.btnDeleteAllText.visibility = View.GONE
+    private fun setupUi() {
+        with(binding) {
+            layoutEdittextDialogFrame.layoutParams.width = context.resources.displayMetrics.widthPixels
+
+            when (builder.title) {
+                null -> { textViewTitle.text = context.getString(R.string.dialog_title_text_default) }
+                else -> { textViewTitle.text = builder.title }
+            }
+
+            when (builder.content) {
+                null -> textViewContent.visibility = View.GONE
+                else -> {
+                    textViewContent.visibility = View.VISIBLE
+                    textViewContent.text = builder.content
                 }
             }
 
-            override fun afterTextChanged(p0: Editable?) {}
-        })
+            when(builder.positiveText) {
+                null -> { btnDialogModify.text = context.getString(R.string.dialog_positive_text_default) }
+                else -> { btnDialogModify.text = builder.positiveText }
+            }
 
-        binding.btnDeleteAllText.setOnClickListener {
-            binding.editText.text.clear()
+            when(builder.negativeText) {
+                null -> { btnDialogNegative.text = context.getString(R.string.dialog_negative_text_default) }
+                else -> { btnDialogNegative.text = builder.negativeText }
+            }
+
+            when (builder.editTextHint) {
+                null -> binding.editText.hint = "내용을 입력해 주세요"
+                else -> binding.editText.hint = builder.editTextHint
+            }
+
+            if (builder.editTextMaxLine != null) {
+                binding.editText.maxLines = builder.editTextMaxLine!!
+            }
+
+            if (builder.editTextImeOption != null) {
+                binding.editText.imeOptions = builder.editTextImeOption!!
+            }
+
+            // Title Color Set
+            textViewTitle.setTextColor(
+                ContextCompat.getColor(context, builder.titleTextColorResId)
+            )
+
+            // Positive Text Color Set
+            btnDialogModify.setTextColor(
+                ContextCompat.getColor(context, builder.positiveTextColorResId)
+            )
+
+            // Negative Text Color Set
+            btnDialogNegative.setTextColor(
+                ContextCompat.getColor(context, R.color.price_color_red)
+            )
+
+            editText.text.clear()
+            btnDeleteAllText.visibility = View.GONE
         }
-
-        binding.btnDialogModify.setOnClickListener {
-            positiveListener?.onStringCallBack(binding.editText.text.toString().trim())
-            this.dismiss()
-        }
-
-        binding.btnDialogNegative.setOnClickListener {
-            negativeListener?.onNegative()
-            this.dismiss()
-        }
-
-        initView()
     }
 
-    private fun initView() {
-        binding.layoutEdittextDialogFrame.layoutParams.width = context.resources.displayMetrics.widthPixels
+    private fun initListener() {
+        with(binding) {
+            binding.btnDialogModify.setOnClickListener {
+                positiveListener?.onStringCallBack(binding.editText.text.toString().trim())
+                this@EdittextTwoButtonDialogShow.dismiss()
+            }
 
-        when (builder.title) {
-            null -> { binding.textViewTitle.text = context.getString(R.string.dialog_title_text_default) }
-            else -> { binding.textViewTitle.text = builder.title }
+            binding.btnDialogNegative.setOnClickListener {
+                negativeListener?.onNegative()
+                this@EdittextTwoButtonDialogShow.dismiss()
+            }
+
+            editText.addTextChangedListener(object :TextWatcher {
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+                override fun afterTextChanged(p0: Editable?) {}
+                override fun onTextChanged(text: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                    if (text.isNullOrBlank()) {
+                        btnDeleteAllText.visibility = View.GONE
+                    } else {
+                        btnDeleteAllText.visibility = View.VISIBLE
+                    }
+                }
+            })
+
+            btnDeleteAllText.setOnClickListener { binding.editText.text.clear() }
         }
-
-        when (builder.content) {
-            null -> { binding.editText.hint = "내용을 입력해 주세요"}
-            else -> { binding.editText.setText(builder.content) }
-        }
-
-        when(builder.positiveText) {
-            null -> { binding.btnDialogModify.text = context.getString(R.string.dialog_positive_text_default) }
-            else -> { binding.btnDialogModify.text = builder.positiveText }
-        }
-
-        when(builder.negativeText) {
-            null -> { binding.btnDialogNegative.text = context.getString(R.string.dialog_negative_text_default) }
-            else -> { binding.btnDialogNegative.text = builder.negativeText }
-        }
-
-
-        // Title Color Set
-        binding.textViewTitle.setTextColor(
-            ContextCompat.getColor(context, builder.titleTextColorResId)
-        )
-
-        // Positive Text Color Set
-        binding.btnDialogModify.setTextColor(
-            ContextCompat.getColor(context, builder.positiveTextColorResId)
-        )
-
-        // Negative Text Color Set
-        binding.btnDialogNegative.setTextColor(
-            ContextCompat.getColor(context, R.color.price_color_red)
-        )
     }
 }

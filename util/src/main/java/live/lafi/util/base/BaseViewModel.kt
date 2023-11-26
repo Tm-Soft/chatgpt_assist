@@ -1,4 +1,4 @@
-package live.lafi.presentation.base
+package live.lafi.util.base
 
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.CoroutineScope
@@ -6,7 +6,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 
 abstract class BaseViewModel: ViewModel() {
-    val viewModelJob = SupervisorJob()
+    private val viewModelJob = SupervisorJob()
 
     // private val singleThreadDispatcher = newSingleThreadContext("singleThreadDispatcher")
 

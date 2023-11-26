@@ -9,23 +9,24 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import live.lafi.presentation.databinding.ItemChatRoomBinding
 
-class ChatRoomListAdapter(): ListAdapter<ChatRoomInfo, ChatRoomListAdapter.ChatRoomListViewHolder>(
+class ChatRoomListAdapter(): ListAdapter<ChatRoomItem, ChatRoomListAdapter.ChatRoomListViewHolder>(
     diffUtil
 ) {
-    private var onClickLister: ((Long) -> Unit)? = null
+    private var onClickListener: ((Long) -> Unit)? = null
+    private var onLongTouchListener: ((Long) -> Unit)? = null
 
     companion object {
-        val diffUtil = object: DiffUtil.ItemCallback<ChatRoomInfo>() {
+        val diffUtil = object: DiffUtil.ItemCallback<ChatRoomItem>() {
             override fun areItemsTheSame(
-                oldItem: ChatRoomInfo,
-                newItem: ChatRoomInfo
+                oldItem: ChatRoomItem,
+                newItem: ChatRoomItem
             ): Boolean {
                 return oldItem.chatRoomSrl == newItem.chatRoomSrl
             }
 
             override fun areContentsTheSame(
-                oldItem: ChatRoomInfo,
-                newItem: ChatRoomInfo
+                oldItem: ChatRoomItem,
+                newItem: ChatRoomItem
             ): Boolean {
                 return oldItem == newItem
             }
@@ -52,7 +53,11 @@ class ChatRoomListAdapter(): ListAdapter<ChatRoomInfo, ChatRoomListAdapter.ChatR
     ) : RecyclerView.ViewHolder(binding.root) {
         init {
             itemView.setOnClickListener {
-                onClickLister?.invoke(getItem(adapterPosition).chatRoomSrl)
+                onClickListener?.invoke(getItem(adapterPosition).chatRoomSrl)
+            }
+            itemView.setOnLongClickListener {
+                onLongTouchListener?.invoke(getItem(adapterPosition).chatRoomSrl)
+                false
             }
         }
 
@@ -70,7 +75,7 @@ class ChatRoomListAdapter(): ListAdapter<ChatRoomInfo, ChatRoomListAdapter.ChatR
 
             binding.textViewContent.text = itemModel.content
 
-            if (itemModel.lastViewDate == 0L || itemModel.lastUpdate > itemModel.lastViewDate) {
+            if (itemModel.lastReadTimestamp == 0L || itemModel.lastUpdateTimestamp > itemModel.lastReadTimestamp) {
                 binding.layoutNewIcon.visibility = View.VISIBLE
             } else {
                 binding.layoutNewIcon.visibility = View.GONE
@@ -78,8 +83,12 @@ class ChatRoomListAdapter(): ListAdapter<ChatRoomInfo, ChatRoomListAdapter.ChatR
         }
     }
 
-    fun setOnClickListener(onClickLister: (Long) -> Unit) {
-        this.onClickLister = onClickLister
+    fun setOnClickListener(onClickListener: (Long) -> Unit) {
+        this.onClickListener = onClickListener
+    }
+
+    fun setOnLongClickListener(onLongTouchListener: (Long) -> Unit) {
+        this.onLongTouchListener = onLongTouchListener
     }
 
 }

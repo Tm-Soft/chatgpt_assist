@@ -12,23 +12,30 @@ import live.lafi.domain.ApiResult.LoadingEnd.onLoadingEnd
 import live.lafi.domain.ApiResult.LoadingEnd.onLoadingStart
 import live.lafi.domain.ApiResult.LoadingEnd.onSuccess
 import live.lafi.domain.usecase.chat_gpt.PostChatCompletionsUseCase
-import live.lafi.domain.usecase.local_setting.LoadChatGptTokenFlowUseCase
+import live.lafi.domain.usecase.local_setting.LoadChatGptTokenUseCase
+import live.lafi.domain.usecase.local_setting.LoadMaxUseTokenUseCase
 import live.lafi.domain.usecase.local_setting.SaveChatGptTokenUseCase
-import live.lafi.presentation.base.BaseViewModel
+import live.lafi.domain.usecase.local_setting.SaveMaxUseTokenUseCase
+import live.lafi.util.base.BaseViewModel
 import live.lafi.util.ext.SingleLiveEvent
 import live.lafi.util.public_model.GptToken
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
 class SettingViewModel @Inject constructor(
-    private val loadChatGptTokenFlowUseCase: LoadChatGptTokenFlowUseCase,
+    private val loadChatGptTokenUseCase: LoadChatGptTokenUseCase,
     private val saveChatGptTokenUseCase: SaveChatGptTokenUseCase,
+    private val loadMaxUseTokenUseCase: LoadMaxUseTokenUseCase,
+    private val saveMaxUseTokenUseCase: SaveMaxUseTokenUseCase,
     private val postChatCompletionsUseCase: PostChatCompletionsUseCase
 ): BaseViewModel() {
     private val _onLoading = SingleLiveEvent<Boolean>()
     val onLoading: SingleLiveEvent<Boolean> get() = _onLoading
 
-    suspend fun getFlow() = loadChatGptTokenFlowUseCase()
+    suspend fun getChatGptToken() = loadChatGptTokenUseCase()
+
+    suspend fun getMaxUseToken() = loadMaxUseTokenUseCase()
 
     fun updateChatGptToken(
         token: String,
@@ -46,6 +53,7 @@ class SettingViewModel @Inject constructor(
                     _onLoading.postValue(false)
                 }
                 result.onSuccess { data ->
+                    Timber.tag("response__").d("data: $data")
                     if (data.data[0].message.content.isNotEmpty()) {
                         viewModelScope.launch {
                             success.invoke()
@@ -69,5 +77,9 @@ class SettingViewModel @Inject constructor(
                 }
             }
         }
+    }
+
+    fun updateMaxUseToken(number: Int) {
+        scopeIO.launch { saveMaxUseTokenUseCase(number) }
     }
 }

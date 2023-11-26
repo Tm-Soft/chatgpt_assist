@@ -1,8 +1,16 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Base.Theme.Chatgpt_assist" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="colorPrimary">@color/white</item>
+        <item name="colorPrimaryVariant">@color/palette_deepblue100_50p</item>
+        <item name="colorOnPrimary">@color/palette_white900</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/palette_deepblue100</item>
+        <item name="colorSecondaryVariant">@color/palette_deepblue200</item>
+        <item name="colorOnSecondary">@color/palette_white900</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+        <item name="android:windowBackground">@color/palette_gray850</item>
     </style>
 
     <style name="Theme.Chatgpt_assist" parent="Base.Theme.Chatgpt_assist" />

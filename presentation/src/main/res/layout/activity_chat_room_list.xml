@@ -13,7 +13,8 @@
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/appbar"
             android:layout_width="match_parent"
-            android:layout_height="50dp">
+            android:layout_height="50dp"
+            android:background="@color/white">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -38,13 +39,13 @@
                     android:id="@+id/fl_chat_add_button"
                     android:layout_width="50dp"
                     android:layout_height="match_parent"
-                    android:background="?attr/selectableItemBackground">
+                    android:background="@drawable/ripple_circle_effect">
 
                     <ImageView
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:layout_gravity="center"
-                        android:background="@drawable/ic_baseline_add_circle_outline_24" />
+                        android:background="@drawable/ic_circle_plus" />
 
                 </FrameLayout>
 
@@ -52,7 +53,7 @@
                     android:id="@+id/fl_setting_button"
                     android:layout_width="50dp"
                     android:layout_height="match_parent"
-                    android:background="?attr/selectableItemBackground">
+                    android:background="@drawable/ripple_circle_effect">
 
                     <ImageView
                         android:layout_width="30dp"

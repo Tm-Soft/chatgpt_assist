@@ -29,8 +29,21 @@
                 android:textSize="20dp"
                 android:textStyle="bold" />
 
+            <TextView
+                android:id="@+id/textView_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginStart="25dp"
+                android:layout_marginEnd="25dp"
+                android:layout_marginTop="12dp"
+                android:autoLink="web"
+                style="@style/AppThemeBlueAccent"
+                android:textSize="16dp"
+                android:textColor="#555555" />
+
             <FrameLayout
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="15dp"
                 android:layout_marginStart="30dp"
                 android:layout_marginEnd="30dp"
                 android:layout_width="match_parent"
@@ -39,18 +52,20 @@
                 <EditText
                     android:id="@+id/editText"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
+                    android:layout_height="wrap_content"
+                    android:minHeight="40dp"
+                    android:maxHeight="120dp"
                     android:background="@drawable/edittext_focus_selector"
                     android:paddingStart="10dp"
                     android:paddingEnd="40dp"
-                    android:hint="내용을 입력해 주세요."
+                    android:inputType="text"
                     style="@style/EdittextTheme" />
 
                 <LinearLayout
                     android:id="@+id/btn_delete_all_text"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="end"
+                    android:layout_height="40dp"
+                    android:layout_gravity="end|bottom"
                     android:paddingStart="10dp"
                     android:paddingEnd="10dp"
                     android:gravity="center_vertical">

@@ -20,10 +20,13 @@ import live.lafi.util.R
 open class DialogBaseBuilder<out B : DialogBaseBuilder<B>>(
     internal var title: String? = null,
     internal var content: String? = null,
+    internal var editTextHint: String? = null,
     internal var positiveText: String? = null,
     internal var negativeText: String? = null,
     internal var selectTitleList: List<String>? = null,
     internal var selectContentList: List<String>? = null,
+    internal var editTextMaxLine: Int? = null,
+    internal var editTextImeOption: Int? = null,
     @ColorRes
     internal var titleTextColorResId: Int = R.color.gray_60,
     @ColorRes
@@ -32,7 +35,6 @@ open class DialogBaseBuilder<out B : DialogBaseBuilder<B>>(
     internal var positiveTextColorResId: Int = R.color.detail_button_blue,
     @ColorRes
     internal var negativeTextColorResId: Int = R.color.gray_30
-
 ): Parcelable {
     @IgnoredOnParcel
     protected var positiveListener: PositiveListener? = null
@@ -53,6 +55,11 @@ open class DialogBaseBuilder<out B : DialogBaseBuilder<B>>(
         return this as B
     }
 
+    fun editTextHint(editTextHint: String): B {
+        this.editTextHint = editTextHint
+        return this as B
+    }
+
     fun selectTitleList(list: List<String>): B {
         this.selectTitleList = list
         return this as B
@@ -70,6 +77,16 @@ open class DialogBaseBuilder<out B : DialogBaseBuilder<B>>(
 
     fun negativeText(negativeText: String): B {
         this.negativeText = negativeText
+        return this as B
+    }
+
+    fun setEditTextMaxLine(maxLine: Int): B {
+        this.editTextMaxLine = maxLine
+        return this as B
+    }
+
+    fun setEditTextImeOption(imeOption: Int): B {
+        this.editTextImeOption = imeOption
         return this as B
     }
 

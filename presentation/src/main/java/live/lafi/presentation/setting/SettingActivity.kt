@@ -1,6 +1,8 @@
 package live.lafi.presentation.setting
 
 import android.os.Bundle
+import android.view.inputmethod.EditorInfo
+import android.widget.SeekBar
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
@@ -8,28 +10,28 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import live.lafi.library_dialog.Dialog
 import live.lafi.presentation.R
-import live.lafi.presentation.base.BaseActivity
+import live.lafi.util.base.BaseActivity
 import live.lafi.presentation.databinding.ActivitySettingBinding
-import timber.log.Timber
 
 @AndroidEntryPoint
 class SettingActivity : BaseActivity<ActivitySettingBinding>(R.layout.activity_setting) {
     private val viewModel: SettingViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        setupUi()
-        subscribeUi()
-        initListener()
-        initData()
     }
 
-    private fun setupUi() {
-    }
+    override fun setupUi() {}
 
-    private fun subscribeUi() {
+    override fun subscribeUi() {
         lifecycleScope.launch {
-            viewModel.getFlow().collectLatest { setToken ->
+            viewModel.getMaxUseToken().collectLatest { setMaxUseToken ->
+                binding.seekBarMaxToken.progress = setMaxUseToken
+                binding.tvMaxTokenText.text = "$setMaxUseToken Token"
+            }
+        }
+
+        lifecycleScope.launch {
+            viewModel.getChatGptToken().collectLatest { setToken ->
                 if (setToken.isNotEmpty()) {
                     val viewToken = if (setToken.length > 10) {
                         setToken.substring(0, 20) + "..."
@@ -38,7 +40,7 @@ class SettingActivity : BaseActivity<ActivitySettingBinding>(R.layout.activity_s
                     }
                     binding.tvTokenAlready.text = viewToken
                 } else {
-                    binding.tvTokenAlready.text = "X 설정 된 API Token이 없습니다."
+                    binding.tvTokenAlready.text = "Open AI - Api Key 가 존재하지 않습니다"
                 }
             }
         }
@@ -50,41 +52,56 @@ class SettingActivity : BaseActivity<ActivitySettingBinding>(R.layout.activity_s
         }
     }
 
-    private fun initListener() {
+    override fun initListener() {
         with(binding) {
-            flBackButton.setOnClickListener {
-                onBackPressed()
-            }
-            btnTokenModify.setOnClickListener {
-                showEditGptToken()
+            flBackButton.setOnClickListener { onBackPressed() }
+
+            btnTokenModify.setOnClickListener { showEditGptToken() }
+
+            seekBarMaxToken.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+                override fun onProgressChanged(
+                    seekBar: SeekBar?,
+                    progress: Int,
+                    fromUser: Boolean
+                ) { tvMaxTokenText.text = "$progress Token" }
+                override fun onStartTrackingTouch(seekBar: SeekBar?) {}
+                override fun onStopTrackingTouch(seekBar: SeekBar?) {
+                    seekBar?.let { viewModel.updateMaxUseToken(it.progress) }
+                }
+            })
+
+            // 내부 this는 expTokenInfo 전체 사용.
+            with(expTokenInfo) {
+                parentLayout.setOnClickListener {
+                    if (isExpanded) collapse()
+                    else expand()
+                }
+
+                secondLayout.setOnClickListener { collapse() }
             }
         }
     }
 
-    private fun initData() {
-
-    }
+    override fun initData() {}
 
     private fun showEditGptToken() {
         Dialog.with(this@SettingActivity)
             .title("ChatGpt API Token 입력")
             .content("https://platform.openai.com/account/api-keys 에서 발급 받은 API Key 입력 해주세요")
+            .editTextHint("sk-xxxxxxxxxxxxxxxxxxxxxxxxxxx")
             .positiveText("변경")
             .negativeText("닫기")
+            .setEditTextMaxLine(1)
+            .setEditTextImeOption(EditorInfo.IME_ACTION_DONE)
             .stringCallbackListener { inputText ->
                 if (inputText.isNotEmpty()) {
                     viewModel.updateChatGptToken(
                         token = inputText,
-                        success = {
-                            Timber.tag("test__").e("토큰 변경 완료")
-                            showToast("ChatGPT Token 변경 완료")
-                        },
-                        fail = {
-                            showToast("유효 하지 않은 Token")
-                        }
+                        success = { showToast("ChatGPT Token 변경 완료") },
+                        fail = { showToast("유효 하지 않은 Token") }
                     )
                 } else {
-                    showToast("AI 이름을 입력 해주세요.")
+                    showToast("API Key를 입력 해주세요")
                 }
             }
             .showEditTextDialog()

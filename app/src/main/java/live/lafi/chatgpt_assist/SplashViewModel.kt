@@ -2,9 +2,8 @@ package live.lafi.chatgpt_assist
 
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
-import live.lafi.chatgpt_assist.base.BaseViewModel
 import live.lafi.util.public_model.GptToken
 import live.lafi.domain.ApiResult.LoadingStart.onError
 import live.lafi.domain.ApiResult.LoadingStart.onException
@@ -14,6 +13,7 @@ import live.lafi.domain.ApiResult.LoadingStart.onSuccess
 import live.lafi.domain.usecase.chat_gpt.PostChatCompletionsUseCase
 import live.lafi.domain.usecase.local_setting.LoadChatGptTokenUseCase
 import live.lafi.domain.usecase.local_setting.SaveChatGptTokenUseCase
+import live.lafi.util.base.BaseViewModel
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -25,7 +25,7 @@ class SplashViewModel @Inject constructor(
 ): BaseViewModel() {
     fun setupChatGptToken() {
         scopeIO.launch {
-            val token = loadChatGptTokenUseCase()
+            val token = loadChatGptTokenUseCase().first()
             if (token.isNotEmpty()) {
                 GptToken.editToken(token)
             }
