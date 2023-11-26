@@ -1,4 +1,4 @@
-package live.lafi.presentation.base
+package live.lafi.util.base
 
 import android.content.Context
 import android.os.Bundle

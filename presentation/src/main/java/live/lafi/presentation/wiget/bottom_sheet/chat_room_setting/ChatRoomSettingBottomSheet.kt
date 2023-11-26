@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import live.lafi.presentation.R
-import live.lafi.presentation.base.BaseBottomSheetFragment
+import live.lafi.util.base.BaseBottomSheetFragment
 import live.lafi.presentation.databinding.FragmentChatRoomSettingBinding
 
 class ChatRoomSettingBottomSheet : BaseBottomSheetFragment<FragmentChatRoomSettingBinding>(R.layout.fragment_chat_room_setting) {

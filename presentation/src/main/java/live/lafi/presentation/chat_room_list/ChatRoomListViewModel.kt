@@ -12,7 +12,7 @@ import live.lafi.domain.ApiResult.LoadingStart.onLoadingStart
 import live.lafi.domain.ApiResult.LoadingStart.onSuccess
 import live.lafi.domain.usecase.chat_gpt.PostChatCompletionsUseCase
 import live.lafi.domain.usecase.local_setting.SaveChatGptTokenUseCase
-import live.lafi.presentation.base.BaseViewModel
+import live.lafi.util.base.BaseViewModel
 import live.lafi.util.ext.SingleLiveEvent
 import timber.log.Timber
 import javax.inject.Inject

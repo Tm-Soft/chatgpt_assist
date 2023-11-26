@@ -16,7 +16,7 @@ import live.lafi.domain.usecase.local_setting.LoadChatGptTokenUseCase
 import live.lafi.domain.usecase.local_setting.LoadMaxUseTokenUseCase
 import live.lafi.domain.usecase.local_setting.SaveChatGptTokenUseCase
 import live.lafi.domain.usecase.local_setting.SaveMaxUseTokenUseCase
-import live.lafi.presentation.base.BaseViewModel
+import live.lafi.util.base.BaseViewModel
 import live.lafi.util.ext.SingleLiveEvent
 import live.lafi.util.public_model.GptToken
 import timber.log.Timber

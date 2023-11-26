@@ -1,4 +1,4 @@
-package live.lafi.presentation.base
+package live.lafi.util.base
 
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.CoroutineScope

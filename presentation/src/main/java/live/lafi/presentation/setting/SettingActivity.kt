@@ -2,37 +2,27 @@ package live.lafi.presentation.setting
 
 import android.os.Bundle
 import android.view.inputmethod.EditorInfo
-import android.widget.EditText
 import android.widget.SeekBar
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
-import com.skydoves.expandablelayout.ExpandableAnimation
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import live.lafi.library_dialog.Dialog
 import live.lafi.presentation.R
-import live.lafi.presentation.base.BaseActivity
+import live.lafi.util.base.BaseActivity
 import live.lafi.presentation.databinding.ActivitySettingBinding
-import timber.log.Timber
-import kotlin.math.exp
 
 @AndroidEntryPoint
 class SettingActivity : BaseActivity<ActivitySettingBinding>(R.layout.activity_setting) {
     private val viewModel: SettingViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        setupUi()
-        subscribeUi()
-        initListener()
-        initData()
     }
 
-    private fun setupUi() {}
+    override fun setupUi() {}
 
-    private fun subscribeUi() {
+    override fun subscribeUi() {
         lifecycleScope.launch {
             viewModel.getMaxUseToken().collectLatest { setMaxUseToken ->
                 binding.seekBarMaxToken.progress = setMaxUseToken
@@ -62,7 +52,7 @@ class SettingActivity : BaseActivity<ActivitySettingBinding>(R.layout.activity_s
         }
     }
 
-    private fun initListener() {
+    override fun initListener() {
         with(binding) {
             flBackButton.setOnClickListener { onBackPressed() }
 
@@ -92,7 +82,7 @@ class SettingActivity : BaseActivity<ActivitySettingBinding>(R.layout.activity_s
         }
     }
 
-    private fun initData() {}
+    override fun initData() {}
 
     private fun showEditGptToken() {
         Dialog.with(this@SettingActivity)

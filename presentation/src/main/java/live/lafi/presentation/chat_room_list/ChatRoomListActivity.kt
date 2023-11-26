@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import live.lafi.library_dialog.Dialog
 import live.lafi.presentation.R
-import live.lafi.presentation.base.BaseActivity
+import live.lafi.util.base.BaseActivity
 import live.lafi.presentation.databinding.ActivityChatRoomListBinding
 import live.lafi.presentation.setting.SettingActivity
 import live.lafi.presentation.wiget.bottom_sheet.chat_room_setting.ChatRoomSettingBottomSheet
@@ -20,10 +20,6 @@ class ChatRoomListActivity : BaseActivity<ActivityChatRoomListBinding>(R.layout.
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        setupUi()
-        subscribeUi()
-        initListener()
 
         chatRoomListAdapter.submitList(
             listOf(
@@ -49,7 +45,7 @@ class ChatRoomListActivity : BaseActivity<ActivityChatRoomListBinding>(R.layout.
         )
     }
 
-    private fun setupUi() {
+    override fun setupUi() {
         with(binding) {
             rvChatRoomList.apply {
                 adapter = chatRoomListAdapter
@@ -58,12 +54,12 @@ class ChatRoomListActivity : BaseActivity<ActivityChatRoomListBinding>(R.layout.
         }
     }
 
-    private fun subscribeUi() {
+    override fun subscribeUi() {
         with(viewModel) {
         }
     }
 
-    private fun initListener() {
+    override fun initListener() {
         with(binding) {
             flChatAddButton.setOnClickListener { showAddChatRoomDialog() }
             flSettingButton.setOnClickListener {
@@ -77,6 +73,8 @@ class ChatRoomListActivity : BaseActivity<ActivityChatRoomListBinding>(R.layout.
             showToast("안녕 클릭 : $it")
         }
     }
+
+    override fun initData() {}
 
     private fun showAddChatRoomDialog() {
         Dialog.with(this@ChatRoomListActivity)
