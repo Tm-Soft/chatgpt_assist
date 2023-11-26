@@ -58,6 +58,7 @@
                     android:background="@drawable/edittext_focus_selector"
                     android:paddingStart="10dp"
                     android:paddingEnd="40dp"
+                    android:inputType="text"
                     style="@style/EdittextTheme" />
 
                 <LinearLayout

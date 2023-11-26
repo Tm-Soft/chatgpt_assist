@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <style name="TextViewAsButtonPrimaryBlue" parent="TextAppearance.AppCompat.Button">
         <item name="android:background">@drawable/ripple_text_view_effect</item>
         <item name="android:paddingStart">16dp</item>
@@ -10,5 +10,12 @@
         <item name="android:gravity">center</item>
         <item name="android:clickable">true</item>
         <item name="android:focusable">true</item>
+    </style>
+
+    <style name="EdittextTheme" parent="Widget.AppCompat.EditText">
+        <item name="android:textColor"> @color/gray_50</item>
+        <item name="android:textColorHint"> @color/gray_30</item>
+        <item name="android:textSize" tools:ignore="SpUsage">14dp</item>
+        <item name="colorAccent">@color/gray_50</item>
     </style>
 </resources>

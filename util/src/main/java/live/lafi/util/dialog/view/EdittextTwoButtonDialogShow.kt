@@ -68,6 +68,10 @@ class EdittextTwoButtonDialogShow (
                 binding.editText.maxLines = builder.editTextMaxLine!!
             }
 
+            if (builder.editTextImeOption != null) {
+                binding.editText.imeOptions = builder.editTextImeOption!!
+            }
+
             // Title Color Set
             textViewTitle.setTextColor(
                 ContextCompat.getColor(context, builder.titleTextColorResId)

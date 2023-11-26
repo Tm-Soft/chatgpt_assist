@@ -1,6 +1,8 @@
 package live.lafi.presentation.setting
 
 import android.os.Bundle
+import android.view.inputmethod.EditorInfo
+import android.widget.EditText
 import android.widget.SeekBar
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -96,9 +98,11 @@ class SettingActivity : BaseActivity<ActivitySettingBinding>(R.layout.activity_s
         Dialog.with(this@SettingActivity)
             .title("ChatGpt API Token 입력")
             .content("https://platform.openai.com/account/api-keys 에서 발급 받은 API Key 입력 해주세요")
-            .editTextHint("API Key를 입력 해주세요")
+            .editTextHint("sk-xxxxxxxxxxxxxxxxxxxxxxxxxxx")
             .positiveText("변경")
             .negativeText("닫기")
+            .setEditTextMaxLine(1)
+            .setEditTextImeOption(EditorInfo.IME_ACTION_DONE)
             .stringCallbackListener { inputText ->
                 if (inputText.isNotEmpty()) {
                     viewModel.updateChatGptToken(
@@ -107,7 +111,7 @@ class SettingActivity : BaseActivity<ActivitySettingBinding>(R.layout.activity_s
                         fail = { showToast("유효 하지 않은 Token") }
                     )
                 } else {
-                    showToast("AI 이름을 입력 해주세요.")
+                    showToast("API Key를 입력 해주세요")
                 }
             }
             .showEditTextDialog()

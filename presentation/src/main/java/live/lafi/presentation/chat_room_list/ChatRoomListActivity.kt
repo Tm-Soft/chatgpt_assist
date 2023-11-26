@@ -2,7 +2,6 @@ package live.lafi.presentation.chat_room_list
 
 import android.content.Intent
 import android.os.Bundle
-import android.text.method.ScrollingMovementMethod
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
@@ -11,6 +10,7 @@ import live.lafi.presentation.R
 import live.lafi.presentation.base.BaseActivity
 import live.lafi.presentation.databinding.ActivityChatRoomListBinding
 import live.lafi.presentation.setting.SettingActivity
+import live.lafi.presentation.wiget.bottom_sheet.chat_room_setting.ChatRoomSettingBottomSheet
 
 @AndroidEntryPoint
 class ChatRoomListActivity : BaseActivity<ActivityChatRoomListBinding>(R.layout.activity_chat_room_list) {
@@ -45,69 +45,6 @@ class ChatRoomListActivity : BaseActivity<ActivityChatRoomListBinding>(R.layout.
                     lastViewDate = 0L,
                     lastUpdate = 0L
                 ),
-                ChatRoomInfo(
-                    chatRoomSrl = 3L,
-                    title = "챗봇이냐옹",
-                    question = "물어보고 싶네요",
-                    content = "무엇을용?",
-                    profileUri = "",
-                    lastViewDate = 0L,
-                    lastUpdate = 0L
-                ),
-                ChatRoomInfo(
-                    chatRoomSrl = 4L,
-                    title = "챗봇이냐옹",
-                    question = "물어보고 싶네요",
-                    content = "무엇을용?",
-                    profileUri = "",
-                    lastViewDate = 0L,
-                    lastUpdate = 0L
-                ),
-                ChatRoomInfo(
-                    chatRoomSrl = 5L,
-                    title = "챗봇이냐옹",
-                    question = "물어보고 싶네요",
-                    content = "무엇을용?",
-                    profileUri = "",
-                    lastViewDate = 0L,
-                    lastUpdate = 0L
-                ),
-                ChatRoomInfo(
-                    chatRoomSrl = 6L,
-                    title = "챗봇이냐옹",
-                    question = "물어보고 싶네요",
-                    content = "무엇을용?",
-                    profileUri = "",
-                    lastViewDate = 0L,
-                    lastUpdate = 0L
-                ),
-                ChatRoomInfo(
-                    chatRoomSrl = 7L,
-                    title = "챗봇이냐옹",
-                    question = "물어보고 싶네요",
-                    content = "무엇을용?",
-                    profileUri = "",
-                    lastViewDate = 0L,
-                    lastUpdate = 0L
-                ),
-                ChatRoomInfo(
-                    chatRoomSrl = 8L,
-                    title = "챗봇이냐옹",
-                    question = "물어보고 싶네요",
-                    content = "무엇을용?",
-                    profileUri = "",
-                    lastViewDate = 0L,
-                    lastUpdate = 0L
-                ),
-                ChatRoomInfo(
-                    chatRoomSrl = 9L,
-                    title = "챗봇이냐옹",
-                    question = "물어보고 싶네요",
-                    content = "무엇을용?",
-                    profileUri = "",
-                    lastViewDate = 0L,
-                    lastUpdate = 0L
-                )
             )
         )
     }
@@ -143,15 +80,17 @@ class ChatRoomListActivity : BaseActivity<ActivityChatRoomListBinding>(R.layout.
 
     private fun showAddChatRoomDialog() {
         Dialog.with(this@ChatRoomListActivity)
-            .title("챗봇 이름 입력")
-            .content("")
-            .positiveText("변경")
-            .negativeText("닫기")
+            .title(getString(R.string.enter_chat_bot_name))
+            .positiveText(getString(R.string.add_text))
+            .negativeText(getString(R.string.close_text))
             .stringCallbackListener { inputText ->
                 if (inputText.isNotEmpty()) {
-
+                    ChatRoomSettingBottomSheet.newInstance(
+                        0L,
+                        inputText
+                    ).show(supportFragmentManager, "ChatRoomSettingBottomSheet")
                 } else {
-                    showToast("AI 이름을 입력 해주세요.")
+                    showToast(getString(R.string.plase_enter_chat_bot_name))
                 }
             }
             .showEditTextDialog()
