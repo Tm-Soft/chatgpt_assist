@@ -24,13 +24,13 @@ import timber.log.Timber
 import javax.inject.Inject
 
 class ChatGptRepositoryImpl @Inject constructor(
-    private val service: OpenaiApi
+    private val openApiService: OpenaiApi
 ): ChatGptRepository {
     override suspend fun postChatCompletions(
         sendMessage: String
     ): Flow<ApiResult<CompletionData>> =
         handleFlowApi {
-            service.getCompletion(
+            openApiService.getCompletion(
                 CompletionRequest(
                     model = "gpt-3.5-turbo-16k",
                     temperature = 0.8,

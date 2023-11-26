@@ -3,8 +3,13 @@ package live.lafi.presentation.chat_room_list
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
+import live.lafi.domain.model.chat.ChatRoomInfo
 import live.lafi.library_dialog.Dialog
 import live.lafi.presentation.R
 import live.lafi.util.base.BaseActivity
@@ -20,29 +25,6 @@ class ChatRoomListActivity : BaseActivity<ActivityChatRoomListBinding>(R.layout.
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        chatRoomListAdapter.submitList(
-            listOf(
-                ChatRoomInfo(
-                    chatRoomSrl = 1L,
-                    title = "챗봇이냐옹",
-                    question = "물어보고 싶네요",
-                    content = "무엇을용?",
-                    profileUri = "",
-                    lastViewDate = 0L,
-                    lastUpdate = 0L
-                ),
-                ChatRoomInfo(
-                    chatRoomSrl = 2L,
-                    title = "챗봇이냐옹",
-                    question = "물어보고 싶네요",
-                    content = "무엇을용?",
-                    profileUri = "",
-                    lastViewDate = 0L,
-                    lastUpdate = 0L
-                ),
-            )
-        )
     }
 
     override fun setupUi() {
@@ -56,6 +38,9 @@ class ChatRoomListActivity : BaseActivity<ActivityChatRoomListBinding>(R.layout.
 
     override fun subscribeUi() {
         with(viewModel) {
+            lifecycleScope.launch(Dispatchers.IO) {
+                getAllChatRoomInfo().collectLatest { setOnChatRoomList(it) }
+            }
         }
     }
 
@@ -76,6 +61,22 @@ class ChatRoomListActivity : BaseActivity<ActivityChatRoomListBinding>(R.layout.
 
     override fun initData() {}
 
+    private fun setOnChatRoomList(chatRoomInfoList: List<ChatRoomInfo>) {
+        chatRoomListAdapter.submitList(
+            chatRoomInfoList.map {
+                ChatRoomItem(
+                    chatRoomSrl = it.chatRoomSrl,
+                    title = it.title,
+                    question = "",
+                    content = "",
+                    profileUri = it.profileUri,
+                    lastReadTimestamp = it.lastReadTimestamp,
+                    lastUpdateTimestamp = it.lastUpdateTimestamp
+                )
+            }.sortedByDescending { it.lastUpdateTimestamp }
+        )
+    }
+
     private fun showAddChatRoomDialog() {
         Dialog.with(this@ChatRoomListActivity)
             .title(getString(R.string.enter_chat_bot_name))
@@ -83,6 +84,7 @@ class ChatRoomListActivity : BaseActivity<ActivityChatRoomListBinding>(R.layout.
             .negativeText(getString(R.string.close_text))
             .stringCallbackListener { inputText ->
                 if (inputText.isNotEmpty()) {
+                    viewModel.insertChatRoom(title = inputText)
                     ChatRoomSettingBottomSheet.newInstance(
                         0L,
                         inputText

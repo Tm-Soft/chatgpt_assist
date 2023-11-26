@@ -9,23 +9,23 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import live.lafi.presentation.databinding.ItemChatRoomBinding
 
-class ChatRoomListAdapter(): ListAdapter<ChatRoomInfo, ChatRoomListAdapter.ChatRoomListViewHolder>(
+class ChatRoomListAdapter(): ListAdapter<ChatRoomItem, ChatRoomListAdapter.ChatRoomListViewHolder>(
     diffUtil
 ) {
     private var onClickLister: ((Long) -> Unit)? = null
 
     companion object {
-        val diffUtil = object: DiffUtil.ItemCallback<ChatRoomInfo>() {
+        val diffUtil = object: DiffUtil.ItemCallback<ChatRoomItem>() {
             override fun areItemsTheSame(
-                oldItem: ChatRoomInfo,
-                newItem: ChatRoomInfo
+                oldItem: ChatRoomItem,
+                newItem: ChatRoomItem
             ): Boolean {
                 return oldItem.chatRoomSrl == newItem.chatRoomSrl
             }
 
             override fun areContentsTheSame(
-                oldItem: ChatRoomInfo,
-                newItem: ChatRoomInfo
+                oldItem: ChatRoomItem,
+                newItem: ChatRoomItem
             ): Boolean {
                 return oldItem == newItem
             }
@@ -70,7 +70,7 @@ class ChatRoomListAdapter(): ListAdapter<ChatRoomInfo, ChatRoomListAdapter.ChatR
 
             binding.textViewContent.text = itemModel.content
 
-            if (itemModel.lastViewDate == 0L || itemModel.lastUpdate > itemModel.lastViewDate) {
+            if (itemModel.lastReadTimestamp == 0L || itemModel.lastUpdateTimestamp > itemModel.lastReadTimestamp) {
                 binding.layoutNewIcon.visibility = View.VISIBLE
             } else {
                 binding.layoutNewIcon.visibility = View.GONE
