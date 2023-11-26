@@ -62,10 +62,10 @@
         </FrameLayout>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_system_command"
+            android:id="@+id/rv_system_role"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:listitem="@layout/item_chat_system_command"
+            tools:listitem="@layout/item_chat_system_role"
             app:layout_constraintTop_toBottomOf="@id/fl_appbar"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

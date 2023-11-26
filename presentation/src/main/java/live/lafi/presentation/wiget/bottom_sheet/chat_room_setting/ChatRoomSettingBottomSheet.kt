@@ -3,11 +3,18 @@ package live.lafi.presentation.wiget.bottom_sheet.chat_room_setting
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
+import live.lafi.domain.model.chat.ChatRoomSystemRoleInfo
 import live.lafi.library_dialog.Dialog
 import live.lafi.presentation.R
 import live.lafi.util.base.BaseBottomSheetFragment
 import live.lafi.presentation.databinding.FragmentChatRoomSettingBinding
+import timber.log.Timber
 
 @AndroidEntryPoint
 class ChatRoomSettingBottomSheet : BaseBottomSheetFragment<FragmentChatRoomSettingBinding>(R.layout.fragment_chat_room_setting) {
@@ -15,24 +22,55 @@ class ChatRoomSettingBottomSheet : BaseBottomSheetFragment<FragmentChatRoomSetti
 
     private val viewModel: ChatRoomSettingViewModel by viewModels()
 
+    private val chatSystemRoleAdapter by lazy { ChatSystemRoleAdapter() }
+
     private var onChatRoomDeleteListener: (() -> Unit)? = null
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         if (chatRoomSrl == 0L) {
             dismiss()
         }
+        super.onViewCreated(view, savedInstanceState)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+
+        viewModel.changeChatRoomSystemRoleList.value?.let { viewModel.updateChatRoomSystemRolList(it) }
     }
 
     override fun setupUi() {
-        with(binding) {}
+        with(binding) {
+            rvSystemRole.apply {
+                adapter = chatSystemRoleAdapter
+                layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+            }
+        }
     }
 
     override fun subscribeUi() {
         with(viewModel) {
             chatRoomInfo.observe(viewLifecycleOwner) { chatRoomInfo ->
                 binding.tvTitle.text = chatRoomInfo.title
+            }
+
+            lifecycleScope.launch(Dispatchers.IO) {
+                viewModel.getChatRoomSystemRole(chatRoomSrl = chatRoomSrl).collectLatest { chatRoomSystemRoleList ->
+                    chatSystemRoleAdapter.submitList(
+                        chatRoomSystemRoleList.map {
+                            ChatSystemRoleListItem(
+                                viewType = ChatSystemRoleListItem.ViewType.ROLE_CONTENT,
+                                chatSystemRoleSrl = it.chatRoomSystemRoleSrl,
+                                roleContent = it.roleContent
+                            )
+                        } + ChatSystemRoleListItem(
+                            viewType = ChatSystemRoleListItem.ViewType.PLUS_BUTTON,
+                            chatSystemRoleSrl = 0L,
+                            roleContent = ""
+                        )
+                    )
+                }
             }
         }
     }
@@ -50,6 +88,34 @@ class ChatRoomSettingBottomSheet : BaseBottomSheetFragment<FragmentChatRoomSetti
                     onChatRoomDeleteListener?.invoke()
                     dismiss()
                 }.showTwoButtonDialog()
+        }
+
+        chatSystemRoleAdapter.apply {
+            setOnChangeChatSystemRoleContentListener { chatRoomSystemRoleSrl, content ->
+                var replaceList: List<ChatRoomSystemRoleInfo>? = null
+                val changeModel = ChatRoomSystemRoleInfo(
+                    chatRoomSystemRoleSrl = chatRoomSystemRoleSrl,
+                    chatRoomSrl = chatRoomSrl,
+                    roleContent = content
+                )
+                replaceList = if (viewModel.changeChatRoomSystemRoleList.value?.firstOrNull { it.chatRoomSystemRoleSrl == chatRoomSystemRoleSrl } == null) {
+                    if (viewModel.changeChatRoomSystemRoleList.value == null) {
+                        listOf(changeModel)
+                    } else {
+                        viewModel.changeChatRoomSystemRoleList.value!! + changeModel
+                    }
+                } else {
+                    viewModel.changeChatRoomSystemRoleList.value?.map {
+                        if (it.chatRoomSystemRoleSrl == chatRoomSystemRoleSrl) {
+                            changeModel
+                        } else {
+                            it
+                        }
+                    }
+                }
+
+                replaceList?.let { viewModel.setChatRoomSystemRoleList(it) }
+            }
         }
     }
 

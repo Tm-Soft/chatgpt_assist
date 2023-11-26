@@ -10,7 +10,12 @@ import live.lafi.domain.repository.LocalSettingRepository
 import live.lafi.domain.usecase.chat.DeleteChatRoomWithSrlUseCase
 import live.lafi.domain.usecase.chat.GetAllChatRoomInfoUseCase
 import live.lafi.domain.usecase.chat.GetChatRoomInfoWithSrlUseCase
+import live.lafi.domain.usecase.chat.GetChatRoomSystemRoleUseCase
+import live.lafi.domain.usecase.chat.InsertChatRoomSystemRoleListUseCase
+import live.lafi.domain.usecase.chat.InsertChatRoomSystemRoleUseCase
 import live.lafi.domain.usecase.chat.InsertChatRoomUseCase
+import live.lafi.domain.usecase.chat.UpdateChatRoomSystemRoleListUseCase
+import live.lafi.domain.usecase.chat.UpdateChatRoomSystemRoleUseCase
 import live.lafi.domain.usecase.chat_gpt.PostChatCompletionsUseCase
 import live.lafi.domain.usecase.local_setting.LoadChatGptTokenUseCase
 import live.lafi.domain.usecase.local_setting.LoadMaxUseTokenUseCase
@@ -56,4 +61,24 @@ object UseCaseModule {
     @Provides
     @Singleton
     fun provideDeleteChatRoomWithSrlUseCase(chatRepository: ChatRepository) = DeleteChatRoomWithSrlUseCase(chatRepository)
+
+    @Provides
+    @Singleton
+    fun provideGetChatRoomSystemRoleUseCase(chatRepository: ChatRepository) = GetChatRoomSystemRoleUseCase(chatRepository)
+
+    @Provides
+    @Singleton
+    fun provideInsertChatRoomSystemRoleUseCase(chatRepository: ChatRepository) = InsertChatRoomSystemRoleUseCase(chatRepository)
+
+    @Provides
+    @Singleton
+    fun provideInsertChatRoomSystemRoleListUseCase(chatRepository: ChatRepository) = InsertChatRoomSystemRoleListUseCase(chatRepository)
+
+    @Provides
+    @Singleton
+    fun provideUpdateChatRoomSystemRoleUseCase(chatRepository: ChatRepository) = UpdateChatRoomSystemRoleUseCase(chatRepository)
+
+    @Provides
+    @Singleton
+    fun provideUpdateChatRoomSystemRoleListUseCase(chatRepository: ChatRepository) = UpdateChatRoomSystemRoleListUseCase(chatRepository)
 }

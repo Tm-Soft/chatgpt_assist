@@ -16,11 +16,13 @@ import live.lafi.util.base.BaseActivity
 import live.lafi.presentation.databinding.ActivityChatRoomListBinding
 import live.lafi.presentation.setting.SettingActivity
 import live.lafi.presentation.wiget.bottom_sheet.chat_room_setting.ChatRoomSettingBottomSheet
+import live.lafi.util.VibratorUtil
 
 @AndroidEntryPoint
 class ChatRoomListActivity : BaseActivity<ActivityChatRoomListBinding>(R.layout.activity_chat_room_list) {
     private val viewModel: ChatRoomListViewModel by viewModels()
     private val chatRoomListAdapter by lazy { ChatRoomListAdapter() }
+    private val vibratorUtil by lazy { VibratorUtil(this@ChatRoomListActivity) }
 
     override fun setupUi() {
         with(binding) {
@@ -34,7 +36,14 @@ class ChatRoomListActivity : BaseActivity<ActivityChatRoomListBinding>(R.layout.
     override fun subscribeUi() {
         with(viewModel) {
             lifecycleScope.launch(Dispatchers.IO) {
-                getAllChatRoomInfo().collectLatest { setOnChatRoomList(it) }
+                getAllChatRoomInfo().collectLatest {
+                    if (it.isEmpty()) {
+                        // 리스트가 비어있다면...
+                        viewModel.insertChatRoom("GPT 비서")
+                    } else {
+                        setOnChatRoomList(it)
+                    }
+                }
             }
         }
     }
@@ -54,7 +63,10 @@ class ChatRoomListActivity : BaseActivity<ActivityChatRoomListBinding>(R.layout.
                 showToast("채팅방 클릭 srl = $it")
             }
 
-            setOnLongClickListener { showChatRoomSettingBottomSheet(chatRoomSrl = it) }
+            setOnLongClickListener {
+                vibratorUtil.vibrateOneShot(50, 100)
+                showChatRoomSettingBottomSheet(chatRoomSrl = it)
+            }
         }
     }
 
@@ -96,6 +108,7 @@ class ChatRoomListActivity : BaseActivity<ActivityChatRoomListBinding>(R.layout.
                 if (inputText.isNotEmpty()) {
                     lifecycleScope.launch(Dispatchers.IO) {
                         val createChatRoomSrl = viewModel.insertChatRoom(title = inputText)
+                        viewModel.initChatRoomSystemRole(createChatRoomSrl)
                         withContext(Dispatchers.Main) {
                             showChatRoomSettingBottomSheet(chatRoomSrl = createChatRoomSrl)
                         }

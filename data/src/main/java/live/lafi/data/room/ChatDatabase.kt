@@ -5,14 +5,17 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import live.lafi.data.room.dao.ChatRoomDao
+import live.lafi.data.room.dao.ChatRoomSystemRoleDao
 import live.lafi.data.room.entity.ChatRoomEntity
+import live.lafi.data.room.entity.ChatRoomSystemRoleEntity
 
 @Database(
-    entities = [ChatRoomEntity::class],
+    entities = [ChatRoomEntity::class, ChatRoomSystemRoleEntity::class],
     version = 1
 )
 abstract class ChatDatabase : RoomDatabase() {
     abstract fun chatRoomDao(): ChatRoomDao
+    abstract fun chatRoomSystemRoleDao(): ChatRoomSystemRoleDao
 
     companion object {
         private var INSTANT: ChatDatabase? = null

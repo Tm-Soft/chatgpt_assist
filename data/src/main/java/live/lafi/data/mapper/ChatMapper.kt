@@ -1,7 +1,9 @@
 package live.lafi.data.mapper
 
 import live.lafi.data.room.entity.ChatRoomEntity
+import live.lafi.data.room.entity.ChatRoomSystemRoleEntity
 import live.lafi.domain.model.chat.ChatRoomInfo
+import live.lafi.domain.model.chat.ChatRoomSystemRoleInfo
 
 object ChatMapper {
     fun mapperToChatRoomInfoList(chatRoomEntity: List<ChatRoomEntity>) =
@@ -23,4 +25,30 @@ object ChatMapper {
             lastReadTimestamp = chatRoomEntity.lastReadTimestamp ?: 0L,
             lastUpdateTimestamp = chatRoomEntity.lastUpdateTimestamp ?: 0L
         )
+
+    fun mapperToChatRoomSystemRoleInfoList(chatRoomSystemRoleEntity: List<ChatRoomSystemRoleEntity>) =
+        chatRoomSystemRoleEntity.map {
+            ChatRoomSystemRoleInfo(
+                chatRoomSrl = it.chatRoomSrl,
+                chatRoomSystemRoleSrl = it.chatRoomSystemRoleSrl,
+                roleContent = it.roleContent
+            )
+        }
+
+    fun mapperToChatRoomSystemRoleEntityList(chatRoomSystemRoleInfo: List<ChatRoomSystemRoleInfo>) =
+        chatRoomSystemRoleInfo.map {
+            ChatRoomSystemRoleEntity(
+                chatRoomSrl = it.chatRoomSrl,
+                chatRoomSystemRoleSrl = it.chatRoomSystemRoleSrl,
+                roleContent = it.roleContent
+            )
+        }
+
+    fun mapperToChatRoomSystemRoleEntity(chatRoomSystemRoleInfo: ChatRoomSystemRoleInfo) =
+        ChatRoomSystemRoleEntity(
+            chatRoomSrl = chatRoomSystemRoleInfo.chatRoomSrl,
+            chatRoomSystemRoleSrl = chatRoomSystemRoleInfo.chatRoomSystemRoleSrl,
+            roleContent = chatRoomSystemRoleInfo.roleContent
+        )
+
 }
