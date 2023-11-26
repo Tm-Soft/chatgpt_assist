@@ -7,7 +7,9 @@ import dagger.hilt.components.SingletonComponent
 import live.lafi.domain.repository.ChatGptRepository
 import live.lafi.domain.repository.ChatRepository
 import live.lafi.domain.repository.LocalSettingRepository
-import live.lafi.domain.usecase.chat.GetAllChatRoomUseCase
+import live.lafi.domain.usecase.chat.DeleteChatRoomWithSrlUseCase
+import live.lafi.domain.usecase.chat.GetAllChatRoomInfoUseCase
+import live.lafi.domain.usecase.chat.GetChatRoomInfoWithSrlUseCase
 import live.lafi.domain.usecase.chat.InsertChatRoomUseCase
 import live.lafi.domain.usecase.chat_gpt.PostChatCompletionsUseCase
 import live.lafi.domain.usecase.local_setting.LoadChatGptTokenUseCase
@@ -45,5 +47,13 @@ object UseCaseModule {
 
     @Provides
     @Singleton
-    fun provideGetAllChatRoomUseCase(chatRepository: ChatRepository) = GetAllChatRoomUseCase(chatRepository)
+    fun provideGetAllChatRoomUseCase(chatRepository: ChatRepository) = GetAllChatRoomInfoUseCase(chatRepository)
+
+    @Provides
+    @Singleton
+    fun provideGetChatRoomInfoWithSrlUseCase(chatRepository: ChatRepository) = GetChatRoomInfoWithSrlUseCase(chatRepository)
+
+    @Provides
+    @Singleton
+    fun provideDeleteChatRoomWithSrlUseCase(chatRepository: ChatRepository) = DeleteChatRoomWithSrlUseCase(chatRepository)
 }

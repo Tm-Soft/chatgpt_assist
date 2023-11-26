@@ -6,7 +6,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 
 abstract class BaseViewModel: ViewModel() {
-    val viewModelJob = SupervisorJob()
+    private val viewModelJob = SupervisorJob()
 
     // private val singleThreadDispatcher = newSingleThreadContext("singleThreadDispatcher")
 

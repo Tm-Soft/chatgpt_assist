@@ -2,7 +2,9 @@ package live.lafi.presentation.chat_room_list
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import live.lafi.domain.ApiResult.LoadingStart.onError
@@ -10,10 +12,10 @@ import live.lafi.domain.ApiResult.LoadingStart.onException
 import live.lafi.domain.ApiResult.LoadingStart.onLoadingEnd
 import live.lafi.domain.ApiResult.LoadingStart.onLoadingStart
 import live.lafi.domain.ApiResult.LoadingStart.onSuccess
-import live.lafi.domain.usecase.chat.GetAllChatRoomUseCase
+import live.lafi.domain.usecase.chat.DeleteChatRoomWithSrlUseCase
+import live.lafi.domain.usecase.chat.GetAllChatRoomInfoUseCase
 import live.lafi.domain.usecase.chat.InsertChatRoomUseCase
 import live.lafi.domain.usecase.chat_gpt.PostChatCompletionsUseCase
-import live.lafi.domain.usecase.local_setting.SaveChatGptTokenUseCase
 import live.lafi.util.base.BaseViewModel
 import live.lafi.util.ext.SingleLiveEvent
 import timber.log.Timber
@@ -23,7 +25,8 @@ import javax.inject.Inject
 class ChatRoomListViewModel @Inject constructor(
     private val postChatCompletionsUseCase: PostChatCompletionsUseCase,
     private val insertChatRoomUseCase: InsertChatRoomUseCase,
-    private val getAllChatRoomUseCase: GetAllChatRoomUseCase
+    private val getAllChatRoomInfoUseCase: GetAllChatRoomInfoUseCase,
+    private val deleteChatRoomWithSrlUseCase: DeleteChatRoomWithSrlUseCase
 ) : BaseViewModel() {
     private val _onLoading = SingleLiveEvent<Boolean>()
     val onLoading: LiveData<Boolean> get() = _onLoading
@@ -57,14 +60,18 @@ class ChatRoomListViewModel @Inject constructor(
         }
     }
 
-    suspend fun getAllChatRoomInfo() = getAllChatRoomUseCase()
+    suspend fun getAllChatRoomInfo() = getAllChatRoomInfoUseCase()
 
-    fun insertChatRoom(title: String) {
-        scopeIO.launch {
-            insertChatRoomUseCase(
-                title = title,
-                profileUri = null
-            )
+    suspend fun insertChatRoom(title: String): Long {
+        return insertChatRoomUseCase(
+            title = title,
+            profileUri = null
+        )
+    }
+
+    fun deleteChatRoom(chatRoomSrl: Long) {
+        viewModelScope.launch(Dispatchers.IO) {
+            deleteChatRoomWithSrlUseCase(chatRoomSrl)
         }
     }
 }

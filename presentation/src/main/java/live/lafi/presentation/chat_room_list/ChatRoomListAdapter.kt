@@ -12,7 +12,8 @@ import live.lafi.presentation.databinding.ItemChatRoomBinding
 class ChatRoomListAdapter(): ListAdapter<ChatRoomItem, ChatRoomListAdapter.ChatRoomListViewHolder>(
     diffUtil
 ) {
-    private var onClickLister: ((Long) -> Unit)? = null
+    private var onClickListener: ((Long) -> Unit)? = null
+    private var onLongTouchListener: ((Long) -> Unit)? = null
 
     companion object {
         val diffUtil = object: DiffUtil.ItemCallback<ChatRoomItem>() {
@@ -52,7 +53,11 @@ class ChatRoomListAdapter(): ListAdapter<ChatRoomItem, ChatRoomListAdapter.ChatR
     ) : RecyclerView.ViewHolder(binding.root) {
         init {
             itemView.setOnClickListener {
-                onClickLister?.invoke(getItem(adapterPosition).chatRoomSrl)
+                onClickListener?.invoke(getItem(adapterPosition).chatRoomSrl)
+            }
+            itemView.setOnLongClickListener {
+                onLongTouchListener?.invoke(getItem(adapterPosition).chatRoomSrl)
+                false
             }
         }
 
@@ -78,8 +83,12 @@ class ChatRoomListAdapter(): ListAdapter<ChatRoomItem, ChatRoomListAdapter.ChatR
         }
     }
 
-    fun setOnClickListener(onClickLister: (Long) -> Unit) {
-        this.onClickLister = onClickLister
+    fun setOnClickListener(onClickListener: (Long) -> Unit) {
+        this.onClickListener = onClickListener
+    }
+
+    fun setOnLongClickListener(onLongTouchListener: (Long) -> Unit) {
+        this.onLongTouchListener = onLongTouchListener
     }
 
 }

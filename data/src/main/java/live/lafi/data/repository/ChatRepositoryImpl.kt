@@ -12,11 +12,11 @@ import javax.inject.Inject
 class ChatRepositoryImpl @Inject constructor(
     private val chatDatabase: ChatDatabase
 ): ChatRepository {
-    override fun insertChatRoom(
+    override suspend fun insertChatRoom(
         title: String,
         profileUri: String?
-    ) {
-        chatDatabase.chatRoomDao().insert(
+    ): Long {
+        return chatDatabase.chatRoomDao().insert(
             ChatRoomEntity(
                 chatRoomSrl = 0,
                 chatRoomTitle = title,
@@ -29,7 +29,17 @@ class ChatRepositoryImpl @Inject constructor(
 
     override suspend fun getAllChatRoom(): Flow<List<ChatRoomInfo>> {
         return chatDatabase.chatRoomDao().getAll().map {
+            ChatMapper.mapperToChatRoomInfoList(it)
+        }
+    }
+
+    override suspend fun getChatRoom(chatRoomSrl: Long): ChatRoomInfo {
+        return chatDatabase.chatRoomDao().getChatRoomEntity(chatRoomSrl).let {
             ChatMapper.mapperToChatRoomInfo(it)
         }
+    }
+
+    override suspend fun deleteChatRoom(chatRoomSrl: Long) {
+        chatDatabase.chatRoomDao().deleteWithSrl(chatRoomSrl = chatRoomSrl)
     }
 }

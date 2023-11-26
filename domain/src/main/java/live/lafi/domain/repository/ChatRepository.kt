@@ -4,10 +4,14 @@ import kotlinx.coroutines.flow.Flow
 import live.lafi.domain.model.chat.ChatRoomInfo
 
 interface ChatRepository {
-    fun insertChatRoom(
+    suspend fun insertChatRoom(
         title: String,
         profileUri: String?,
-    )
+    ): Long
 
     suspend fun getAllChatRoom(): Flow<List<ChatRoomInfo>>
+
+    suspend fun getChatRoom(chatRoomSrl: Long): ChatRoomInfo
+
+    suspend fun deleteChatRoom(chatRoomSrl: Long)
 }

@@ -1,7 +1,6 @@
 package live.lafi.presentation.chat_room_list
 
 import android.content.Intent
-import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -9,6 +8,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import live.lafi.domain.model.chat.ChatRoomInfo
 import live.lafi.library_dialog.Dialog
 import live.lafi.presentation.R
@@ -20,12 +20,7 @@ import live.lafi.presentation.wiget.bottom_sheet.chat_room_setting.ChatRoomSetti
 @AndroidEntryPoint
 class ChatRoomListActivity : BaseActivity<ActivityChatRoomListBinding>(R.layout.activity_chat_room_list) {
     private val viewModel: ChatRoomListViewModel by viewModels()
-
     private val chatRoomListAdapter by lazy { ChatRoomListAdapter() }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     override fun setupUi() {
         with(binding) {
@@ -54,8 +49,12 @@ class ChatRoomListActivity : BaseActivity<ActivityChatRoomListBinding>(R.layout.
             }
         }
 
-        chatRoomListAdapter.setOnClickListener {
-            showToast("안녕 클릭 : $it")
+        chatRoomListAdapter.apply {
+            setOnClickListener {
+                showToast("채팅방 클릭 srl = $it")
+            }
+
+            setOnLongClickListener { showChatRoomSettingBottomSheet(chatRoomSrl = it) }
         }
     }
 
@@ -77,18 +76,30 @@ class ChatRoomListActivity : BaseActivity<ActivityChatRoomListBinding>(R.layout.
         )
     }
 
+    private fun showChatRoomSettingBottomSheet(chatRoomSrl: Long) {
+        ChatRoomSettingBottomSheet.newInstance(
+            chatRoomSrl = chatRoomSrl,
+        ).apply {
+            setOnChatRoomDeleteListener {
+                viewModel.deleteChatRoom(chatRoomSrl = chatRoomSrl)
+            }
+        }.show(supportFragmentManager, "ChatRoomSettingBottomSheet")
+    }
+
     private fun showAddChatRoomDialog() {
         Dialog.with(this@ChatRoomListActivity)
             .title(getString(R.string.enter_chat_bot_name))
-            .positiveText(getString(R.string.add_text))
+            .content("챗봇의 이름을 지어 주세요.\n생성 이후 나만의 프롬프트를 설정할 수 있는 창이 나타나요!")
+            .positiveText(getString(R.string.chat_bot_create_text))
             .negativeText(getString(R.string.close_text))
             .stringCallbackListener { inputText ->
                 if (inputText.isNotEmpty()) {
-                    viewModel.insertChatRoom(title = inputText)
-                    ChatRoomSettingBottomSheet.newInstance(
-                        0L,
-                        inputText
-                    ).show(supportFragmentManager, "ChatRoomSettingBottomSheet")
+                    lifecycleScope.launch(Dispatchers.IO) {
+                        val createChatRoomSrl = viewModel.insertChatRoom(title = inputText)
+                        withContext(Dispatchers.Main) {
+                            showChatRoomSettingBottomSheet(chatRoomSrl = createChatRoomSrl)
+                        }
+                    }
                 } else {
                     showToast(getString(R.string.plase_enter_chat_bot_name))
                 }

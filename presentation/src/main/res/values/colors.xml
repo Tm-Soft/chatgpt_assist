@@ -469,6 +469,7 @@
     <color name="palette_red200_30p">#4AF53E50</color>
     <color name="palette_red200_15p">#26F53E50</color>
     <color name="palette_red200_00p">#00F53E50</color>
+    <color name="price_color_red">#AD0000</color>
 
     <color name="palette_yellow100">#FFFFC24A</color>
     <color name="palette_yellow100_90p">#E6FFC24A</color>

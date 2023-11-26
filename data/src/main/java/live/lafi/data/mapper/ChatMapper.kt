@@ -4,7 +4,7 @@ import live.lafi.data.room.entity.ChatRoomEntity
 import live.lafi.domain.model.chat.ChatRoomInfo
 
 object ChatMapper {
-    fun mapperToChatRoomInfo(chatRoomEntity: List<ChatRoomEntity>) =
+    fun mapperToChatRoomInfoList(chatRoomEntity: List<ChatRoomEntity>) =
         chatRoomEntity.map {
             ChatRoomInfo(
                 chatRoomSrl = it.chatRoomSrl,
@@ -14,4 +14,13 @@ object ChatMapper {
                 lastUpdateTimestamp = it.lastUpdateTimestamp ?: 0L
             )
         }
+
+    fun mapperToChatRoomInfo(chatRoomEntity: ChatRoomEntity) =
+        ChatRoomInfo(
+            chatRoomSrl = chatRoomEntity.chatRoomSrl,
+            title = chatRoomEntity.chatRoomTitle,
+            profileUri = chatRoomEntity.profileUri ?: "",
+            lastReadTimestamp = chatRoomEntity.lastReadTimestamp ?: 0L,
+            lastUpdateTimestamp = chatRoomEntity.lastUpdateTimestamp ?: 0L
+        )
 }
