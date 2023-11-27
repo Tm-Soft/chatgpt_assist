@@ -5,10 +5,14 @@ import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import live.lafi.domain.model.chat.ChatRoomSystemRoleInfo
 import live.lafi.library_dialog.Dialog
 import live.lafi.presentation.R
@@ -26,6 +30,8 @@ class ChatRoomSettingBottomSheet : BaseBottomSheetFragment<FragmentChatRoomSetti
 
     private var onChatRoomDeleteListener: (() -> Unit)? = null
 
+    private var roleScrollBottomFlag = false
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         if (chatRoomSrl == 0L) {
@@ -37,7 +43,7 @@ class ChatRoomSettingBottomSheet : BaseBottomSheetFragment<FragmentChatRoomSetti
     override fun onDestroy() {
         super.onDestroy()
 
-        viewModel.changeChatRoomSystemRoleList.value?.let { viewModel.updateChatRoomSystemRolList(it) }
+        viewModel.changeChatRoomSystemRoleList.value?.let { viewModel.updateChatRoomSystemRoleList(it) }
     }
 
     override fun setupUi() {
@@ -55,6 +61,14 @@ class ChatRoomSettingBottomSheet : BaseBottomSheetFragment<FragmentChatRoomSetti
                 binding.tvTitle.text = chatRoomInfo.title
             }
 
+            changeChatRoomSystemRoleList.observe(viewLifecycleOwner) {
+                if (it.isNotEmpty()) {
+                    binding.tvSettingStatus.visibility = View.VISIBLE
+                    binding.tvSettingStatus.text = "설정 변경 중..."
+                }
+            }
+
+
             lifecycleScope.launch(Dispatchers.IO) {
                 viewModel.getChatRoomSystemRole(chatRoomSrl = chatRoomSrl).collectLatest { chatRoomSystemRoleList ->
                     chatSystemRoleAdapter.submitList(
@@ -69,7 +83,18 @@ class ChatRoomSettingBottomSheet : BaseBottomSheetFragment<FragmentChatRoomSetti
                             chatSystemRoleSrl = 0L,
                             roleContent = ""
                         )
-                    )
+                    ) {
+                        binding.rvSystemRole.post {
+                            lifecycleScope.launch {
+                                delay(300L)
+
+                                if (roleScrollBottomFlag) {
+                                    roleScrollBottomFlag = false
+                                    binding.rvSystemRole.smoothScrollToPosition(chatSystemRoleAdapter.itemCount)
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -115,6 +140,22 @@ class ChatRoomSettingBottomSheet : BaseBottomSheetFragment<FragmentChatRoomSetti
                 }
 
                 replaceList?.let { viewModel.setChatRoomSystemRoleList(it) }
+            }
+
+            setOnRolePlusListener {
+                lifecycleScope.launch(Dispatchers.IO) {
+                    viewModel.insertChatRoomSystemRole(
+                        chatRoomSrl = chatRoomSrl,
+                        roleContent = ""
+                    )
+                    roleScrollBottomFlag = true
+                }
+            }
+
+            setOnDeleteListener { chatSystemRoleSrl ->
+                viewModel.deleteChatRoomSystemRole(
+                    chatRoomSystemRoleSrl = chatSystemRoleSrl
+                )
             }
         }
     }

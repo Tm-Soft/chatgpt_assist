@@ -7,6 +7,7 @@ import dagger.hilt.components.SingletonComponent
 import live.lafi.domain.repository.ChatGptRepository
 import live.lafi.domain.repository.ChatRepository
 import live.lafi.domain.repository.LocalSettingRepository
+import live.lafi.domain.usecase.chat.DeleteChatRoomSystemRoleUseCase
 import live.lafi.domain.usecase.chat.DeleteChatRoomWithSrlUseCase
 import live.lafi.domain.usecase.chat.GetAllChatRoomInfoUseCase
 import live.lafi.domain.usecase.chat.GetChatRoomInfoWithSrlUseCase
@@ -81,4 +82,9 @@ object UseCaseModule {
     @Provides
     @Singleton
     fun provideUpdateChatRoomSystemRoleListUseCase(chatRepository: ChatRepository) = UpdateChatRoomSystemRoleListUseCase(chatRepository)
+
+
+    @Provides
+    @Singleton
+    fun provideDeleteChatRoomSystemRoleUseCase(chatRepository: ChatRepository) = DeleteChatRoomSystemRoleUseCase(chatRepository)
 }

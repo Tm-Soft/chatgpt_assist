@@ -10,6 +10,7 @@ import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import live.lafi.domain.model.chat.ChatRoomInfo
 import live.lafi.domain.model.chat.ChatRoomSystemRoleInfo
+import live.lafi.domain.usecase.chat.DeleteChatRoomSystemRoleUseCase
 import live.lafi.domain.usecase.chat.GetChatRoomInfoWithSrlUseCase
 import live.lafi.domain.usecase.chat.GetChatRoomSystemRoleUseCase
 import live.lafi.domain.usecase.chat.InsertChatRoomSystemRoleUseCase
@@ -22,7 +23,9 @@ import javax.inject.Inject
 class ChatRoomSettingViewModel @Inject constructor(
     private val getChatRoomInfoWithSrlUseCase: GetChatRoomInfoWithSrlUseCase,
     private val getChatRoomSystemRoleUseCase: GetChatRoomSystemRoleUseCase,
-    private val updateChatRoomSystemRoleListUseCase: UpdateChatRoomSystemRoleListUseCase
+    private val updateChatRoomSystemRoleListUseCase: UpdateChatRoomSystemRoleListUseCase,
+    private val insertChatRoomSystemRoleUseCase: InsertChatRoomSystemRoleUseCase,
+    private val deleteChatRoomSystemRoleUseCase: DeleteChatRoomSystemRoleUseCase
 ) : BaseViewModel() {
     private val _chatRoomInfo = MutableLiveData<ChatRoomInfo>()
     val chatRoomInfo: LiveData<ChatRoomInfo> get() = _chatRoomInfo
@@ -40,7 +43,7 @@ class ChatRoomSettingViewModel @Inject constructor(
 
     suspend fun getChatRoomSystemRole(chatRoomSrl: Long) = getChatRoomSystemRoleUseCase(chatRoomSrl = chatRoomSrl)
 
-    fun updateChatRoomSystemRolList(
+    fun updateChatRoomSystemRoleList(
         chatRoomSystemRoleInfoList: List<ChatRoomSystemRoleInfo>
     ) {
         CoroutineScope(Dispatchers.IO).launch {
@@ -50,7 +53,27 @@ class ChatRoomSettingViewModel @Inject constructor(
         }
     }
 
+    suspend fun insertChatRoomSystemRole(
+        chatRoomSrl: Long,
+        roleContent: String,
+    ) {
+        insertChatRoomSystemRoleUseCase(
+            chatRoomSrl = chatRoomSrl,
+            roleContent = roleContent
+        )
+    }
+
     fun setChatRoomSystemRoleList(list: List<ChatRoomSystemRoleInfo>) {
         _changeChatRoomSystemRoleList.postValue(list)
+    }
+
+    fun deleteChatRoomSystemRole(
+        chatRoomSystemRoleSrl: Long
+    ) {
+        viewModelScope.launch(Dispatchers.IO) {
+            deleteChatRoomSystemRoleUseCase(
+                chatRoomSystemRoleSrl = chatRoomSystemRoleSrl
+            )
+        }
     }
 }

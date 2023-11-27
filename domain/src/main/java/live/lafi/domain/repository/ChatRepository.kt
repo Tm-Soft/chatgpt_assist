@@ -34,4 +34,8 @@ interface ChatRepository {
     suspend fun updateChatRoomSystemRoleList(
         chatRoomSystemRoleInfoList: List<ChatRoomSystemRoleInfo>
     )
+
+    suspend fun deleteChatRoomSystemRole(
+        chatRoomSystemRoleSrl: Long
+    )
 }

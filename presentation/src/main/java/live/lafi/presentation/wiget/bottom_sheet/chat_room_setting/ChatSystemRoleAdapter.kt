@@ -9,10 +9,12 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import live.lafi.presentation.databinding.ItemChatSystemRoleBinding
 import live.lafi.presentation.databinding.ItemChatSystemRolePlusButtonBinding
+import timber.log.Timber
 
 class ChatSystemRoleAdapter : ListAdapter<ChatSystemRoleListItem, RecyclerView.ViewHolder>(
     diffUtil
 ) {
+    private var onRolePlusListener: (() -> Unit)? = null
     private var onDeleteListener: ((chatSystemRoleSrl: Long) -> Unit)? = null
     private var onChangeChatSystemRoleContent: ((chatSystemRoleSrl: Long, content: String) -> Unit)? = null
 
@@ -51,7 +53,7 @@ class ChatSystemRoleAdapter : ListAdapter<ChatSystemRoleListItem, RecyclerView.V
             }
 
             is PlusButtonViewHolder -> {
-
+                holder.setupUi(position)
             }
         }
     }
@@ -59,28 +61,49 @@ class ChatSystemRoleAdapter : ListAdapter<ChatSystemRoleListItem, RecyclerView.V
     inner class RoleContentViewHolder(
         val binding: ItemChatSystemRoleBinding
     ): RecyclerView.ViewHolder(binding.root) {
-        fun setupUi(position: Int) {
-            val itemModel = getItem(position)
-            binding.etRoleContent.setText(itemModel.roleContent)
-            binding.flDeleteButton.setOnClickListener { onDeleteListener?.invoke(itemModel.chatSystemRoleSrl) }
-            binding.etRoleContent.addTextChangedListener(object : TextWatcher {
+        private var textWatcher: TextWatcher? = null
+        private var isManuallyTriggered = false
+
+        init {
+            textWatcher = object : TextWatcher {
                 override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
                 override fun afterTextChanged(s: Editable?) {}
                 override fun onTextChanged(content: CharSequence?, start: Int, before: Int, count: Int) {
-                    onChangeChatSystemRoleContent?.invoke(
-                        itemModel.chatSystemRoleSrl,
-                        content.toString()
-                    )
+                    if (isManuallyTriggered) {
+                        onChangeChatSystemRoleContent?.invoke(
+                            getItem(adapterPosition).chatSystemRoleSrl,
+                            content.toString()
+                        )
+                    }
                 }
-            })
+            }
+
+            binding.etRoleContent.addTextChangedListener(textWatcher)
+        }
+
+        fun setupUi(position: Int) {
+            val itemModel = getItem(position)
+
+            isManuallyTriggered = false
+            binding.etRoleContent.setText(itemModel.roleContent)
+            isManuallyTriggered = true
+
+            binding.flDeleteButton.setOnClickListener { onDeleteListener?.invoke(itemModel.chatSystemRoleSrl) }
         }
     }
 
     inner class PlusButtonViewHolder(
         val binding: ItemChatSystemRolePlusButtonBinding
     ): RecyclerView.ViewHolder(binding.root) {
-        fun setupUi() {
+        fun setupUi(position: Int) {
+            binding.ivPlusButton.setOnClickListener {
+                onRolePlusListener?.invoke()
+            }
         }
+    }
+
+    fun setOnRolePlusListener(listener: () -> Unit) {
+        this.onRolePlusListener = listener
     }
 
     fun setOnDeleteListener(listener: (chatSystemRoleSrl: Long) -> Unit) {

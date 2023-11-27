@@ -78,4 +78,10 @@ class ChatRepositoryImpl @Inject constructor(
             ChatMapper.mapperToChatRoomSystemRoleEntityList(chatRoomSystemRoleInfoList)
         )
     }
+
+    override suspend fun deleteChatRoomSystemRole(chatRoomSystemRoleSrl: Long) {
+        chatDatabase.chatRoomSystemRoleDao().deleteWithSystemRoleSrl(
+            chatRoomSystemRoleSrl = chatRoomSystemRoleSrl
+        )
+    }
 }

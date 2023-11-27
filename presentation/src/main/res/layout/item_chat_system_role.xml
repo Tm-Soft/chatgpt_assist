@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:minHeight="40dp"
             android:maxHeight="120dp"
-            android:paddingHorizontal="10dp"
+            android:padding="10dp"
             android:hint="명령어를 입력 해주세요."
             android:layout_weight="1"
             android:inputType="textMultiLine"
@@ -34,14 +34,14 @@
             android:id="@+id/fl_delete_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:padding="7dp"
             android:foreground="@drawable/ripple_circle_effect">
 
             <ImageView
                 android:layout_width="25dp"
                 android:layout_height="25dp"
-                android:layout_margin="7dp"
-                android:layout_gravity="bottom"
-                android:background="@drawable/ic_trash_bold"/>
+                android:background="@drawable/ic_circle_minus"/>
 
         </FrameLayout>
 

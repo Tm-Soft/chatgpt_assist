@@ -39,7 +39,8 @@ class ChatRoomListActivity : BaseActivity<ActivityChatRoomListBinding>(R.layout.
                 getAllChatRoomInfo().collectLatest {
                     if (it.isEmpty()) {
                         // 리스트가 비어있다면...
-                        viewModel.insertChatRoom("GPT 비서")
+                        val createChatRoomSrl = viewModel.insertChatRoom("GPT 비서")
+                        viewModel.initChatRoomSystemRole(createChatRoomSrl)
                     } else {
                         setOnChatRoomList(it)
                     }
