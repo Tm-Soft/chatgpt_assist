@@ -12,6 +12,7 @@ import kotlinx.coroutines.withContext
 import live.lafi.domain.model.chat.ChatRoomInfo
 import live.lafi.library_dialog.Dialog
 import live.lafi.presentation.R
+import live.lafi.presentation.chat_room.ChatRoomActivity
 import live.lafi.util.base.BaseActivity
 import live.lafi.presentation.databinding.ActivityChatRoomListBinding
 import live.lafi.presentation.setting.SettingActivity
@@ -61,7 +62,11 @@ class ChatRoomListActivity : BaseActivity<ActivityChatRoomListBinding>(R.layout.
 
         chatRoomListAdapter.apply {
             setOnClickListener {
-                showToast("채팅방 클릭 srl = $it")
+                startActivity(
+                    Intent(this@ChatRoomListActivity, ChatRoomActivity::class.java).apply {
+                        putExtra(ChatRoomActivity.CHAT_ROOM_SRL, it)
+                    }
+                )
             }
 
             setOnLongClickListener {
