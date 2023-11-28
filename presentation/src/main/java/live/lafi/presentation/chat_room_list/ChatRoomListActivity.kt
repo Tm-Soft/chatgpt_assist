@@ -43,7 +43,9 @@ class ChatRoomListActivity : BaseActivity<ActivityChatRoomListBinding>(R.layout.
                         val createChatRoomSrl = viewModel.insertChatRoom("GPT 비서")
                         viewModel.initChatRoomSystemRole(createChatRoomSrl)
                     } else {
-                        setOnChatRoomList(it)
+                        withContext(Dispatchers.Main) {
+                            setOnChatRoomList(it)
+                        }
                     }
                 }
             }
@@ -61,10 +63,11 @@ class ChatRoomListActivity : BaseActivity<ActivityChatRoomListBinding>(R.layout.
         }
 
         chatRoomListAdapter.apply {
-            setOnClickListener {
+            setOnClickListener { chatRoomSrl, chatRoomTitle ->
                 startActivity(
                     Intent(this@ChatRoomListActivity, ChatRoomActivity::class.java).apply {
-                        putExtra(ChatRoomActivity.CHAT_ROOM_SRL, it)
+                        putExtra(ChatRoomActivity.CHAT_ROOM_SRL, chatRoomSrl)
+                        putExtra(ChatRoomActivity.CHAT_ROOM_TITLE, chatRoomTitle)
                     }
                 )
             }
@@ -79,19 +82,21 @@ class ChatRoomListActivity : BaseActivity<ActivityChatRoomListBinding>(R.layout.
     override fun initData() {}
 
     private fun setOnChatRoomList(chatRoomInfoList: List<ChatRoomInfo>) {
-        chatRoomListAdapter.submitList(
-            chatRoomInfoList.map {
-                ChatRoomItem(
-                    chatRoomSrl = it.chatRoomSrl,
-                    title = it.title,
-                    question = "",
-                    content = "",
-                    profileUri = it.profileUri,
-                    lastReadTimestamp = it.lastReadTimestamp,
-                    lastUpdateTimestamp = it.lastUpdateTimestamp
-                )
-            }.sortedByDescending { it.lastUpdateTimestamp }
-        )
+        if (chatRoomInfoList.isNotEmpty()) {
+            chatRoomListAdapter.submitList(
+                chatRoomInfoList.map {
+                    ChatRoomItem(
+                        chatRoomSrl = it.chatRoomSrl,
+                        title = it.title,
+                        question = "",
+                        content = "",
+                        profileUri = it.profileUri,
+                        lastReadTimestamp = it.lastReadTimestamp,
+                        lastUpdateTimestamp = it.lastUpdateTimestamp
+                    )
+                }.sortedByDescending { it.lastUpdateTimestamp }
+            )
+        }
     }
 
     private fun showChatRoomSettingBottomSheet(chatRoomSrl: Long) {

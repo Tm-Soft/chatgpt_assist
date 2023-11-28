@@ -13,6 +13,7 @@ import live.lafi.domain.usecase.chat.DeleteChatRoomWithSrlUseCase
 import live.lafi.domain.usecase.chat.GetAllChatRoomInfoUseCase
 import live.lafi.domain.usecase.chat.GetChatRoomInfoWithSrlUseCase
 import live.lafi.domain.usecase.chat.GetChatRoomSystemRoleUseCase
+import live.lafi.domain.usecase.chat.InsertChatContentUseCase
 import live.lafi.domain.usecase.chat.InsertChatRoomSystemRoleListUseCase
 import live.lafi.domain.usecase.chat.InsertChatRoomSystemRoleUseCase
 import live.lafi.domain.usecase.chat.InsertChatRoomUseCase
@@ -92,4 +93,11 @@ object UseCaseModule {
     @Provides
     @Singleton
     fun provideDeleteChatRoomSystemRoleWithChatRoomSrlUseCase(chatRepository: ChatRepository) = DeleteChatRoomSystemRoleWithChatRoomSrlUseCase(chatRepository)
+
+    /**
+     * Chat Content 관련 UseCase
+     */
+    @Provides
+    @Singleton
+    fun provideInsertChatContentUseCase(chatRepository: ChatRepository) = InsertChatContentUseCase(chatRepository)
 }

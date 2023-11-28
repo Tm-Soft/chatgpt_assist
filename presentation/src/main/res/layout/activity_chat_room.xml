@@ -10,6 +10,45 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appbar"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:backgroundTint="@color/white">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <FrameLayout
+                    android:id="@+id/fl_back_button"
+                    android:layout_width="40dp"
+                    android:layout_height="match_parent"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/ripple_circle_effect">
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:background="@drawable/ic_back_button_ios_type"
+                        android:layout_gravity="center"
+                        />
+                </FrameLayout>
+
+                <TextView
+                    android:id="@+id/tv_chat_room_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+            </FrameLayout>
+
+        </com.google.android.material.appbar.AppBarLayout>
+
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -42,7 +81,7 @@
                 app:cardElevation="0dp" >
 
                 <EditText
-                    android:id="@+id/edit_text_message"
+                    android:id="@+id/et_text_message"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:maxHeight="100dp"
@@ -51,6 +90,7 @@
                     android:layout_marginStart="10dp"
                     android:layout_marginEnd="30dp"
                     android:background="@color/transparent"
+                    android:textSize="13sp"
                     android:textColor="@color/gray_60"/>
 
             </androidx.cardview.widget.CardView>
@@ -61,6 +101,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="15dp"
+                android:visibility="gone"
+                android:background="?attr/selectableItemBackground"
                 android:layout_gravity="center|bottom|end">
 
                 <ImageView

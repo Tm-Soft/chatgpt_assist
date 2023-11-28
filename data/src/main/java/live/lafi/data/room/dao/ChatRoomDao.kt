@@ -17,7 +17,7 @@ interface ChatRoomDao {
     fun getChatRoomEntity(chatRoomSrl: Long): ChatRoomEntity
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(coinEntity: ChatRoomEntity): Long
+    fun insert(chatRoomEntity: ChatRoomEntity): Long
 
     @Query("DELETE FROM chat_room WHERE chat_room_srl = :chatRoomSrl")
     fun deleteWithSrl(chatRoomSrl: Long)

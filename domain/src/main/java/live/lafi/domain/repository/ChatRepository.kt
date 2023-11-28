@@ -42,4 +42,18 @@ interface ChatRepository {
     suspend fun deleteChatRoomSystemRoleWithChatRoomSrl(
         chatRoomSrl: Long
     )
+
+    /**
+     * chat Content 관련 함수
+     */
+    suspend fun insertChatContent(
+        chatRoomSrl: Long,
+        parentChatContentSrl: Long?,
+        role: String,
+        content: String,
+        useToken: Int?,
+        status: String,
+        updateDate: Long,
+        createDate: Long
+    )
 }

@@ -4,6 +4,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import live.lafi.data.mapper.ChatMapper
 import live.lafi.data.room.ChatDatabase
+import live.lafi.data.room.entity.ChatContentEntity
 import live.lafi.data.room.entity.ChatRoomEntity
 import live.lafi.data.room.entity.ChatRoomSystemRoleEntity
 import live.lafi.domain.model.chat.ChatRoomInfo
@@ -88,6 +89,31 @@ class ChatRepositoryImpl @Inject constructor(
     override suspend fun deleteChatRoomSystemRoleWithChatRoomSrl(chatRoomSrl: Long) {
         chatDatabase.chatRoomSystemRoleDao().deleteWithSystemRoleSrlWithChatRoomSrl(
             chatRoomSrl = chatRoomSrl
+        )
+    }
+
+    override suspend fun insertChatContent(
+        chatRoomSrl: Long,
+        parentChatContentSrl: Long?,
+        role: String,
+        content: String,
+        useToken: Int?,
+        status: String,
+        updateDate: Long,
+        createDate: Long
+    ) {
+        chatDatabase.chatContentDao().insert(
+            ChatContentEntity(
+                chatContentSrl = 0L,
+                chatRoomSrl = chatRoomSrl,
+                parentChatContentSrl = parentChatContentSrl,
+                role = role,
+                content = content,
+                useToken = useToken,
+                status = status,
+                updateDate = updateDate,
+                createDate = createDate,
+            )
         )
     }
 }
