@@ -11,6 +11,7 @@ import kotlinx.coroutines.launch
 import live.lafi.domain.model.chat.ChatRoomInfo
 import live.lafi.domain.model.chat.ChatRoomSystemRoleInfo
 import live.lafi.domain.usecase.chat.DeleteChatRoomSystemRoleUseCase
+import live.lafi.domain.usecase.chat.DeleteChatRoomSystemRoleWithChatRoomSrlUseCase
 import live.lafi.domain.usecase.chat.GetChatRoomInfoWithSrlUseCase
 import live.lafi.domain.usecase.chat.GetChatRoomSystemRoleUseCase
 import live.lafi.domain.usecase.chat.InsertChatRoomSystemRoleUseCase

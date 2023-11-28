@@ -84,4 +84,10 @@ class ChatRepositoryImpl @Inject constructor(
             chatRoomSystemRoleSrl = chatRoomSystemRoleSrl
         )
     }
+
+    override suspend fun deleteChatRoomSystemRoleWithChatRoomSrl(chatRoomSrl: Long) {
+        chatDatabase.chatRoomSystemRoleDao().deleteWithSystemRoleSrlWithChatRoomSrl(
+            chatRoomSrl = chatRoomSrl
+        )
+    }
 }

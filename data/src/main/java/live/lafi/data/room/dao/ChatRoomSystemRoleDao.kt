@@ -28,4 +28,7 @@ interface ChatRoomSystemRoleDao {
 
     @Query("DELETE FROM chat_room_system_role WHERE chat_room_system_role_srl = :chatRoomSystemRoleSrl")
     fun deleteWithSystemRoleSrl(chatRoomSystemRoleSrl: Long)
+
+    @Query("DELETE FROM chat_room_system_role WHERE chat_room_srl = :chatRoomSrl")
+    fun deleteWithSystemRoleSrlWithChatRoomSrl(chatRoomSrl: Long)
 }

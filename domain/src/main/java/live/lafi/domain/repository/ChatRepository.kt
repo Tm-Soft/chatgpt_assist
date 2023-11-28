@@ -38,4 +38,8 @@ interface ChatRepository {
     suspend fun deleteChatRoomSystemRole(
         chatRoomSystemRoleSrl: Long
     )
+
+    suspend fun deleteChatRoomSystemRoleWithChatRoomSrl(
+        chatRoomSrl: Long
+    )
 }

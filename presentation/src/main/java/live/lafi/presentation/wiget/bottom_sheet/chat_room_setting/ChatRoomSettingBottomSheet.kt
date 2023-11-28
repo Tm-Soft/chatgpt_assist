@@ -1,7 +1,9 @@
 package live.lafi.presentation.wiget.bottom_sheet.chat_room_setting
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import android.widget.FrameLayout
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -32,12 +34,17 @@ class ChatRoomSettingBottomSheet : BaseBottomSheetFragment<FragmentChatRoomSetti
 
     private var roleScrollBottomFlag = false
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         if (chatRoomSrl == 0L) {
             dismiss()
         }
         super.onViewCreated(view, savedInstanceState)
+
+//        BottomSheetBehavior.from(binding.root.parent as View).apply {
+//            state = BottomSheetBehavior.STATE_EXPANDED
+//            isHideable = false
+//            skipCollapsed = false
+//        }
     }
 
     override fun onDestroy() {
@@ -72,7 +79,6 @@ class ChatRoomSettingBottomSheet : BaseBottomSheetFragment<FragmentChatRoomSetti
                 }
             }
 
-
             lifecycleScope.launch(Dispatchers.IO) {
                 viewModel.getChatRoomSystemRole(chatRoomSrl = chatRoomSrl).collectLatest { chatRoomSystemRoleList ->
                     chatSystemRoleAdapter.submitList(
@@ -94,6 +100,7 @@ class ChatRoomSettingBottomSheet : BaseBottomSheetFragment<FragmentChatRoomSetti
 
                                 if (roleScrollBottomFlag) {
                                     roleScrollBottomFlag = false
+
                                     binding.rvSystemRole.smoothScrollToPosition(chatSystemRoleAdapter.itemCount)
                                 }
                             }
