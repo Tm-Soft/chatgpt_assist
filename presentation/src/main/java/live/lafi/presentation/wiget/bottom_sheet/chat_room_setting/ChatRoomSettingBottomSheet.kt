@@ -55,6 +55,11 @@ class ChatRoomSettingBottomSheet : BaseBottomSheetFragment<FragmentChatRoomSetti
         }
     }
 
+    private fun modifyUiUpdate() {
+        binding.tvSettingStatus.visibility = View.VISIBLE
+        binding.tvSettingStatus.text = "설정 변경 중..."
+    }
+
     override fun subscribeUi() {
         with(viewModel) {
             chatRoomInfo.observe(viewLifecycleOwner) { chatRoomInfo ->
@@ -63,8 +68,7 @@ class ChatRoomSettingBottomSheet : BaseBottomSheetFragment<FragmentChatRoomSetti
 
             changeChatRoomSystemRoleList.observe(viewLifecycleOwner) {
                 if (it.isNotEmpty()) {
-                    binding.tvSettingStatus.visibility = View.VISIBLE
-                    binding.tvSettingStatus.text = "설정 변경 중..."
+                    modifyUiUpdate()
                 }
             }
 
@@ -144,18 +148,25 @@ class ChatRoomSettingBottomSheet : BaseBottomSheetFragment<FragmentChatRoomSetti
 
             setOnRolePlusListener {
                 lifecycleScope.launch(Dispatchers.IO) {
+                    viewModel.changeChatRoomSystemRoleList.value?.let { viewModel.updateChatRoomSystemRoleListCoroutine(it) }
+
                     viewModel.insertChatRoomSystemRole(
                         chatRoomSrl = chatRoomSrl,
                         roleContent = ""
                     )
                     roleScrollBottomFlag = true
                 }
+                modifyUiUpdate()
             }
 
             setOnDeleteListener { chatSystemRoleSrl ->
-                viewModel.deleteChatRoomSystemRole(
-                    chatRoomSystemRoleSrl = chatSystemRoleSrl
-                )
+                lifecycleScope.launch(Dispatchers.IO) {
+                    viewModel.changeChatRoomSystemRoleList.value?.let { viewModel.updateChatRoomSystemRoleListCoroutine(it) }
+                    viewModel.deleteChatRoomSystemRole(
+                        chatRoomSystemRoleSrl = chatSystemRoleSrl
+                    )
+                }
+                modifyUiUpdate()
             }
         }
     }

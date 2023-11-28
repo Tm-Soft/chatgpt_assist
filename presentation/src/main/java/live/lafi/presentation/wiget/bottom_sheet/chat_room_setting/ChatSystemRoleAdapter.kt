@@ -74,6 +74,7 @@ class ChatSystemRoleAdapter : ListAdapter<ChatSystemRoleListItem, RecyclerView.V
                             getItem(adapterPosition).chatSystemRoleSrl,
                             content.toString()
                         )
+                        getItem(adapterPosition).roleContent = content.toString()
                     }
                 }
             }

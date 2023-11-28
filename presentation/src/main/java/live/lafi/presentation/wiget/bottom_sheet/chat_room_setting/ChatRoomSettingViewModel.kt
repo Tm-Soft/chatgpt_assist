@@ -53,6 +53,14 @@ class ChatRoomSettingViewModel @Inject constructor(
         }
     }
 
+    suspend fun updateChatRoomSystemRoleListCoroutine(
+        chatRoomSystemRoleInfoList: List<ChatRoomSystemRoleInfo>
+    ) {
+        updateChatRoomSystemRoleListUseCase(
+            chatRoomSystemRoleInfoList = chatRoomSystemRoleInfoList
+        )
+    }
+
     suspend fun insertChatRoomSystemRole(
         chatRoomSrl: Long,
         roleContent: String,
@@ -67,13 +75,11 @@ class ChatRoomSettingViewModel @Inject constructor(
         _changeChatRoomSystemRoleList.postValue(list)
     }
 
-    fun deleteChatRoomSystemRole(
+    suspend fun deleteChatRoomSystemRole(
         chatRoomSystemRoleSrl: Long
     ) {
-        viewModelScope.launch(Dispatchers.IO) {
-            deleteChatRoomSystemRoleUseCase(
-                chatRoomSystemRoleSrl = chatRoomSystemRoleSrl
-            )
-        }
+        deleteChatRoomSystemRoleUseCase(
+            chatRoomSystemRoleSrl = chatRoomSystemRoleSrl
+        )
     }
 }
