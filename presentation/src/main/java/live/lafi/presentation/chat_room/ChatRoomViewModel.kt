@@ -25,7 +25,7 @@ class ChatRoomViewModel @Inject constructor(
                 listOf(
                     ChatGptMessage(
                         "user",
-                        "안녕하세요. 저는 지금 어떤걸 찾고 있어요. 그런데 아주 작은 아기새가 나타나서 저한테 하는말이 있는거에요!!"
+                        content
                     )
                 )
             )
