@@ -12,6 +12,9 @@ interface ChatContentDao {
     @Query("SELECT * FROM chat_content")
     fun getAll(): Flow<List<ChatContentEntity>>
 
+    @Query("SELECT * FROM chat_content WHERE chat_room_srl = :chatRoomSrl ")
+    fun getAllWithChatRoomSrl(chatRoomSrl: Long): Flow<List<ChatContentEntity>>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(chatContentEntity: ChatContentEntity): Long
 }

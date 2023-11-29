@@ -7,6 +7,7 @@ import live.lafi.data.room.ChatDatabase
 import live.lafi.data.room.entity.ChatContentEntity
 import live.lafi.data.room.entity.ChatRoomEntity
 import live.lafi.data.room.entity.ChatRoomSystemRoleEntity
+import live.lafi.domain.model.chat.ChatContentInfo
 import live.lafi.domain.model.chat.ChatRoomInfo
 import live.lafi.domain.model.chat.ChatRoomSystemRoleInfo
 import live.lafi.domain.repository.ChatRepository
@@ -99,11 +100,19 @@ class ChatRepositoryImpl @Inject constructor(
         )
     }
 
+    override suspend fun getAllChatContentWithChatRoomSrl(chatRoomSrl: Long): Flow<List<ChatContentInfo>> {
+        return chatDatabase.chatContentDao().getAllWithChatRoomSrl(chatRoomSrl = chatRoomSrl).map {
+            ChatMapper.mapperToChatContentInfoList(it)
+        }
+    }
+
     override suspend fun insertChatContent(
         chatRoomSrl: Long,
         parentChatContentSrl: Long?,
         role: String,
         content: String,
+        contentSummary: String?,
+        contentTranslate: String?,
         useToken: Int?,
         status: String,
         updateDate: Long,
@@ -116,6 +125,8 @@ class ChatRepositoryImpl @Inject constructor(
                 parentChatContentSrl = parentChatContentSrl,
                 role = role,
                 content = content,
+                contentSummary = contentSummary,
+                contentTranslate = contentTranslate,
                 useToken = useToken,
                 status = status,
                 updateDate = updateDate,

@@ -4,11 +4,17 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import androidx.activity.viewModels
+import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.HiltAndroidApp
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import live.lafi.presentation.R
 import live.lafi.presentation.databinding.ActivityChatRoomBinding
 import live.lafi.util.base.BaseActivity
+import timber.log.Timber
 
 @AndroidEntryPoint
 class ChatRoomActivity : BaseActivity<ActivityChatRoomBinding>(R.layout.activity_chat_room) {
@@ -18,6 +24,8 @@ class ChatRoomActivity : BaseActivity<ActivityChatRoomBinding>(R.layout.activity
     }
 
     private val viewModel: ChatRoomViewModel by viewModels()
+
+    private val chatContentAdapter by lazy { ChatContentListAdapter() }
 
     private val chatRoomSrl by lazy { intent.getLongExtra(CHAT_ROOM_SRL, 0L) }
     private val chatRoomTitle by lazy { intent.getStringExtra(CHAT_ROOM_TITLE) ?: "" }
@@ -29,11 +37,46 @@ class ChatRoomActivity : BaseActivity<ActivityChatRoomBinding>(R.layout.activity
         }
 
         with(binding) {
-            binding.tvChatRoomTitle.text = chatRoomTitle
+            tvChatRoomTitle.text = chatRoomTitle
+
+            rvChatContent.apply {
+                adapter = chatContentAdapter
+                layoutManager = LinearLayoutManager(this@ChatRoomActivity, LinearLayoutManager.VERTICAL, false)
+            }
         }
     }
 
     override fun subscribeUi() {
+        with(viewModel) {
+            scopeIO.launch {
+                getAllChatContentWithChatRoomSrl(chatRoomSrl = chatRoomSrl).collectLatest { chatContentList ->
+                    Timber.tag("whk__").d("chatContentList : $chatContentList")
+
+                    val chatContentItemList = chatContentList.map { chatContent ->
+                        val viewType = if (chatContent.role == "user") {
+                            ChatContentItem.ViewType.CHAT_CONTENT_MY_TEXT
+                        } else {
+                            ChatContentItem.ViewType.CHAT_CONTENT_OTHER_TEXT
+                        }
+
+                        ChatContentItem(
+                            viewType = viewType,
+                            chatContentSrl = chatContent.chatContentSrl,
+                            content = chatContent.content,
+                            profileUri = "",
+                            nickname = chatRoomTitle,
+                            createDate = chatContent.createDate
+                        )
+                    }
+
+                    Timber.tag("whk__").d("chatContentItemList : $chatContentItemList")
+
+                    withContext(Dispatchers.Main) {
+                        chatContentAdapter.submitList(chatContentItemList)
+                        //binding.rvChatContent.scrollToPosition(chatContentItemList.size - 1)
+                    }
+                }
+        }   }
     }
 
     override fun initListener() {

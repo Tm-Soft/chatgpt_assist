@@ -1,6 +1,7 @@
 package live.lafi.domain.repository
 
 import kotlinx.coroutines.flow.Flow
+import live.lafi.domain.model.chat.ChatContentInfo
 import live.lafi.domain.model.chat.ChatRoomInfo
 import live.lafi.domain.model.chat.ChatRoomSystemRoleInfo
 
@@ -48,11 +49,17 @@ interface ChatRepository {
     /**
      * chat Content 관련 함수
      */
+    suspend fun getAllChatContentWithChatRoomSrl(
+        chatRoomSrl: Long
+    ): Flow<List<ChatContentInfo>>
+
     suspend fun insertChatContent(
         chatRoomSrl: Long,
         parentChatContentSrl: Long?,
         role: String,
         content: String,
+        contentSummary: String?,
+        contentTranslate: String?,
         useToken: Int?,
         status: String,
         updateDate: Long,
