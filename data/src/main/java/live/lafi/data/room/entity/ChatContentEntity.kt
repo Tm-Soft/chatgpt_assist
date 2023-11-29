@@ -12,6 +12,8 @@ data class ChatContentEntity(
     @ColumnInfo(name = "parent_chat_content_srl") val parentChatContentSrl: Long?,
     @ColumnInfo(name = "role") val role: String,
     @ColumnInfo(name = "content") val content: String,
+    @ColumnInfo(name = "content_summary") val contentSummary: String?,
+    @ColumnInfo(name = "content_translate") val contentTranslate: String?,
     @ColumnInfo(name = "use_token") val useToken: Int?,
     @ColumnInfo(name = "status") val status: String,
     @ColumnInfo(name = "update_date") val updateDate: Long,
