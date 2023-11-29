@@ -17,6 +17,7 @@ import live.lafi.domain.usecase.chat.GetChatRoomSystemRoleUseCase
 import live.lafi.domain.usecase.chat.InsertChatRoomSystemRoleUseCase
 import live.lafi.domain.usecase.chat.UpdateChatRoomSystemRoleListUseCase
 import live.lafi.domain.usecase.chat.UpdateChatRoomSystemRoleUseCase
+import live.lafi.domain.usecase.chat.UpdateChatRoomTitleUseCase
 import live.lafi.util.base.BaseViewModel
 import javax.inject.Inject
 
@@ -26,7 +27,8 @@ class ChatRoomSettingViewModel @Inject constructor(
     private val getChatRoomSystemRoleUseCase: GetChatRoomSystemRoleUseCase,
     private val updateChatRoomSystemRoleListUseCase: UpdateChatRoomSystemRoleListUseCase,
     private val insertChatRoomSystemRoleUseCase: InsertChatRoomSystemRoleUseCase,
-    private val deleteChatRoomSystemRoleUseCase: DeleteChatRoomSystemRoleUseCase
+    private val deleteChatRoomSystemRoleUseCase: DeleteChatRoomSystemRoleUseCase,
+    private val updateChatRoomTitleUseCase: UpdateChatRoomTitleUseCase
 ) : BaseViewModel() {
     private val _chatRoomInfo = MutableLiveData<ChatRoomInfo>()
     val chatRoomInfo: LiveData<ChatRoomInfo> get() = _chatRoomInfo
@@ -39,6 +41,15 @@ class ChatRoomSettingViewModel @Inject constructor(
             getChatRoomInfoWithSrlUseCase(chatRoomSrl).let {
                 _chatRoomInfo.postValue(it)
             }
+        }
+    }
+
+    fun updateChatRoomTitle(chatRoomSrl: Long, title: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            updateChatRoomTitleUseCase(
+                chatRoomSrl = chatRoomSrl,
+                title = title
+            )
         }
     }
 

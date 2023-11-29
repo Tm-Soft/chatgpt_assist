@@ -40,15 +40,41 @@
                 android:orientation="vertical"
                 android:gravity="center">
 
-                <TextView
-                    android:id="@+id/tv_title"
-                    android:layout_width="match_parent"
+                <LinearLayout
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="채팅방 이름..."
-                    android:textSize="18dp"
-                    android:gravity="center"
-                    android:textStyle="bold"
-                    android:maxLength="10"/>
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tv_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="채팅방 이름"
+                        android:textSize="18dp"
+                        android:gravity="bottom"
+                        android:textStyle="bold"
+                        android:maxLength="10"/>
+
+                    <FrameLayout
+                        android:id="@+id/fl_edit_title"
+                        android:layout_width="25dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="5dp"
+                        android:background="?attr/selectableItemBackground">
+
+                        <ImageView
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
+                            android:layout_gravity="bottom|center"
+                            android:layout_marginBottom="3dp"
+                            android:background="@drawable/ripple_circle_effect"
+                            android:src="@drawable/ic_edit_pencil_default">
+
+                        </ImageView>
+
+                    </FrameLayout>
+
+                </LinearLayout>
 
                 <TextView
                     android:id="@+id/tv_setting_status"

@@ -14,6 +14,8 @@ interface ChatRepository {
 
     suspend fun getChatRoom(chatRoomSrl: Long): ChatRoomInfo
 
+    suspend fun updateChatRoomTitle(chatRoomSrl: Long, title: String)
+
     suspend fun deleteChatRoom(chatRoomSrl: Long)
 
     suspend fun getChatRoomSystemRole(chatRoomSrl: Long): Flow<List<ChatRoomSystemRoleInfo>>

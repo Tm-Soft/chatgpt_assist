@@ -19,6 +19,7 @@ import live.lafi.domain.usecase.chat.InsertChatRoomSystemRoleUseCase
 import live.lafi.domain.usecase.chat.InsertChatRoomUseCase
 import live.lafi.domain.usecase.chat.UpdateChatRoomSystemRoleListUseCase
 import live.lafi.domain.usecase.chat.UpdateChatRoomSystemRoleUseCase
+import live.lafi.domain.usecase.chat.UpdateChatRoomTitleUseCase
 import live.lafi.domain.usecase.chat_gpt.PostChatCompletionsUseCase
 import live.lafi.domain.usecase.local_setting.LoadChatGptTokenUseCase
 import live.lafi.domain.usecase.local_setting.LoadMaxUseTokenUseCase
@@ -51,7 +52,11 @@ object UseCaseModule {
 
     @Provides
     @Singleton
-    fun provideInsertChatUseCase(chatRepository: ChatRepository) = InsertChatRoomUseCase(chatRepository)
+    fun provideInsertChatRoomUseCase(chatRepository: ChatRepository) = InsertChatRoomUseCase(chatRepository)
+
+    @Provides
+    @Singleton
+    fun provideUpdateChatRoomTitleUseCase(chatRepository: ChatRepository) = UpdateChatRoomTitleUseCase(chatRepository)
 
     @Provides
     @Singleton

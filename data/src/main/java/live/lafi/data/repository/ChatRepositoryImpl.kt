@@ -42,6 +42,13 @@ class ChatRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun updateChatRoomTitle(chatRoomSrl: Long, title: String) {
+        chatDatabase.chatRoomDao().updateChatRoomTitle(
+            chatRoomSrl = chatRoomSrl,
+            title = title
+        )
+    }
+
     override suspend fun deleteChatRoom(chatRoomSrl: Long) {
         chatDatabase.chatRoomDao().deleteWithSrl(chatRoomSrl = chatRoomSrl)
     }

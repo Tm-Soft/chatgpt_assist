@@ -19,6 +19,9 @@ interface ChatRoomDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(chatRoomEntity: ChatRoomEntity): Long
 
+    @Query("UPDATE chat_room SET chat_room_title = :title WHERE chat_room_srl = :chatRoomSrl")
+    fun updateChatRoomTitle(chatRoomSrl: Long, title: String)
+
     @Query("DELETE FROM chat_room WHERE chat_room_srl = :chatRoomSrl")
     fun deleteWithSrl(chatRoomSrl: Long)
 }

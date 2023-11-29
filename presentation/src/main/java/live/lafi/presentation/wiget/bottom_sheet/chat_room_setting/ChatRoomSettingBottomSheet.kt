@@ -115,7 +115,7 @@ class ChatRoomSettingBottomSheet : BaseBottomSheetFragment<FragmentChatRoomSetti
         binding.flCloseButton.setOnClickListener { dismiss() }
         binding.flDeleteButton.setOnClickListener {
             Dialog.with(requireContext())
-                .title("채팅방 삭제")
+                .title("채팅방 이름 변경")
                 .content("정말 채팅방을 삭제 하시겠어요?\n등록된 프롬프트와 대화 내역이 삭제 됩니다.")
                 .positiveText("그대로 두기")
                 .negativeText("삭제")
@@ -124,6 +124,23 @@ class ChatRoomSettingBottomSheet : BaseBottomSheetFragment<FragmentChatRoomSetti
                     onChatRoomDeleteListener?.invoke()
                     dismiss()
                 }.showTwoButtonDialog()
+        }
+        binding.flEditTitle.setOnClickListener {
+            Dialog.with(requireContext())
+                .title(getString(R.string.enter_chat_bot_name))
+                .content("변경 하실 챗봇의 이름을 지어주세요!")
+                .positiveText(getString(R.string.chat_bot_modify_text))
+                .negativeText(getString(R.string.close_text))
+                .stringCallbackListener { inputText ->
+                    if (inputText.isNotEmpty()) {
+                        viewModel.updateChatRoomTitle(
+                            chatRoomSrl = chatRoomSrl,
+                            title = inputText
+                        )
+                        binding.tvTitle.text = inputText
+                    }
+                }
+                .showEditTextDialog()
         }
 
         chatSystemRoleAdapter.apply {
