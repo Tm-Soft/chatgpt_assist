@@ -34,6 +34,7 @@ class ChatRoomViewModel @Inject constructor(
 //                    )
 //                )
 //            )
+            
             insertChatContentUseCase(
                 chatRoomSrl = chatRoomSrl,
                 role = "user",
