@@ -2,6 +2,7 @@ package live.lafi.util.base
 
 import android.content.Context
 import android.os.Bundle
+import android.view.ContextThemeWrapper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +10,7 @@ import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import live.lafi.util.R
 import timber.log.Timber
 
 abstract class BaseBottomSheetFragment<T: ViewDataBinding>(

@@ -12,15 +12,18 @@ import kotlinx.coroutines.withContext
 import live.lafi.domain.model.chat.ChatRoomInfo
 import live.lafi.library_dialog.Dialog
 import live.lafi.presentation.R
+import live.lafi.presentation.chat_room.ChatRoomActivity
 import live.lafi.util.base.BaseActivity
 import live.lafi.presentation.databinding.ActivityChatRoomListBinding
 import live.lafi.presentation.setting.SettingActivity
 import live.lafi.presentation.wiget.bottom_sheet.chat_room_setting.ChatRoomSettingBottomSheet
+import live.lafi.util.VibratorUtil
 
 @AndroidEntryPoint
 class ChatRoomListActivity : BaseActivity<ActivityChatRoomListBinding>(R.layout.activity_chat_room_list) {
     private val viewModel: ChatRoomListViewModel by viewModels()
     private val chatRoomListAdapter by lazy { ChatRoomListAdapter() }
+    private val vibratorUtil by lazy { VibratorUtil(this@ChatRoomListActivity) }
 
     override fun setupUi() {
         with(binding) {
@@ -34,7 +37,17 @@ class ChatRoomListActivity : BaseActivity<ActivityChatRoomListBinding>(R.layout.
     override fun subscribeUi() {
         with(viewModel) {
             lifecycleScope.launch(Dispatchers.IO) {
-                getAllChatRoomInfo().collectLatest { setOnChatRoomList(it) }
+                getAllChatRoomInfo().collectLatest {
+                    if (it.isEmpty()) {
+                        // 리스트가 비어있다면...
+                        val createChatRoomSrl = viewModel.insertChatRoom("GPT 비서")
+                        viewModel.initChatRoomSystemRole(createChatRoomSrl)
+                    } else {
+                        withContext(Dispatchers.Main) {
+                            setOnChatRoomList(it)
+                        }
+                    }
+                }
             }
         }
     }
@@ -50,30 +63,40 @@ class ChatRoomListActivity : BaseActivity<ActivityChatRoomListBinding>(R.layout.
         }
 
         chatRoomListAdapter.apply {
-            setOnClickListener {
-                showToast("채팅방 클릭 srl = $it")
+            setOnClickListener { chatRoomSrl, chatRoomTitle ->
+                startActivity(
+                    Intent(this@ChatRoomListActivity, ChatRoomActivity::class.java).apply {
+                        putExtra(ChatRoomActivity.CHAT_ROOM_SRL, chatRoomSrl)
+                        putExtra(ChatRoomActivity.CHAT_ROOM_TITLE, chatRoomTitle)
+                    }
+                )
             }
 
-            setOnLongClickListener { showChatRoomSettingBottomSheet(chatRoomSrl = it) }
+            setOnLongClickListener {
+                vibratorUtil.vibrateOneShot(50, 100)
+                showChatRoomSettingBottomSheet(chatRoomSrl = it)
+            }
         }
     }
 
     override fun initData() {}
 
     private fun setOnChatRoomList(chatRoomInfoList: List<ChatRoomInfo>) {
-        chatRoomListAdapter.submitList(
-            chatRoomInfoList.map {
-                ChatRoomItem(
-                    chatRoomSrl = it.chatRoomSrl,
-                    title = it.title,
-                    question = "",
-                    content = "",
-                    profileUri = it.profileUri,
-                    lastReadTimestamp = it.lastReadTimestamp,
-                    lastUpdateTimestamp = it.lastUpdateTimestamp
-                )
-            }.sortedByDescending { it.lastUpdateTimestamp }
-        )
+        if (chatRoomInfoList.isNotEmpty()) {
+            chatRoomListAdapter.submitList(
+                chatRoomInfoList.map {
+                    ChatRoomItem(
+                        chatRoomSrl = it.chatRoomSrl,
+                        title = it.title,
+                        question = "",
+                        content = "",
+                        profileUri = it.profileUri,
+                        lastReadTimestamp = it.lastReadTimestamp,
+                        lastUpdateTimestamp = it.lastUpdateTimestamp
+                    )
+                }.sortedByDescending { it.lastUpdateTimestamp }
+            )
+        }
     }
 
     private fun showChatRoomSettingBottomSheet(chatRoomSrl: Long) {
@@ -96,6 +119,7 @@ class ChatRoomListActivity : BaseActivity<ActivityChatRoomListBinding>(R.layout.
                 if (inputText.isNotEmpty()) {
                     lifecycleScope.launch(Dispatchers.IO) {
                         val createChatRoomSrl = viewModel.insertChatRoom(title = inputText)
+                        viewModel.initChatRoomSystemRole(createChatRoomSrl)
                         withContext(Dispatchers.Main) {
                             showChatRoomSettingBottomSheet(chatRoomSrl = createChatRoomSrl)
                         }

@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <application
-        android:theme="@style/Theme.Chatgpt_assist">
-
+    <application android:theme="@style/Theme.Chatgpt_assist">
+        <activity
+            android:name=".chat_room.ChatRoomActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize"/>
         <activity
             android:name=".setting.SettingActivity"
             android:exported="false" />

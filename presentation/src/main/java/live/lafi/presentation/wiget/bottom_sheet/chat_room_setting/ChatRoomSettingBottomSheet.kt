@@ -1,13 +1,26 @@
 package live.lafi.presentation.wiget.bottom_sheet.chat_room_setting
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import android.widget.FrameLayout
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import live.lafi.domain.model.chat.ChatRoomSystemRoleInfo
 import live.lafi.library_dialog.Dialog
 import live.lafi.presentation.R
 import live.lafi.util.base.BaseBottomSheetFragment
 import live.lafi.presentation.databinding.FragmentChatRoomSettingBinding
+import timber.log.Timber
 
 @AndroidEntryPoint
 class ChatRoomSettingBottomSheet : BaseBottomSheetFragment<FragmentChatRoomSettingBinding>(R.layout.fragment_chat_room_setting) {
@@ -15,24 +28,85 @@ class ChatRoomSettingBottomSheet : BaseBottomSheetFragment<FragmentChatRoomSetti
 
     private val viewModel: ChatRoomSettingViewModel by viewModels()
 
+    private val chatSystemRoleAdapter by lazy { ChatSystemRoleAdapter() }
+
     private var onChatRoomDeleteListener: (() -> Unit)? = null
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    private var roleScrollBottomFlag = false
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         if (chatRoomSrl == 0L) {
             dismiss()
         }
+        super.onViewCreated(view, savedInstanceState)
+
+//        BottomSheetBehavior.from(binding.root.parent as View).apply {
+//            state = BottomSheetBehavior.STATE_EXPANDED
+//            isHideable = false
+//            skipCollapsed = false
+//        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+
+        viewModel.changeChatRoomSystemRoleList.value?.let { viewModel.updateChatRoomSystemRoleList(it) }
     }
 
     override fun setupUi() {
-        with(binding) {}
+        with(binding) {
+            rvSystemRole.apply {
+                adapter = chatSystemRoleAdapter
+                layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+            }
+        }
+    }
+
+    private fun modifyUiUpdate() {
+        binding.tvSettingStatus.visibility = View.VISIBLE
+        binding.tvSettingStatus.text = "설정 변경 중..."
     }
 
     override fun subscribeUi() {
         with(viewModel) {
             chatRoomInfo.observe(viewLifecycleOwner) { chatRoomInfo ->
                 binding.tvTitle.text = chatRoomInfo.title
+            }
+
+            changeChatRoomSystemRoleList.observe(viewLifecycleOwner) {
+                if (it.isNotEmpty()) {
+                    modifyUiUpdate()
+                }
+            }
+
+            lifecycleScope.launch(Dispatchers.IO) {
+                viewModel.getChatRoomSystemRole(chatRoomSrl = chatRoomSrl).collectLatest { chatRoomSystemRoleList ->
+                    chatSystemRoleAdapter.submitList(
+                        chatRoomSystemRoleList.map {
+                            ChatSystemRoleListItem(
+                                viewType = ChatSystemRoleListItem.ViewType.ROLE_CONTENT,
+                                chatSystemRoleSrl = it.chatRoomSystemRoleSrl,
+                                roleContent = it.roleContent
+                            )
+                        } + ChatSystemRoleListItem(
+                            viewType = ChatSystemRoleListItem.ViewType.PLUS_BUTTON,
+                            chatSystemRoleSrl = 0L,
+                            roleContent = ""
+                        )
+                    ) {
+                        binding.rvSystemRole.post {
+                            lifecycleScope.launch {
+                                delay(300L)
+
+                                if (roleScrollBottomFlag) {
+                                    roleScrollBottomFlag = false
+
+                                    binding.rvSystemRole.smoothScrollToPosition(chatSystemRoleAdapter.itemCount)
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
     }
@@ -41,7 +115,7 @@ class ChatRoomSettingBottomSheet : BaseBottomSheetFragment<FragmentChatRoomSetti
         binding.flCloseButton.setOnClickListener { dismiss() }
         binding.flDeleteButton.setOnClickListener {
             Dialog.with(requireContext())
-                .title("채팅방 삭제")
+                .title("채팅방 이름 변경")
                 .content("정말 채팅방을 삭제 하시겠어요?\n등록된 프롬프트와 대화 내역이 삭제 됩니다.")
                 .positiveText("그대로 두기")
                 .negativeText("삭제")
@@ -50,6 +124,74 @@ class ChatRoomSettingBottomSheet : BaseBottomSheetFragment<FragmentChatRoomSetti
                     onChatRoomDeleteListener?.invoke()
                     dismiss()
                 }.showTwoButtonDialog()
+        }
+        binding.flEditTitle.setOnClickListener {
+            Dialog.with(requireContext())
+                .title(getString(R.string.enter_chat_bot_name))
+                .content("변경 하실 챗봇의 이름을 지어주세요!")
+                .positiveText(getString(R.string.chat_bot_modify_text))
+                .negativeText(getString(R.string.close_text))
+                .stringCallbackListener { inputText ->
+                    if (inputText.isNotEmpty()) {
+                        viewModel.updateChatRoomTitle(
+                            chatRoomSrl = chatRoomSrl,
+                            title = inputText
+                        )
+                        binding.tvTitle.text = inputText
+                    }
+                }
+                .showEditTextDialog()
+        }
+
+        chatSystemRoleAdapter.apply {
+            setOnChangeChatSystemRoleContentListener { chatRoomSystemRoleSrl, content ->
+                var replaceList: List<ChatRoomSystemRoleInfo>? = null
+                val changeModel = ChatRoomSystemRoleInfo(
+                    chatRoomSystemRoleSrl = chatRoomSystemRoleSrl,
+                    chatRoomSrl = chatRoomSrl,
+                    roleContent = content
+                )
+                replaceList = if (viewModel.changeChatRoomSystemRoleList.value?.firstOrNull { it.chatRoomSystemRoleSrl == chatRoomSystemRoleSrl } == null) {
+                    if (viewModel.changeChatRoomSystemRoleList.value == null) {
+                        listOf(changeModel)
+                    } else {
+                        viewModel.changeChatRoomSystemRoleList.value!! + changeModel
+                    }
+                } else {
+                    viewModel.changeChatRoomSystemRoleList.value?.map {
+                        if (it.chatRoomSystemRoleSrl == chatRoomSystemRoleSrl) {
+                            changeModel
+                        } else {
+                            it
+                        }
+                    }
+                }
+
+                replaceList?.let { viewModel.setChatRoomSystemRoleList(it) }
+            }
+
+            setOnRolePlusListener {
+                lifecycleScope.launch(Dispatchers.IO) {
+                    viewModel.changeChatRoomSystemRoleList.value?.let { viewModel.updateChatRoomSystemRoleListCoroutine(it) }
+
+                    viewModel.insertChatRoomSystemRole(
+                        chatRoomSrl = chatRoomSrl,
+                        roleContent = ""
+                    )
+                    roleScrollBottomFlag = true
+                }
+                modifyUiUpdate()
+            }
+
+            setOnDeleteListener { chatSystemRoleSrl ->
+                lifecycleScope.launch(Dispatchers.IO) {
+                    viewModel.changeChatRoomSystemRoleList.value?.let { viewModel.updateChatRoomSystemRoleListCoroutine(it) }
+                    viewModel.deleteChatRoomSystemRole(
+                        chatRoomSystemRoleSrl = chatSystemRoleSrl
+                    )
+                }
+                modifyUiUpdate()
+            }
         }
     }
 

@@ -10,5 +10,6 @@
     <string name="enter_chat_bot_name">챗봇 이름 입력</string>
     <string name="close_text">닫기</string>
     <string name="chat_bot_create_text">생성</string>
+    <string name="chat_bot_modify_text">변경</string>
     <string name="plase_enter_chat_bot_name">챗봇 이름을 입력 해주세요.</string>
 </resources>

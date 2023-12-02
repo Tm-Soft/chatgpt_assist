@@ -36,6 +36,7 @@ object GetGptToken {
 
         var sum  = 0
         messages.forEach { message ->
+            Timber.tag("whk__").d("tokenPerMessage : $tokenPerMessage / encoding.countTokens(message.role) : ${encoding.countTokens(message.role)} / encoding.countTokens(message.content) : ${encoding.countTokens(message.content)}")
             sum += tokenPerMessage
             sum += encoding.countTokens(message.role)
             sum += encoding.countTokens(message.content)
