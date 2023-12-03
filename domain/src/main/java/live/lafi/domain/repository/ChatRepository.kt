@@ -7,11 +7,14 @@ import live.lafi.domain.model.chat.ChatRoomSystemRoleInfo
 
 interface ChatRepository {
     suspend fun insertChatRoom(
+        chatRoomType: Int,
         title: String,
         profileUri: String?,
     ): Long
 
     suspend fun getAllChatRoom(): Flow<List<ChatRoomInfo>>
+
+    suspend fun getAllChatRoom(chatRoomType: Int): Flow<List<ChatRoomInfo>>
 
     suspend fun getChatRoom(chatRoomSrl: Long): ChatRoomInfo
 

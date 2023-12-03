@@ -11,7 +11,8 @@ import live.lafi.domain.usecase.chat.DeleteChatRoomSystemRoleUseCase
 import live.lafi.domain.usecase.chat.DeleteChatRoomSystemRoleWithChatRoomSrlUseCase
 import live.lafi.domain.usecase.chat.DeleteChatRoomWithSrlUseCase
 import live.lafi.domain.usecase.chat.GetAllChatContentWithChatRoomSrlUseCase
-import live.lafi.domain.usecase.chat.GetAllChatRoomInfoUseCase
+import live.lafi.domain.usecase.chat.GetAllChatRoomUseCase
+import live.lafi.domain.usecase.chat.GetAllChatRoomWithChatRoomTypeUseCase
 import live.lafi.domain.usecase.chat.GetChatRoomInfoWithSrlUseCase
 import live.lafi.domain.usecase.chat.GetChatRoomSystemRoleUseCase
 import live.lafi.domain.usecase.chat.InsertChatContentUseCase
@@ -61,7 +62,11 @@ object UseCaseModule {
 
     @Provides
     @Singleton
-    fun provideGetAllChatRoomUseCase(chatRepository: ChatRepository) = GetAllChatRoomInfoUseCase(chatRepository)
+    fun provideGetAllChatRoomUseCase(chatRepository: ChatRepository) = GetAllChatRoomUseCase(chatRepository)
+
+    @Provides
+    @Singleton
+    fun provideGetAllChatRoomWithChatRoomTypeUseCase(chatRepository: ChatRepository) = GetAllChatRoomWithChatRoomTypeUseCase(chatRepository)
 
     @Provides
     @Singleton

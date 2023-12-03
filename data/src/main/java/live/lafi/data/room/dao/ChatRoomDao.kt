@@ -7,11 +7,15 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import kotlinx.coroutines.flow.Flow
 import live.lafi.data.room.entity.ChatRoomEntity
+import live.lafi.util.enums.ChatRoomType
 
 @Dao
 interface ChatRoomDao {
     @Query("SELECT * FROM chat_room")
     fun getAll(): Flow<List<ChatRoomEntity>>
+
+    @Query("SELECT * FROM chat_room WHERE chat_room_type = :chatRoomType")
+    fun getAll(chatRoomType: Int): Flow<List<ChatRoomEntity>>
 
     @Query("SELECT * FROM chat_room WHERE chat_room_srl = :chatRoomSrl")
     fun getChatRoomEntity(chatRoomSrl: Long): ChatRoomEntity

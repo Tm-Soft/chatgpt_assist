@@ -4,10 +4,12 @@ import live.lafi.domain.repository.ChatRepository
 
 class InsertChatRoomUseCase(private val chatRepository: ChatRepository) {
     suspend operator fun invoke(
+        chatRoomType: Int,
         title: String,
         profileUri: String?,
     ) = chatRepository.insertChatRoom(
-            title = title,
-            profileUri = profileUri,
-        )
+        chatRoomType = chatRoomType,
+        title = title,
+        profileUri = profileUri,
+    )
 }

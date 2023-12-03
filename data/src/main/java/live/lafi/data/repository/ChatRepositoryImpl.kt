@@ -17,12 +17,14 @@ class ChatRepositoryImpl @Inject constructor(
     private val chatDatabase: ChatDatabase
 ): ChatRepository {
     override suspend fun insertChatRoom(
+        chatRoomType: Int,
         title: String,
         profileUri: String?
     ): Long {
         return chatDatabase.chatRoomDao().insert(
             ChatRoomEntity(
                 chatRoomSrl = 0,
+                chatRoomType = chatRoomType,
                 chatRoomTitle = title,
                 profileUri = profileUri,
                 lastUpdateTimestamp = null,
@@ -33,6 +35,13 @@ class ChatRepositoryImpl @Inject constructor(
 
     override suspend fun getAllChatRoom(): Flow<List<ChatRoomInfo>> {
         return chatDatabase.chatRoomDao().getAll().map {
+            ChatMapper.mapperToChatRoomInfoList(it)
+        }
+    }
+
+    // 오버 로딩으로 chatRoomType(Int) 파라미터가 있으면 ChatRoomType을 비교하여 찾는다.
+    override suspend fun getAllChatRoom(chatRoomType: Int): Flow<List<ChatRoomInfo>> {
+        return chatDatabase.chatRoomDao().getAll(chatRoomType = chatRoomType).map {
             ChatMapper.mapperToChatRoomInfoList(it)
         }
     }

@@ -8,6 +8,7 @@ import androidx.room.PrimaryKey
 data class ChatRoomEntity(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "chat_room_srl") val chatRoomSrl: Long,
+    @ColumnInfo(name = "chat_room_type") val chatRoomType: Int,
     @ColumnInfo(name = "chat_room_title") val chatRoomTitle: String,
     @ColumnInfo(name = "profile_uri") val profileUri: String?,
     @ColumnInfo(name = "last_update_timestamp") val lastUpdateTimestamp: Long?,

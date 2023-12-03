@@ -15,9 +15,9 @@ import live.lafi.domain.ApiResult.LoadingStart.onSuccess
 import live.lafi.domain.model.chat.ChatRoomSystemRoleInfo
 import live.lafi.domain.usecase.chat.DeleteChatRoomSystemRoleWithChatRoomSrlUseCase
 import live.lafi.domain.usecase.chat.DeleteChatRoomWithSrlUseCase
-import live.lafi.domain.usecase.chat.GetAllChatRoomInfoUseCase
+import live.lafi.domain.usecase.chat.GetAllChatRoomUseCase
+import live.lafi.domain.usecase.chat.GetAllChatRoomWithChatRoomTypeUseCase
 import live.lafi.domain.usecase.chat.InsertChatRoomSystemRoleListUseCase
-import live.lafi.domain.usecase.chat.InsertChatRoomSystemRoleUseCase
 import live.lafi.domain.usecase.chat.InsertChatRoomUseCase
 import live.lafi.domain.usecase.chat_gpt.PostChatCompletionsUseCase
 import live.lafi.util.base.BaseViewModel
@@ -29,7 +29,8 @@ import javax.inject.Inject
 class ChatRoomListViewModel @Inject constructor(
     private val postChatCompletionsUseCase: PostChatCompletionsUseCase,
     private val insertChatRoomUseCase: InsertChatRoomUseCase,
-    private val getAllChatRoomInfoUseCase: GetAllChatRoomInfoUseCase,
+    private val getAllChatRoomUseCase: GetAllChatRoomUseCase,
+    private val getAllChatRoomWithChatRoomTypeUseCase: GetAllChatRoomWithChatRoomTypeUseCase,
     private val deleteChatRoomWithSrlUseCase: DeleteChatRoomWithSrlUseCase,
     private val insertChatRoomSystemRoleListUseCase: InsertChatRoomSystemRoleListUseCase,
     private val deleteChatRoomSystemRoleWithChatRoomSrlUseCase: DeleteChatRoomSystemRoleWithChatRoomSrlUseCase
@@ -66,10 +67,16 @@ class ChatRoomListViewModel @Inject constructor(
         }
     }
 
-    suspend fun getAllChatRoomInfo() = getAllChatRoomInfoUseCase()
+    suspend fun getAllChatRoomInfo() = getAllChatRoomUseCase()
 
-    suspend fun insertChatRoom(title: String): Long {
+    suspend fun getAllChatRoomWithChatRoomType(chatRoomType: Int) = getAllChatRoomWithChatRoomTypeUseCase(chatRoomType)
+
+    suspend fun insertChatRoom(
+        chatRoomType: Int,
+        title: String
+    ): Long {
         return insertChatRoomUseCase(
+            chatRoomType = chatRoomType,
             title = title,
             profileUri = null
         )

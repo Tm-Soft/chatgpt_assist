@@ -18,6 +18,7 @@ import live.lafi.presentation.databinding.ActivityChatRoomListBinding
 import live.lafi.presentation.setting.SettingActivity
 import live.lafi.presentation.wiget.bottom_sheet.chat_room_setting.ChatRoomSettingBottomSheet
 import live.lafi.util.VibratorUtil
+import live.lafi.util.enums.ChatRoomType
 
 @AndroidEntryPoint
 class ChatRoomListActivity : BaseActivity<ActivityChatRoomListBinding>(R.layout.activity_chat_room_list) {
@@ -37,10 +38,13 @@ class ChatRoomListActivity : BaseActivity<ActivityChatRoomListBinding>(R.layout.
     override fun subscribeUi() {
         with(viewModel) {
             lifecycleScope.launch(Dispatchers.IO) {
-                getAllChatRoomInfo().collectLatest {
+                getAllChatRoomWithChatRoomType(ChatRoomType.CUSTOM.value).collectLatest {
                     if (it.isEmpty()) {
                         // 리스트가 비어있다면...
-                        val createChatRoomSrl = viewModel.insertChatRoom("GPT 비서")
+                        val createChatRoomSrl = viewModel.insertChatRoom(
+                            chatRoomType = ChatRoomType.CUSTOM.value,
+                            title = "GPT 비서"
+                        )
                         viewModel.initChatRoomSystemRole(createChatRoomSrl)
                     } else {
                         withContext(Dispatchers.Main) {
@@ -118,7 +122,10 @@ class ChatRoomListActivity : BaseActivity<ActivityChatRoomListBinding>(R.layout.
             .stringCallbackListener { inputText ->
                 if (inputText.isNotEmpty()) {
                     lifecycleScope.launch(Dispatchers.IO) {
-                        val createChatRoomSrl = viewModel.insertChatRoom(title = inputText)
+                        val createChatRoomSrl = viewModel.insertChatRoom(
+                            chatRoomType = ChatRoomType.CUSTOM.value,
+                            title = inputText
+                        )
                         viewModel.initChatRoomSystemRole(createChatRoomSrl)
                         withContext(Dispatchers.Main) {
                             showChatRoomSettingBottomSheet(chatRoomSrl = createChatRoomSrl)
