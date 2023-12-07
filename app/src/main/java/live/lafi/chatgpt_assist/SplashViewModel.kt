@@ -4,7 +4,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
-import live.lafi.util.public_model.GptToken
+import live.lafi.util.public_model.GptTokenManager
 import live.lafi.domain.ApiResult.LoadingStart.onError
 import live.lafi.domain.ApiResult.LoadingStart.onException
 import live.lafi.domain.ApiResult.LoadingStart.onLoadingEnd
@@ -27,14 +27,14 @@ class SplashViewModel @Inject constructor(
         scopeIO.launch {
             val token = loadChatGptTokenUseCase().first()
             if (token.isNotEmpty()) {
-                GptToken.editToken(token)
+                GptTokenManager.editToken(token)
             }
         }
     }
 
     fun updateChatGptToken(token: String) {
         scopeIO.launch {
-            GptToken.editToken(token)
+            GptTokenManager.editToken(token)
 
             saveChatGptTokenUseCase(token)
         }

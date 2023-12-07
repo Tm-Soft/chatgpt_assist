@@ -9,6 +9,7 @@ import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import dagger.hilt.android.AndroidEntryPoint
 import live.lafi.chatgpt_assist.databinding.ActivityMainBinding
+import live.lafi.util.service.ChatContentService
 import live.lafi.presentation.chat_room_list.ChatRoomListActivity
 import live.lafi.util.base.BaseActivity
 

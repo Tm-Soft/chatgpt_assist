@@ -5,6 +5,8 @@ plugins {
     kotlin("android")
     kotlin("kapt")
 
+    id("com.google.dagger.hilt.android")
+
     id("kotlin-parcelize")
 }
 
@@ -60,6 +62,11 @@ dependencies {
 
     // Gpt Token 사용을 위한 의존성 추가
     implementation(Dep.Gpt.jtokkit)
+
+    // Hilt 사용을 위한 의존성 추가.
+    kapt("org.jetbrains.kotlinx:kotlinx-metadata-jvm:0.5.0")
+    implementation(Dep.Hilt.hilt)
+    kapt(Dep.Hilt.compiler)
 
     // Hilt 사용을 위한 의존성 추가.
 //    implementation(Dep.Hlit.hilt)
