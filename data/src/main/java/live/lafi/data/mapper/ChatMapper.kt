@@ -55,18 +55,21 @@ object ChatMapper {
 
     fun mapperToChatContentInfoList(chatContentEntity: List<ChatContentEntity>) =
         chatContentEntity.map {
-            ChatContentInfo(
-                chatRoomSrl = it.chatRoomSrl,
-                chatContentSrl = it.chatContentSrl,
-                parentChatContentSrl = it.parentChatContentSrl ?: 0L,
-                role = it.role,
-                content = it.content,
-                contentSummary = it.contentSummary ?: "",
-                contentTranslate = it.contentTranslate ?: "",
-                useToken = it.useToken ?: 0,
-                status = it.status,
-                updateDate = it.updateDate ?: 0L,
-                createDate = it.createDate ?: 0L
-            )
+            mapperToChatContentInfo(it)
         }
+
+    fun mapperToChatContentInfo(chatContentEntity: ChatContentEntity?) =
+        ChatContentInfo(
+            chatRoomSrl = chatContentEntity?.chatRoomSrl ?: 0L,
+            chatContentSrl = chatContentEntity?.chatContentSrl ?: 0L,
+            parentChatContentSrl = chatContentEntity?.parentChatContentSrl ?: 0L,
+            role = chatContentEntity?.role ?: "",
+            content = chatContentEntity?.content ?: "",
+            contentSummary = chatContentEntity?.contentSummary ?: "",
+            contentTranslate = chatContentEntity?.contentTranslate ?: "",
+            useToken = chatContentEntity?.useToken ?: 0,
+            status = chatContentEntity?.status ?: "",
+            updateDate = chatContentEntity?.updateDate ?: 0L,
+            createDate = chatContentEntity?.createDate ?: 0L
+        )
 }

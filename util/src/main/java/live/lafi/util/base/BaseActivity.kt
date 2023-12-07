@@ -1,11 +1,14 @@
 package live.lafi.util.base
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
+import live.lafi.util.public_model.ContentManager
+import live.lafi.util.service.ChatContentService
 import timber.log.Timber
 
 abstract class BaseActivity<T: ViewDataBinding>(
@@ -29,6 +32,11 @@ abstract class BaseActivity<T: ViewDataBinding>(
 
     override fun onResume() {
         Timber.tag("LifeCycleTracker-A").d("$TAG - onResume")
+        if (!ContentManager.isContentServiceRunning()) {
+            startService(
+                Intent(applicationContext, ChatContentService::class.java)
+            )
+        }
         super.onResume()
     }
 

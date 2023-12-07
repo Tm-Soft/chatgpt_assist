@@ -5,9 +5,9 @@ package live.lafi.util.public_model
  * 1. App이 최초 실행 될 때 토큰을 DataStore에서 가져와 set
  * 2. 유저 인터렉션으로 변경 되었을 때 set 해준다.
  */
-object GptToken {
+object GptTokenManager {
     var token = ""
     fun editToken(token: String) {
-        GptToken.token = token
+        GptTokenManager.token = token
     }
 }

@@ -13,6 +13,7 @@ import live.lafi.domain.ApiResult.LoadingStart.onLoadingEnd
 import live.lafi.domain.ApiResult.LoadingStart.onLoadingStart
 import live.lafi.domain.ApiResult.LoadingStart.onSuccess
 import live.lafi.domain.model.chat.ChatRoomSystemRoleInfo
+import live.lafi.domain.usecase.chat.DeleteChatContentWithChatRoomSrlUseCase
 import live.lafi.domain.usecase.chat.DeleteChatRoomSystemRoleWithChatRoomSrlUseCase
 import live.lafi.domain.usecase.chat.DeleteChatRoomWithSrlUseCase
 import live.lafi.domain.usecase.chat.GetAllChatRoomInfoUseCase
@@ -32,7 +33,8 @@ class ChatRoomListViewModel @Inject constructor(
     private val getAllChatRoomInfoUseCase: GetAllChatRoomInfoUseCase,
     private val deleteChatRoomWithSrlUseCase: DeleteChatRoomWithSrlUseCase,
     private val insertChatRoomSystemRoleListUseCase: InsertChatRoomSystemRoleListUseCase,
-    private val deleteChatRoomSystemRoleWithChatRoomSrlUseCase: DeleteChatRoomSystemRoleWithChatRoomSrlUseCase
+    private val deleteChatRoomSystemRoleWithChatRoomSrlUseCase: DeleteChatRoomSystemRoleWithChatRoomSrlUseCase,
+    private val deleteChatContentWithChatRoomSrlUseCase: DeleteChatContentWithChatRoomSrlUseCase
 ) : BaseViewModel() {
     private val _onLoading = SingleLiveEvent<Boolean>()
     val onLoading: LiveData<Boolean> get() = _onLoading
@@ -79,6 +81,7 @@ class ChatRoomListViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             deleteChatRoomWithSrlUseCase(chatRoomSrl)
             deleteChatRoomSystemRoleWithChatRoomSrlUseCase(chatRoomSrl)
+            deleteChatContentWithChatRoomSrlUseCase(chatRoomSrl)
         }
     }
 

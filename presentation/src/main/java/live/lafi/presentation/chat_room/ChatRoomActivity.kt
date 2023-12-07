@@ -72,7 +72,15 @@ class ChatRoomActivity : BaseActivity<ActivityChatRoomBinding>(R.layout.activity
                     Timber.tag("whk__").d("chatContentItemList : $chatContentItemList")
 
                     withContext(Dispatchers.Main) {
-                        chatContentAdapter.submitList(chatContentItemList)
+                        chatContentAdapter.submitList(chatContentItemList) {
+                            if (binding.rvChatContent.adapter != null && binding.rvChatContent.adapter!!.itemCount >= 0) {
+                                binding.rvChatContent.post {
+                                    binding.rvChatContent.smoothScrollToPosition(
+                                        binding.rvChatContent.adapter!!.itemCount
+                                    )
+                                }
+                            }
+                        }
                         //binding.rvChatContent.scrollToPosition(chatContentItemList.size - 1)
                     }
                 }

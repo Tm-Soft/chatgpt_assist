@@ -51,4 +51,45 @@ class ChatGptRepositoryImpl @Inject constructor(
                 is ApiResult.LoadingEnd -> ApiResult.LoadingEnd
             }
         }
+
+    override suspend fun postChatListCompletions(
+        sendSystemMessage: List<String>,
+        sendUserMessage: List<Pair<String, String>>
+    ): Flow<ApiResult<CompletionData>> =
+        handleFlowApi {
+            val messageList = ArrayList<ChatGptMessage>()
+            sendSystemMessage.forEach {
+                messageList.add(
+                    ChatGptMessage(
+                        role = "system",
+                        content = it
+                    )
+                )
+            }
+
+            sendUserMessage.forEach {
+                messageList.add(
+                    ChatGptMessage(
+                        role = it.first,
+                        content = it.second
+                    )
+                )
+            }
+
+            openApiService.getCompletion(
+                CompletionRequest(
+                    model = "gpt-3.5-turbo-16k",
+                    temperature = 0.8,
+                    stream = false,
+                    messages = messageList
+                )
+            )
+        }.map { apiResult ->
+            when(apiResult) {
+                is ApiResult.Success -> ApiResult.Success(ChatGptMapper.mapperToCompletionData(apiResult.data))
+                is ApiResult.Fail -> apiResult
+                is ApiResult.LoadingStart -> ApiResult.LoadingStart
+                is ApiResult.LoadingEnd -> ApiResult.LoadingEnd
+            }
+        }
 }

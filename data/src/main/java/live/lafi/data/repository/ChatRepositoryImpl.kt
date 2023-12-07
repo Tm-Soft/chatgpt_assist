@@ -1,5 +1,6 @@
 package live.lafi.data.repository
 
+import android.util.Log
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import live.lafi.data.mapper.ChatMapper
@@ -100,10 +101,40 @@ class ChatRepositoryImpl @Inject constructor(
         )
     }
 
+    override suspend fun getAllChatContent(): Flow<List<ChatContentInfo>> {
+        return chatDatabase.chatContentDao().getAll().map {
+            ChatMapper.mapperToChatContentInfoList(it)
+        }
+    }
+
     override suspend fun getAllChatContentWithChatRoomSrl(chatRoomSrl: Long): Flow<List<ChatContentInfo>> {
         return chatDatabase.chatContentDao().getAllWithChatRoomSrl(chatRoomSrl = chatRoomSrl).map {
             ChatMapper.mapperToChatContentInfoList(it)
         }
+    }
+
+    override suspend fun getChatContentWaitMyMessage(): Flow<ChatContentInfo> {
+        return chatDatabase.chatContentDao().getChatContentWaitMessage().map {
+            ChatMapper.mapperToChatContentInfo(it)
+        }
+    }
+
+    override suspend fun getChatContentListWithChatRoomSrl(chatRoomSrl: Long): List<ChatContentInfo> {
+        return chatDatabase.chatContentDao().getChatContentListWithChatRoomSrl(chatRoomSrl = chatRoomSrl).map {
+            ChatMapper.mapperToChatContentInfo(it)
+        }
+    }
+
+    override suspend fun updateChatContentStatus(
+        chatContentSrl: Long,
+        status: String,
+        updateDate: Long
+    ) {
+        chatDatabase.chatContentDao().updateChatContentStatus(
+            chatContentSrl = chatContentSrl,
+            status = status,
+            updateDate = updateDate
+        )
     }
 
     override suspend fun insertChatContent(
@@ -132,6 +163,14 @@ class ChatRepositoryImpl @Inject constructor(
                 updateDate = updateDate,
                 createDate = createDate,
             )
+        )
+    }
+
+    override suspend fun deleteChatContentWithChatRoomSrl(
+        chatRoomSrl: Long
+    ) {
+        chatDatabase.chatContentDao().deleteChatContentWithChatRoomSrl(
+            chatRoomSrl = chatRoomSrl
         )
     }
 }

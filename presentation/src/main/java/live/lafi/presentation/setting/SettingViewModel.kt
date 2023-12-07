@@ -18,7 +18,7 @@ import live.lafi.domain.usecase.local_setting.SaveChatGptTokenUseCase
 import live.lafi.domain.usecase.local_setting.SaveMaxUseTokenUseCase
 import live.lafi.util.base.BaseViewModel
 import live.lafi.util.ext.SingleLiveEvent
-import live.lafi.util.public_model.GptToken
+import live.lafi.util.public_model.GptTokenManager
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -43,7 +43,7 @@ class SettingViewModel @Inject constructor(
         fail: () -> Unit
     ) {
         scopeIO.launch {
-            GptToken.editToken(token)
+            GptTokenManager.editToken(token)
             // 먼저 토큰 값으로 서버에 요청을 보내서 토큰이 유효한지 확인한다.
             postChatCompletionsUseCase("hi").collectLatest { result ->
                 result.onLoadingStart {

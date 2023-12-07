@@ -19,6 +19,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Chatgpt_assist"
         tools:targetApi="31">
+
+        <service
+            android:name="live.lafi.util.service.ChatContentService"
+            android:enabled="true"
+            android:exported="true" />
+
         <activity
             android:name=".SplashActivity"
             android:exported="true">

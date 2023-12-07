@@ -7,21 +7,27 @@ import dagger.hilt.components.SingletonComponent
 import live.lafi.domain.repository.ChatGptRepository
 import live.lafi.domain.repository.ChatRepository
 import live.lafi.domain.repository.LocalSettingRepository
+import live.lafi.domain.usecase.chat.DeleteChatContentWithChatRoomSrlUseCase
 import live.lafi.domain.usecase.chat.DeleteChatRoomSystemRoleUseCase
 import live.lafi.domain.usecase.chat.DeleteChatRoomSystemRoleWithChatRoomSrlUseCase
 import live.lafi.domain.usecase.chat.DeleteChatRoomWithSrlUseCase
+import live.lafi.domain.usecase.chat.GetAllChatContentUseCase
 import live.lafi.domain.usecase.chat.GetAllChatContentWithChatRoomSrlUseCase
 import live.lafi.domain.usecase.chat.GetAllChatRoomInfoUseCase
+import live.lafi.domain.usecase.chat.GetChatContentListWithChatRoomSrlUseCase
+import live.lafi.domain.usecase.chat.GetChatContentWaitMessageUseCase
 import live.lafi.domain.usecase.chat.GetChatRoomInfoWithSrlUseCase
 import live.lafi.domain.usecase.chat.GetChatRoomSystemRoleUseCase
 import live.lafi.domain.usecase.chat.InsertChatContentUseCase
 import live.lafi.domain.usecase.chat.InsertChatRoomSystemRoleListUseCase
 import live.lafi.domain.usecase.chat.InsertChatRoomSystemRoleUseCase
 import live.lafi.domain.usecase.chat.InsertChatRoomUseCase
+import live.lafi.domain.usecase.chat.UpdateChatContentStatusUseCase
 import live.lafi.domain.usecase.chat.UpdateChatRoomSystemRoleListUseCase
 import live.lafi.domain.usecase.chat.UpdateChatRoomSystemRoleUseCase
 import live.lafi.domain.usecase.chat.UpdateChatRoomTitleUseCase
 import live.lafi.domain.usecase.chat_gpt.PostChatCompletionsUseCase
+import live.lafi.domain.usecase.chat_gpt.PostChatListCompletionsUseCase
 import live.lafi.domain.usecase.local_setting.LoadChatGptTokenUseCase
 import live.lafi.domain.usecase.local_setting.LoadMaxUseTokenUseCase
 import live.lafi.domain.usecase.local_setting.SaveChatGptTokenUseCase
@@ -50,6 +56,10 @@ object UseCaseModule {
     @Provides
     @Singleton
     fun providePostChatCompletionsUseCase(chatGptRepository: ChatGptRepository) = PostChatCompletionsUseCase(chatGptRepository)
+
+    @Provides
+    @Singleton
+    fun providePostChatListCompletionsUseCase(chatGptRepository: ChatGptRepository) = PostChatListCompletionsUseCase(chatGptRepository)
 
     @Provides
     @Singleton
@@ -105,9 +115,29 @@ object UseCaseModule {
      */
     @Provides
     @Singleton
+    fun provideGetAllChatContentUseCase(chatRepository: ChatRepository) = GetAllChatContentUseCase(chatRepository)
+
+    @Provides
+    @Singleton
     fun provideGetAllChatContentWithChatRoomSrlUseCase(chatRepository: ChatRepository) = GetAllChatContentWithChatRoomSrlUseCase(chatRepository)
 
     @Provides
     @Singleton
+    fun provideGetChatContentWaitMessageUseCase(chatRepository: ChatRepository) = GetChatContentWaitMessageUseCase(chatRepository)
+
+    @Provides
+    @Singleton
+    fun provideGetChatContentListWithChatRoomSrlUseCase(chatRepository: ChatRepository) = GetChatContentListWithChatRoomSrlUseCase(chatRepository)
+
+    @Provides
+    @Singleton
+    fun provideUpdateChatContentStatusUseCase(chatRepository: ChatRepository) = UpdateChatContentStatusUseCase(chatRepository)
+
+    @Provides
+    @Singleton
     fun provideInsertChatContentUseCase(chatRepository: ChatRepository) = InsertChatContentUseCase(chatRepository)
+
+    @Provides
+    @Singleton
+    fun provideDeleteChatContentWithChatRoomSrlUseCase(chatRepository: ChatRepository) = DeleteChatContentWithChatRoomSrlUseCase(chatRepository)
 }

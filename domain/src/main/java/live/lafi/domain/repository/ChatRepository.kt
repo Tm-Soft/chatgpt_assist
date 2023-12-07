@@ -49,9 +49,21 @@ interface ChatRepository {
     /**
      * chat Content 관련 함수
      */
+    suspend fun getAllChatContent(): Flow<List<ChatContentInfo>>
+
     suspend fun getAllChatContentWithChatRoomSrl(
         chatRoomSrl: Long
     ): Flow<List<ChatContentInfo>>
+
+    suspend fun getChatContentWaitMyMessage(): Flow<ChatContentInfo>
+
+    suspend fun getChatContentListWithChatRoomSrl(chatRoomSrl: Long): List<ChatContentInfo>
+
+    suspend fun updateChatContentStatus(
+        chatContentSrl: Long,
+        status: String,
+        updateDate: Long
+    )
 
     suspend fun insertChatContent(
         chatRoomSrl: Long,
@@ -64,5 +76,9 @@ interface ChatRepository {
         status: String,
         updateDate: Long,
         createDate: Long
+    )
+
+    suspend fun deleteChatContentWithChatRoomSrl(
+        chatRoomSrl: Long
     )
 }
