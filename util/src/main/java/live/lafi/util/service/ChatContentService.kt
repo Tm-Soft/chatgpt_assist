@@ -20,8 +20,10 @@ import live.lafi.domain.usecase.chat.GetChatRoomSystemRoleUseCase
 import live.lafi.domain.usecase.chat.InsertChatContentUseCase
 import live.lafi.domain.usecase.chat.UpdateChatContentStatusUseCase
 import live.lafi.domain.usecase.chat_gpt.PostChatListCompletionsUseCase
+import live.lafi.domain.usecase.local_setting.LoadChatGptTokenUseCase
 import live.lafi.util.DateUtil
 import live.lafi.util.public_model.ContentManager
+import live.lafi.util.public_model.GptTokenManager
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -39,6 +41,8 @@ class ChatContentService : Service() {
     lateinit var getChatRoomSystemRoleUseCase: GetChatRoomSystemRoleUseCase
     @Inject
     lateinit var getChatContentListWithChatRoomSrlUseCase: GetChatContentListWithChatRoomSrlUseCase
+    @Inject
+    lateinit var loadChatGptTokenUseCase: LoadChatGptTokenUseCase
 
     private val coroutineJob = SupervisorJob()
 
@@ -50,6 +54,12 @@ class ChatContentService : Service() {
         super.onCreate()
 
         Timber.tag("ChatContentService").d("Start ChatContent Service")
+        scopeIO.launch {
+            val token = loadChatGptTokenUseCase().first()
+            if (token.isNotEmpty()) {
+                GptTokenManager.editToken(token)
+            }
+        }
         subscribe()
 
         ContentManager.setContentServiceRunning(true)

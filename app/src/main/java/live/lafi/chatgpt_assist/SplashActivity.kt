@@ -44,19 +44,13 @@ class SplashActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main)
 
     override fun initListener() {
         with(binding) {
-            tvTextFirst.setOnClickListener {
-                splashViewModel.updateChatGptToken("")
-            }
-
             tvTextSecond.setOnClickListener {
                 splashViewModel.postChatGpt()
             }
         }
     }
 
-    override fun initData() {
-        splashViewModel.setupChatGptToken()
-    }
+    override fun initData() {}
 
     private fun initAdMob() {
         val adRequest = AdRequest.Builder().build()

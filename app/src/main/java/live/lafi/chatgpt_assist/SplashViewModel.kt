@@ -20,25 +20,7 @@ import javax.inject.Inject
 @HiltViewModel
 class SplashViewModel @Inject constructor(
     private val postChatCompletionsUseCase: PostChatCompletionsUseCase,
-    private val saveChatGptTokenUseCase: SaveChatGptTokenUseCase,
-    private val loadChatGptTokenUseCase: LoadChatGptTokenUseCase
 ): BaseViewModel() {
-    fun setupChatGptToken() {
-        scopeIO.launch {
-            val token = loadChatGptTokenUseCase().first()
-            if (token.isNotEmpty()) {
-                GptTokenManager.editToken(token)
-            }
-        }
-    }
-
-    fun updateChatGptToken(token: String) {
-        scopeIO.launch {
-            GptTokenManager.editToken(token)
-
-            saveChatGptTokenUseCase(token)
-        }
-    }
 
     fun postChatGpt() {
         scopeIO.launch {

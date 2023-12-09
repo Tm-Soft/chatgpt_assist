@@ -6,7 +6,10 @@ package live.lafi.util.public_model
  * 2. 유저 인터렉션으로 변경 되었을 때 set 해준다.
  */
 object GptTokenManager {
-    var token = ""
+    private var token = ""
+
+    fun getApiToken() = token
+
     fun editToken(token: String) {
         GptTokenManager.token = token
     }

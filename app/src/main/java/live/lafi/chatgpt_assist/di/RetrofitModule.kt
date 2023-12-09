@@ -77,16 +77,18 @@ object RetrofitModule {
                     @Throws(IOException::class)
                     override fun intercept(chain: Interceptor.Chain): Response = with(chain) {
                         try {
-                            val newRequest =request()
+                            Timber.tag("OkHttp_Intercept").d("api key : ${GptTokenManager.getApiToken()}")
+                            val newRequest = request()
                                 .newBuilder()
                                 .addHeader("Content-Type", "application/json")
                                 .addHeader(
                                     "Authorization",
-                                    "Bearer ${GptTokenManager.token}"
+                                    "Bearer ${GptTokenManager.getApiToken()}"
                                 )
                                 .build()
                             proceed(newRequest)
                         } catch (e: Exception) {
+                            Timber.tag("OkHttp_Intercept").d("Header Catch : $e")
                             proceed(request())
                         }
                     }

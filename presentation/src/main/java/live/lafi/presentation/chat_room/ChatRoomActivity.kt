@@ -73,10 +73,10 @@ class ChatRoomActivity : BaseActivity<ActivityChatRoomBinding>(R.layout.activity
 
                     withContext(Dispatchers.Main) {
                         chatContentAdapter.submitList(chatContentItemList) {
-                            if (binding.rvChatContent.adapter != null && binding.rvChatContent.adapter!!.itemCount >= 0) {
+                            if (binding.rvChatContent.adapter != null && binding.rvChatContent.adapter!!.itemCount > 0) {
                                 binding.rvChatContent.post {
-                                    binding.rvChatContent.smoothScrollToPosition(
-                                        binding.rvChatContent.adapter!!.itemCount
+                                    binding.rvChatContent.scrollToPosition(
+                                        binding.rvChatContent.adapter!!.itemCount - 1
                                     )
                                 }
                             }
