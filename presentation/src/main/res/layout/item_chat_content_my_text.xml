@@ -22,10 +22,7 @@
             android:layout_height="wrap_content"
             android:maxWidth="220dp"
             android:background="?attr/selectableItemBackground"
-            android:paddingStart="15dp"
-            android:paddingEnd="15dp"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"
+            android:padding="10dp"
             android:textColor="@color/gray_60"
             android:textSize="13sp" />
     </LinearLayout>

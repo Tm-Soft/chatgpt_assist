@@ -10,6 +10,7 @@ data class ChatContentItem(
 ) {
     enum class ViewType(val type: Int) {
         CHAT_CONTENT_MY_TEXT(0),
-        CHAT_CONTENT_OTHER_TEXT(1)
+        CHAT_CONTENT_OTHER_TEXT(1),
+        CHAT_CONTENT_OTHER_LOADING(2)
     }
 }

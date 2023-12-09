@@ -77,4 +77,8 @@ object Dep {
     object ExpandableLayout {
         const val expandableLayout = "com.github.skydoves:expandablelayout:1.0.7"
     }
+    object Lottie {
+        const val version = "3.4.0"
+        const val lottie = "com.airbnb.android:lottie:$version"
+    }
 }

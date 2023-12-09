@@ -94,4 +94,6 @@ dependencies {
     implementation(Dep.AdMob.ads)
 
     implementation(Dep.ExpandableLayout.expandableLayout)
+
+    implementation(Dep.Lottie.lottie)
 }

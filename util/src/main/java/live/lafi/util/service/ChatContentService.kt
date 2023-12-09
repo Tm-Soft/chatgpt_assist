@@ -13,6 +13,7 @@ import kotlinx.coroutines.launch
 import live.lafi.domain.ApiResult.LoadingStart.onError
 import live.lafi.domain.ApiResult.LoadingStart.onException
 import live.lafi.domain.ApiResult.LoadingStart.onSuccess
+import live.lafi.domain.model.chat.ChatContentInfo
 import live.lafi.domain.usecase.chat.DeleteChatContentWithChatRoomSrlUseCase
 import live.lafi.domain.usecase.chat.GetChatContentListWithChatRoomSrlUseCase
 import live.lafi.domain.usecase.chat.GetChatContentWaitMessageUseCase
@@ -86,17 +87,31 @@ class ChatContentService : Service() {
                             contentSrl = chatContentInfo.chatContentSrl
                         )
 
-                        val sendMessage = getChatContentListWithChatRoomSrlUseCase(
+                        val beforeChatContentList = getChatContentListWithChatRoomSrlUseCase(
                             chatRoomSrl = chatContentInfo.chatRoomSrl
-                        ).filter { it.chatContentSrl != chatContentInfo.chatContentSrl } .map { Pair(it.role, it.content) } + Pair("user", chatContentInfo.content)
+                        ).filter { it.chatContentSrl != chatContentInfo.chatContentSrl && it.status == "complete" }
+
+                        val mappedPairs = mutableListOf<ChatContentInfo>()
+                        beforeChatContentList.forEach { chatContent ->
+                            if (chatContent.parentChatContentSrl == 0L && chatContent.chatContentSrl < chatContentInfo.chatContentSrl) { // 질문인 경우
+                                val answer = beforeChatContentList.find { it.parentChatContentSrl == chatContent.chatContentSrl }
+                                if (answer != null) {
+                                    mappedPairs.add(chatContent) // 질문 추가
+                                    mappedPairs.add(answer) // 해당 답변 추가
+                                }
+                            }
+                        }
+
+                        val sendMessage = mappedPairs.map { Pair(it.role, it.content) } + Pair("user", chatContentInfo.content)
+
+
                         Timber.tag("ChatContentService").d("chat Content Data : $chatContentInfo\n전송 대화 : ${sendMessage}")
 
 
                         postChatListCompletionsUseCase(
                             sendSystemMessage = getChatRoomSystemRoleUseCase(chatRoomSrl = chatContentInfo.chatRoomSrl).first().map { it.roleContent },
                             sendUserMessage = sendMessage
-                        )
-                        .filterNotNull()
+                        ).filterNotNull()
                         .collect { result ->
                             result.onSuccess {
                                 val responseMessage = it.data[0].message.content

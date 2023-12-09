@@ -1,19 +1,26 @@
 package live.lafi.presentation.chat_room
 
+import android.animation.Animator
+import android.content.Intent
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.SimpleItemAnimator
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.HiltAndroidApp
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import live.lafi.domain.model.chat.ChatContentInfo
 import live.lafi.presentation.R
 import live.lafi.presentation.databinding.ActivityChatRoomBinding
 import live.lafi.util.base.BaseActivity
+import live.lafi.util.public_model.ContentManager
+import live.lafi.util.service.ChatContentService
 import timber.log.Timber
 
 @AndroidEntryPoint
@@ -30,6 +37,8 @@ class ChatRoomActivity : BaseActivity<ActivityChatRoomBinding>(R.layout.activity
     private val chatRoomSrl by lazy { intent.getLongExtra(CHAT_ROOM_SRL, 0L) }
     private val chatRoomTitle by lazy { intent.getStringExtra(CHAT_ROOM_TITLE) ?: "" }
 
+    private var isLottieAnimatorRunning = false
+
     override fun setupUi() {
         if (chatRoomSrl == 0L) {
             showToast("잘못 된 접근입니다.")
@@ -41,8 +50,16 @@ class ChatRoomActivity : BaseActivity<ActivityChatRoomBinding>(R.layout.activity
 
             rvChatContent.apply {
                 adapter = chatContentAdapter
-                layoutManager = LinearLayoutManager(this@ChatRoomActivity, LinearLayoutManager.VERTICAL, false)
+                layoutManager = LinearLayoutManager(this@ChatRoomActivity).apply {
+                    orientation = LinearLayoutManager.VERTICAL
+                    reverseLayout = false
+                    stackFromEnd = true
+                    setHasFixedSize(true)
+                }
+                itemAnimator = null
             }
+
+            etTextMessage.requestFocus()
         }
     }
 
@@ -50,10 +67,39 @@ class ChatRoomActivity : BaseActivity<ActivityChatRoomBinding>(R.layout.activity
         with(viewModel) {
             scopeIO.launch {
                 getAllChatContentWithChatRoomSrl(chatRoomSrl = chatRoomSrl).collectLatest { chatContentList ->
-                    Timber.tag("whk__").d("chatContentList : $chatContentList")
+                    val mappedPairs = mutableListOf<ChatContentInfo>()
+                    chatContentList.forEach { chatContent ->
+                        if (chatContent.parentChatContentSrl == 0L) { // 질문인 경우
+                            chatContentList.find { it.parentChatContentSrl == chatContent.chatContentSrl }?.let {
+                                mappedPairs.add(chatContent) // 질문 추가
+                                mappedPairs.add(it) // 해당 답변 추가
+                            } ?: run {
+                                mappedPairs.add(chatContent) // 질문 추가
+                                if (chatContent.status == "wait" || chatContent.status == "request") {
+                                    mappedPairs.add(
+                                        ChatContentInfo(
+                                            chatContentSrl = 0L,
+                                            chatRoomSrl = chatContent.chatRoomSrl,
+                                            parentChatContentSrl = chatContent.chatContentSrl,
+                                            role = "assistant",
+                                            content = "",
+                                            contentSummary = "",
+                                            contentTranslate = "",
+                                            useToken = 0,
+                                            status = "loading",
+                                            updateDate = chatContent.updateDate,
+                                            createDate = chatContent.createDate
+                                        )
+                                    ) // 로딩중.. 추가
+                                }
+                            }
+                        }
+                    }
 
-                    val chatContentItemList = chatContentList.map { chatContent ->
-                        val viewType = if (chatContent.role == "user") {
+                    val chatContentItemList = mappedPairs.map { chatContent ->
+                        val viewType = if (chatContent.status == "loading") {
+                            ChatContentItem.ViewType.CHAT_CONTENT_OTHER_LOADING
+                        } else if (chatContent.role == "user") {
                             ChatContentItem.ViewType.CHAT_CONTENT_MY_TEXT
                         } else {
                             ChatContentItem.ViewType.CHAT_CONTENT_OTHER_TEXT
@@ -68,8 +114,6 @@ class ChatRoomActivity : BaseActivity<ActivityChatRoomBinding>(R.layout.activity
                             createDate = chatContent.createDate
                         )
                     }
-
-                    Timber.tag("whk__").d("chatContentItemList : $chatContentItemList")
 
                     withContext(Dispatchers.Main) {
                         chatContentAdapter.submitList(chatContentItemList) {
@@ -103,6 +147,21 @@ class ChatRoomActivity : BaseActivity<ActivityChatRoomBinding>(R.layout.activity
                     }
                 }
             })
+
+            ltLogo.addAnimatorListener(object : Animator.AnimatorListener{
+                override fun onAnimationStart(animation: Animator) {
+                    // 애니메이션 시작 될 때
+                    isLottieAnimatorRunning = true
+                }
+
+                override fun onAnimationEnd(animation: Animator) {
+                    // 애니메이션 종료 될 때
+                    isLottieAnimatorRunning = false
+                }
+
+                override fun onAnimationCancel(animation: Animator) {}
+                override fun onAnimationRepeat(animation: Animator) { }
+            })
         }
     }
 
@@ -116,6 +175,16 @@ class ChatRoomActivity : BaseActivity<ActivityChatRoomBinding>(R.layout.activity
                 content = message
             )
             binding.etTextMessage.text.clear()
+
+            if (!isLottieAnimatorRunning) {
+                binding.ltLogo.playAnimation()
+            }
+
+            if (!ContentManager.isContentServiceRunning()) {
+                startService(
+                    Intent(applicationContext, ChatContentService::class.java)
+                )
+            }
         }
     }
 }

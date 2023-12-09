@@ -50,18 +50,15 @@
             <FrameLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/chat_content_left_text">
+                android:background="@drawable/chat_content_left_text"
+                android:padding="5dp">
 
-                <TextView
-                    android:id="@+id/textView_text_content"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:maxWidth="300dp"
-                    android:background="?attr/selectableItemBackground"
-                    android:maxLines="30"
-                    android:padding="10dp"
-                    android:textColor="@color/gray_60"
-                    android:textSize="13sp" />
+                <com.airbnb.lottie.LottieAnimationView
+                    android:layout_width="60dp"
+                    android:layout_height="30dp"
+                    app:lottie_rawRes="@raw/lottie_message_loading"
+                    app:lottie_autoPlay="true"
+                    app:lottie_loop="true" />
 
             </FrameLayout>
         </LinearLayout>

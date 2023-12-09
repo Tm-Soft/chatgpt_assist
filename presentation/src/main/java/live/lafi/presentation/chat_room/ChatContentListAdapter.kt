@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import live.lafi.presentation.databinding.ItemChatContentMyTextBinding
+import live.lafi.presentation.databinding.ItemChatContentOtherLoadingBinding
 import live.lafi.presentation.databinding.ItemChatContentOtherTextBinding
 import timber.log.Timber
 
@@ -37,6 +38,16 @@ class ChatContentListAdapter : ListAdapter<ChatContentItem, RecyclerView.ViewHol
                     )
                 )
             }
+            ChatContentItem.ViewType.CHAT_CONTENT_OTHER_LOADING.type -> {
+                OtherContentLoadingViewHolder(
+                    ItemChatContentOtherLoadingBinding.inflate(
+                        LayoutInflater.from(parent.context),
+                        parent,
+                        false
+                    )
+                )
+            }
+
             else -> throw IndexOutOfBoundsException()
         }
     }
@@ -68,6 +79,14 @@ class ChatContentListAdapter : ListAdapter<ChatContentItem, RecyclerView.ViewHol
         fun setupUi(position: Int) {
             val item = getItem(position)
             binding.textViewTextContent.text = item.content
+        }
+    }
+
+    inner class OtherContentLoadingViewHolder(
+        private val binding: ItemChatContentOtherLoadingBinding
+    ) : RecyclerView.ViewHolder(binding.root) {
+        fun setupUi(position: Int) {
+            val item = getItem(position)
         }
     }
 
