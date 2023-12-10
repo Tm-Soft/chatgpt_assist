@@ -77,9 +77,11 @@ class ChatGptRepositoryImpl @Inject constructor(
             }
 
             openApiService.getCompletion(
+                // gpt-4
+                // gpt-3.5-turbo-16k
                 CompletionRequest(
                     model = "gpt-3.5-turbo-16k",
-                    temperature = 0.8,
+                    temperature = 1.0,
                     stream = false,
                     messages = messageList
                 )

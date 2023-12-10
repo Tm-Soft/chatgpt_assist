@@ -103,10 +103,10 @@ class ChatContentService : Service() {
                         }
 
                         val sendMessage = mappedPairs.map { Pair(it.role, it.content) } + Pair("user", chatContentInfo.content)
-
-
                         Timber.tag("ChatContentService").d("chat Content Data : $chatContentInfo\n전송 대화 : ${sendMessage}")
-
+                        sendMessage.forEachIndexed { index, content ->
+                            Timber.tag("ChatContentService").d("$index Chat : $content")
+                        }
 
                         postChatListCompletionsUseCase(
                             sendSystemMessage = getChatRoomSystemRoleUseCase(chatRoomSrl = chatContentInfo.chatRoomSrl).first().map { it.roleContent },

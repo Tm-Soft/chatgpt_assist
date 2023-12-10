@@ -18,7 +18,6 @@ class ChatContentListAdapter : ListAdapter<ChatContentItem, RecyclerView.ViewHol
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        Timber.tag("whk__").d("viewType : $viewType")
         return when(viewType) {
             ChatContentItem.ViewType.CHAT_CONTENT_MY_TEXT.type -> {
                 MyTextContentViewHolder(
@@ -78,6 +77,7 @@ class ChatContentListAdapter : ListAdapter<ChatContentItem, RecyclerView.ViewHol
     ) : RecyclerView.ViewHolder(binding.root) {
         fun setupUi(position: Int) {
             val item = getItem(position)
+            binding.tvChatRoomTitle.text = item.nickname
             binding.textViewTextContent.text = item.content
         }
     }
@@ -87,6 +87,7 @@ class ChatContentListAdapter : ListAdapter<ChatContentItem, RecyclerView.ViewHol
     ) : RecyclerView.ViewHolder(binding.root) {
         fun setupUi(position: Int) {
             val item = getItem(position)
+            binding.tvChatRoomTitle.text = item.nickname
         }
     }
 

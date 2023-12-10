@@ -2,15 +2,16 @@ package live.lafi.presentation.chat_room
 
 import android.animation.Animator
 import android.content.Intent
+import android.graphics.Rect
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.MotionEvent
 import android.view.View
+import android.widget.EditText
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.SimpleItemAnimator
 import dagger.hilt.android.AndroidEntryPoint
-import dagger.hilt.android.HiltAndroidApp
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -19,9 +20,12 @@ import live.lafi.domain.model.chat.ChatContentInfo
 import live.lafi.presentation.R
 import live.lafi.presentation.databinding.ActivityChatRoomBinding
 import live.lafi.util.base.BaseActivity
+import live.lafi.util.ext.hideKeyboard
 import live.lafi.util.public_model.ContentManager
 import live.lafi.util.service.ChatContentService
 import timber.log.Timber
+import java.util.LinkedList
+import java.util.Queue
 
 @AndroidEntryPoint
 class ChatRoomActivity : BaseActivity<ActivityChatRoomBinding>(R.layout.activity_chat_room) {
@@ -36,6 +40,10 @@ class ChatRoomActivity : BaseActivity<ActivityChatRoomBinding>(R.layout.activity
 
     private val chatRoomSrl by lazy { intent.getLongExtra(CHAT_ROOM_SRL, 0L) }
     private val chatRoomTitle by lazy { intent.getStringExtra(CHAT_ROOM_TITLE) ?: "" }
+
+    private var chatContentEndScrollFlag = false
+    private var chatContentScrollTimeTick = System.currentTimeMillis()
+    private val touchQueue: Queue<Int> = LinkedList()
 
     private var isLottieAnimatorRunning = false
 
@@ -119,9 +127,12 @@ class ChatRoomActivity : BaseActivity<ActivityChatRoomBinding>(R.layout.activity
                         chatContentAdapter.submitList(chatContentItemList) {
                             if (binding.rvChatContent.adapter != null && binding.rvChatContent.adapter!!.itemCount > 0) {
                                 binding.rvChatContent.post {
-                                    binding.rvChatContent.scrollToPosition(
-                                        binding.rvChatContent.adapter!!.itemCount - 1
-                                    )
+                                    if (chatContentEndScrollFlag) {
+                                        chatContentEndScrollFlag = false
+                                        binding.rvChatContent.scrollToPosition(
+                                            binding.rvChatContent.adapter!!.itemCount - 1
+                                        )
+                                    }
                                 }
                             }
                         }
@@ -162,14 +173,49 @@ class ChatRoomActivity : BaseActivity<ActivityChatRoomBinding>(R.layout.activity
                 override fun onAnimationCancel(animation: Animator) {}
                 override fun onAnimationRepeat(animation: Animator) { }
             })
+
+            rvChatContent.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    super.onScrolled(recyclerView, dx, dy)
+                    chatContentScrollTimeTick = System.currentTimeMillis()
+                }
+            })
         }
     }
 
-    override fun initData() {
+    override fun initData() {}
+
+    override fun dispatchTouchEvent(event: MotionEvent?): Boolean {
+        if (event != null) {
+            val view = currentFocus
+            if (view is EditText) {
+                if (event.action == MotionEvent.ACTION_UP) {
+                    val outRect = Rect()
+                    view.getGlobalVisibleRect(outRect)
+                    if (!outRect.contains(event.rawX.toInt(), event.rawY.toInt())) {
+                        Timber.tag("whk__").d("touchQueue.filter { it == MotionEvent.ACTION_MOVE }.size : ${touchQueue.filter { it == MotionEvent.ACTION_MOVE }.size}")
+                        if (System.currentTimeMillis() - chatContentScrollTimeTick >= 300L && (touchQueue.filter { it == MotionEvent.ACTION_MOVE }.size) < 8) {
+                            hideKeyboard()
+                            view.clearFocus()
+                        }
+                    }
+
+                    touchQueue.clear()
+                } else {
+                    if (touchQueue.size > 30) {
+                        touchQueue.remove()
+                    }
+                    touchQueue.add(event.action)
+                }
+            }
+        }
+
+        return super.dispatchTouchEvent(event)
     }
 
     private fun sendMessage(message: String) {
         if (message.isNotBlank()) {
+            chatContentEndScrollFlag = true
             viewModel.sendChatContent(
                 chatRoomSrl = chatRoomSrl,
                 content = message
