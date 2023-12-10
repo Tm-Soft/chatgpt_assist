@@ -59,6 +59,9 @@ class ChatContentListAdapter : ListAdapter<ChatContentItem, RecyclerView.ViewHol
             is OtherTextContentViewHolder -> {
                 holder.setupUi(position)
             }
+            is OtherContentLoadingViewHolder -> {
+            holder.setupUi(position)
+            }
         }
     }
 
