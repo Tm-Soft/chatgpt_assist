@@ -192,7 +192,7 @@ class ChatRoomActivity : BaseActivity<ActivityChatRoomBinding>(R.layout.activity
                 if (event.action == MotionEvent.ACTION_UP) {
                     val outRect = Rect()
                     view.getGlobalVisibleRect(outRect)
-                    if (!outRect.contains(event.rawX.toInt(), event.rawY.toInt())) {
+                    if (event.rawY < outRect.top || event.rawY > outRect.bottom) {
                         Timber.tag("whk__").d("touchQueue.filter { it == MotionEvent.ACTION_MOVE }.size : ${touchQueue.filter { it == MotionEvent.ACTION_MOVE }.size}")
                         if (System.currentTimeMillis() - chatContentScrollTimeTick >= 300L && (touchQueue.filter { it == MotionEvent.ACTION_MOVE }.size) < 8) {
                             hideKeyboard()
