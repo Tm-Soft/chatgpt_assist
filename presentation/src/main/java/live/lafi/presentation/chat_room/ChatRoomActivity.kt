@@ -43,6 +43,11 @@ class ChatRoomActivity : BaseActivity<ActivityChatRoomBinding>(R.layout.activity
 
     private var chatContentEndScrollFlag = false
     private var chatContentScrollTimeTick = System.currentTimeMillis()
+
+    // 현재 스크롤 관련 변수
+    private var chatContentScrollTopPercent: Double? = null
+    private var chatContentScrollOnePagePercent: Double? = null
+
     private val touchQueue: Queue<Int> = LinkedList()
 
     private var isLottieAnimatorRunning = false
@@ -125,9 +130,23 @@ class ChatRoomActivity : BaseActivity<ActivityChatRoomBinding>(R.layout.activity
 
                     withContext(Dispatchers.Main) {
                         chatContentAdapter.submitList(chatContentItemList) {
+                            var isScrollBottom = false
+                            if (chatContentEndScrollFlag) {
+                                isScrollBottom = true
+                            }
+
+                            if (!isScrollBottom && chatContentScrollTopPercent != null && chatContentScrollOnePagePercent != null) {
+                                val bottomScrollPercent = chatContentScrollTopPercent!! + chatContentScrollOnePagePercent!!
+                                if ((100-bottomScrollPercent)*2 < chatContentScrollOnePagePercent!!) {
+                                    isScrollBottom = true
+                                } else {
+                                    // 새로운 메세지가 왔는디..? 스크롤은 위에 있네..
+                                }
+                            }
+
                             if (binding.rvChatContent.adapter != null && binding.rvChatContent.adapter!!.itemCount > 0) {
                                 binding.rvChatContent.post {
-                                    if (chatContentEndScrollFlag) {
+                                    if (isScrollBottom) {
                                         chatContentEndScrollFlag = false
                                         binding.rvChatContent.scrollToPosition(
                                             binding.rvChatContent.adapter!!.itemCount - 1
@@ -178,6 +197,12 @@ class ChatRoomActivity : BaseActivity<ActivityChatRoomBinding>(R.layout.activity
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                     super.onScrolled(recyclerView, dx, dy)
                     chatContentScrollTimeTick = System.currentTimeMillis()
+
+                    chatContentScrollTopPercent = (recyclerView.computeVerticalScrollOffset().toDouble() / recyclerView.computeVerticalScrollRange().toDouble()) * 100
+                    chatContentScrollOnePagePercent = (recyclerView.computeVerticalScrollExtent().toDouble() / recyclerView.computeVerticalScrollRange().toDouble()) * 100
+                    val bottomScrollPercent = chatContentScrollTopPercent!! + chatContentScrollOnePagePercent!!
+
+                    Timber.tag("whk__").d("bottomScrollPercent : $bottomScrollPercent / (100-bottomScrollPercent)*2 : ${(100-bottomScrollPercent)*2} // mScrollOnePagePercent : $chatContentScrollOnePagePercent")
                 }
             })
         }
