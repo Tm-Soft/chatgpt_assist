@@ -37,39 +37,6 @@ class ChatRoomListViewModel @Inject constructor(
     private val deleteChatRoomSystemRoleWithChatRoomSrlUseCase: DeleteChatRoomSystemRoleWithChatRoomSrlUseCase,
     private val deleteChatContentWithChatRoomSrlUseCase: DeleteChatContentWithChatRoomSrlUseCase
 ) : BaseViewModel() {
-    private val _onLoading = SingleLiveEvent<Boolean>()
-    val onLoading: LiveData<Boolean> get() = _onLoading
-
-    private val _responseMessage = MutableLiveData<String>()
-    val responseMessage: LiveData<String> get() = _responseMessage
-
-    fun postChatGptMessage(message: String) {
-        scopeIO.launch {
-            postChatCompletionsUseCase(sendMessage = message).collectLatest { response ->
-                response.onLoadingStart {
-                    Timber.tag("server flow").e("로딩 VISIBLE")
-                    _onLoading.postValue(true)
-                }
-                response.onLoadingEnd {
-                    Timber.tag("server flow").e("로딩 GONE")
-                    _onLoading.postValue(false)
-
-                }
-                response.onSuccess {
-                    Timber.tag("server flow").e("성공 데이터 : $it")
-                    _responseMessage.postValue(it.data[0].message.content)
-                }
-                response.onError { code, message ->
-                    Timber.tag("server flow").e("에러 code : $code / message : $message")
-                }
-                response.onException {
-                    Timber.tag("server flow").e("익셉션 : $it")
-                }
-            }
-        }
-    }
-
-    suspend fun getAllChatRoomInfo() = getAllChatRoomUseCase()
 
     suspend fun getAllChatRoomWithChatRoomType(chatRoomType: Int) = getAllChatRoomWithChatRoomTypeUseCase(chatRoomType)
 

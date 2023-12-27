@@ -24,6 +24,7 @@ import live.lafi.domain.usecase.chat.InsertChatRoomSystemRoleListUseCase
 import live.lafi.domain.usecase.chat.InsertChatRoomSystemRoleUseCase
 import live.lafi.domain.usecase.chat.InsertChatRoomUseCase
 import live.lafi.domain.usecase.chat.UpdateChatContentStatusUseCase
+import live.lafi.domain.usecase.chat.UpdateChatRoomLastUpdateTimestampUseCase
 import live.lafi.domain.usecase.chat.UpdateChatRoomSystemRoleListUseCase
 import live.lafi.domain.usecase.chat.UpdateChatRoomSystemRoleUseCase
 import live.lafi.domain.usecase.chat.UpdateChatRoomTitleUseCase
@@ -69,6 +70,10 @@ object UseCaseModule {
     @Provides
     @Singleton
     fun provideUpdateChatRoomTitleUseCase(chatRepository: ChatRepository) = UpdateChatRoomTitleUseCase(chatRepository)
+
+    @Provides
+    @Singleton
+    fun provideUpdateChatRoomLastTimestampUseCase(chatRepository: ChatRepository) = UpdateChatRoomLastUpdateTimestampUseCase(chatRepository)
 
     @Provides
     @Singleton

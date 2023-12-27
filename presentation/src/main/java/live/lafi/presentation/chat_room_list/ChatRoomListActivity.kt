@@ -19,6 +19,7 @@ import live.lafi.presentation.setting.SettingActivity
 import live.lafi.presentation.wiget.bottom_sheet.chat_room_setting.ChatRoomSettingBottomSheet
 import live.lafi.util.VibratorUtil
 import live.lafi.util.enums.ChatRoomType
+import timber.log.Timber
 
 @AndroidEntryPoint
 class ChatRoomListActivity : BaseActivity<ActivityChatRoomListBinding>(R.layout.activity_chat_room_list) {
@@ -38,8 +39,8 @@ class ChatRoomListActivity : BaseActivity<ActivityChatRoomListBinding>(R.layout.
     override fun subscribeUi() {
         with(viewModel) {
             lifecycleScope.launch(Dispatchers.IO) {
-                getAllChatRoomWithChatRoomType(ChatRoomType.CUSTOM.value).collectLatest {
-                    if (it.isEmpty()) {
+                getAllChatRoomWithChatRoomType(ChatRoomType.CUSTOM.value).collectLatest { chatRoomList ->
+                    if (chatRoomList.isEmpty()) {
                         // 리스트가 비어있다면...
                         val createChatRoomSrl = viewModel.insertChatRoom(
                             chatRoomType = ChatRoomType.CUSTOM.value,
@@ -48,7 +49,14 @@ class ChatRoomListActivity : BaseActivity<ActivityChatRoomListBinding>(R.layout.
                         viewModel.initChatRoomSystemRole(createChatRoomSrl)
                     } else {
                         withContext(Dispatchers.Main) {
-                            setOnChatRoomList(it)
+                            /**
+                             * 채팅 룸 데이터
+                             */
+                            chatRoomList.sortedBy {
+                                Timber.tag("whk__").d("it.lastUpdateTimestamp : ${it.lastUpdateTimestamp}")
+                                it.lastUpdateTimestamp
+                            }
+                            setOnChatRoomList(chatRoomList)
                         }
                     }
                 }

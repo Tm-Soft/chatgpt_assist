@@ -20,6 +20,7 @@ import live.lafi.domain.usecase.chat.GetChatContentWaitMessageUseCase
 import live.lafi.domain.usecase.chat.GetChatRoomSystemRoleUseCase
 import live.lafi.domain.usecase.chat.InsertChatContentUseCase
 import live.lafi.domain.usecase.chat.UpdateChatContentStatusUseCase
+import live.lafi.domain.usecase.chat.UpdateChatRoomLastUpdateTimestampUseCase
 import live.lafi.domain.usecase.chat_gpt.PostChatListCompletionsUseCase
 import live.lafi.domain.usecase.local_setting.LoadChatGptTokenUseCase
 import live.lafi.util.DateUtil
@@ -44,10 +45,11 @@ class ChatContentService : Service() {
     lateinit var getChatContentListWithChatRoomSrlUseCase: GetChatContentListWithChatRoomSrlUseCase
     @Inject
     lateinit var loadChatGptTokenUseCase: LoadChatGptTokenUseCase
+    @Inject
+    lateinit var updateChatRoomLastUpdateTimestampUseCase: UpdateChatRoomLastUpdateTimestampUseCase
 
     private val coroutineJob = SupervisorJob()
 
-    private val scopeMain = CoroutineScope(Dispatchers.Main + coroutineJob)
     private val scopeIO = CoroutineScope(Dispatchers.IO + coroutineJob)
     private val scopeDefault = CoroutineScope(Dispatchers.Default + coroutineJob)
 
@@ -121,6 +123,11 @@ class ChatContentService : Service() {
                                     chatContentSrl = chatContentInfo.chatContentSrl,
                                     status = "complete",
                                     updateDate = DateUtil.getFullDate()
+                                )
+
+                                updateChatRoomLastUpdateTimestampUseCase(
+                                    chatRoomSrl = chatContentInfo.chatRoomSrl,
+                                    lastUpdateTimestamp = DateUtil.getFullDate()
                                 )
 
                                 insertChatContentUseCase(

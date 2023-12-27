@@ -26,6 +26,9 @@ interface ChatRoomDao {
     @Query("UPDATE chat_room SET chat_room_title = :title WHERE chat_room_srl = :chatRoomSrl")
     fun updateChatRoomTitle(chatRoomSrl: Long, title: String)
 
+    @Query("UPDATE chat_room SET last_update_timestamp = :lastUpdateTimestamp WHERE chat_room_srl = :chatRoomSrl")
+    fun updateChatRoomLastUpdateTimestamp(chatRoomSrl: Long, lastUpdateTimestamp: Long)
+
     @Query("DELETE FROM chat_room WHERE chat_room_srl = :chatRoomSrl")
     fun deleteWithSrl(chatRoomSrl: Long)
 }

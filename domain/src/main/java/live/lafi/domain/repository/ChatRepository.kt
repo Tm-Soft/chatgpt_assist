@@ -20,6 +20,8 @@ interface ChatRepository {
 
     suspend fun updateChatRoomTitle(chatRoomSrl: Long, title: String)
 
+    suspend fun updateChatRoomLastUpdateTimestamp(chatRoomSrl: Long, lastUpdateTimestamp: Long)
+
     suspend fun deleteChatRoom(chatRoomSrl: Long)
 
     suspend fun getChatRoomSystemRole(chatRoomSrl: Long): Flow<List<ChatRoomSystemRoleInfo>>

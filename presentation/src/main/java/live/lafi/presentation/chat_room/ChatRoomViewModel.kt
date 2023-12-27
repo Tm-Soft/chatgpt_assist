@@ -6,6 +6,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import live.lafi.domain.usecase.chat.GetAllChatContentWithChatRoomSrlUseCase
 import live.lafi.domain.usecase.chat.InsertChatContentUseCase
+import live.lafi.domain.usecase.chat.UpdateChatRoomLastUpdateTimestampUseCase
 import live.lafi.util.DateUtil
 import live.lafi.util.base.BaseViewModel
 import javax.inject.Inject
@@ -13,7 +14,8 @@ import javax.inject.Inject
 @HiltViewModel
 class ChatRoomViewModel @Inject constructor(
     private val getAllChatContentWithChatRoomSrlUseCase: GetAllChatContentWithChatRoomSrlUseCase,
-    private val insertChatContentUseCase: InsertChatContentUseCase
+    private val insertChatContentUseCase: InsertChatContentUseCase,
+    private val updateChatRoomLastUpdateTimestampUseCase: UpdateChatRoomLastUpdateTimestampUseCase
 ) : BaseViewModel() {
     suspend fun getAllChatContentWithChatRoomSrl(chatRoomSrl: Long) =
         getAllChatContentWithChatRoomSrlUseCase(
@@ -34,6 +36,11 @@ class ChatRoomViewModel @Inject constructor(
 //                    )
 //                )
 //            )
+
+            updateChatRoomLastUpdateTimestampUseCase(
+                chatRoomSrl = chatRoomSrl,
+                lastUpdateTimestamp = DateUtil.getFullDate()
+            )
             
             insertChatContentUseCase(
                 chatRoomSrl = chatRoomSrl,

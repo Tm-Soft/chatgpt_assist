@@ -12,6 +12,7 @@ import live.lafi.domain.model.chat.ChatContentInfo
 import live.lafi.domain.model.chat.ChatRoomInfo
 import live.lafi.domain.model.chat.ChatRoomSystemRoleInfo
 import live.lafi.domain.repository.ChatRepository
+import live.lafi.util.DateUtil
 import javax.inject.Inject
 
 class ChatRepositoryImpl @Inject constructor(
@@ -28,7 +29,7 @@ class ChatRepositoryImpl @Inject constructor(
                 chatRoomType = chatRoomType,
                 chatRoomTitle = title,
                 profileUri = profileUri,
-                lastUpdateTimestamp = null,
+                lastUpdateTimestamp = DateUtil.getFullDate(),
                 lastReadTimestamp = null,
             )
         )
@@ -58,6 +59,16 @@ class ChatRepositoryImpl @Inject constructor(
             chatRoomSrl = chatRoomSrl,
             title = title
         )
+    }
+
+    override suspend fun updateChatRoomLastUpdateTimestamp(
+        chatRoomSrl: Long,
+        lastUpdateTimestamp: Long
+    ) {
+       chatDatabase.chatRoomDao().updateChatRoomLastUpdateTimestamp(
+           chatRoomSrl = chatRoomSrl,
+           lastUpdateTimestamp = lastUpdateTimestamp
+       )
     }
 
     override suspend fun deleteChatRoom(chatRoomSrl: Long) {

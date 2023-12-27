@@ -241,6 +241,7 @@ class ChatRoomActivity : BaseActivity<ActivityChatRoomBinding>(R.layout.activity
     private fun sendMessage(message: String) {
         if (message.isNotBlank()) {
             chatContentEndScrollFlag = true
+
             viewModel.sendChatContent(
                 chatRoomSrl = chatRoomSrl,
                 content = message
